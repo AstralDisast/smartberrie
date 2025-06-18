@@ -160,7 +160,7 @@ include_once "../../assest/config/datosUrLP.php";
                                                     <th>CSG/CSP Recepción</th>
                                                     <th>Origen Recepcion</th>
                                                     <th>Fecha Guia </th>
-                                                    <th>Total Kilos Guia</th>
+                                                    <th>Total Envases Guia</th>
                                                     <th>Cantidad Envase</th>
                                                     <th>Total Kilos Neto</th>
                                                     <th>Total Kilos Bruto</th>
@@ -180,7 +180,7 @@ include_once "../../assest/config/datosUrLP.php";
                                             <?php foreach ($ARRAYEMPRESAPRODUCTOR as $a) : ?>
                                                 <?php 
                                                     if ( $TEMPORADAS) {
-                                                        $ARRAYRECEPCION = $RECEPCIONIND_ADO->listarRecepcionEmpresaProductorTemporadaCBX($a["ID_EMPRESA"], $a["ID_PRODUCTOR"], $TEMPORADAS);
+                                                        $ARRAYRECEPCION = $RECEPCIONIND_ADO->listarRecepcionEmpresaProductorTemporadaCBXEst($a["ID_EMPRESA"], $a["ID_PRODUCTOR"], $TEMPORADAS, $ESPECIE);
                                                     }    
                                                 ?>
                                                 <?php foreach ($ARRAYRECEPCION as $r) : ?>

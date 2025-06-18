@@ -276,7 +276,7 @@ if($ARRAYICARGA){
       }  
       $ARRAYRFINAL=$RFINAL_ADO->verRfinal($ARRAYICARGA[0]["ID_RFINAL"]);
       if($ARRAYRFINAL){
-          $NOMBRERFINAL=$ARRAYRFINAL[0]["NOMBRE_RFINAL"];
+          $NOMBRERFINAL=htmlspecialchars($ARRAYRFINAL[0]["NOMBRE_RFINAL"], ENT_QUOTES, 'UTF-8');
       }else{
           $NOMBRERFINAL="Sin Datos";
       }
@@ -528,7 +528,7 @@ $html = '
         <th class="color center ">Etiqueta </th>
         <th class="color center ">Envases </th>
         <th class="color center ">Kilos Neto </th>
-        <th class="color center ">Kilos Bruto </th>
+        <th class="color center ">Kilos Bruto</th>
         <th class="color center ">Recibiddor</th>
 ';
 
@@ -572,10 +572,12 @@ $html=$html.'
 
 foreach ($ARRAYDESPACHOEX as $s) :
   
-  $FECHADESPACHOEX=$As['FECHA'];
-  $NUMEROCONTENEDOR=$As['NUMERO_CONTENEDOR_DESPACHOEX'];
-  $NUMEROSELLO=$As['NUMERO_SELLO_DESPACHOEX'];
-  $TERMOGRAFODESPACHOEX=$As['TERMOGRAFO_DESPACHOEX'];
+  $FECHADESPACHOEX=$s['FECHA'];
+  $NUMEROCONTENEDOR=$s['NUMERO_CONTENEDOR_DESPACHOEX'];
+  $NUMEROSELLO=$s['NUMERO_SELLO_DESPACHOEX'];
+
+
+  $TERMOGRAFODESPACHOEX=$s['TERMOGRAFO_DESPACHOEX'];
   $ARRAYVERPLANTA = $PLANTA_ADO->verPlanta($s['ID_PLANTA']);
   if($ARRAYVERPLANTA){
     $LUGARDECARGA=$ARRAYVERPLANTA[0]["RAZON_SOCIAL_PLANTA"];
@@ -645,6 +647,7 @@ foreach ($ARRAYDESPACHOEX as $s) :
         if ($ARRAYEVERERECEPCIONID) {
             $CODIGOESTANDAR = $ARRAYEVERERECEPCIONID[0]['CODIGO_ESTANDAR'];
             $NOMBREESTANDAR = $ARRAYEVERERECEPCIONID[0]['NOMBRE_ESTANDAR'];
+            $PESO_BRUTO_ESTANDAR = $ARRAYEVERERECEPCIONID[0]['PESO_BRUTO_ESTANDAR'];
             $ARRAYTETIQUETA=$TETIQUETA_ADO->verEtiqueta($ARRAYEVERERECEPCIONID[0]['ID_TETIQUETA']);
             if($ARRAYTETIQUETA){
                 $NOMBRETETIQUETA = $ARRAYTETIQUETA[0]['NOMBRE_TETIQUETA'];
@@ -678,6 +681,14 @@ foreach ($ARRAYDESPACHOEX as $s) :
         } else {
             $NOMBRETEMBALAJE = "Sin Datos";
         }
+
+        $ArrayTermografoPallet =$EXIEXPORTACION_ADO->verFolio($r['FOLIO_EXIEXPORTACION']);  
+              if($ArrayTermografoPallet){
+                $termografoPallet=$ArrayTermografoPallet[0]["N_TERMOGRAFO"];
+              }else{
+                $termografoPallet="Sin Datos";
+              }
+
         $html = $html . '    
               <tr class="center">        
                   <td class=" center ">' . $NUMEROIREFERENCIA . ' </td>
@@ -700,7 +711,7 @@ foreach ($ARRAYDESPACHOEX as $s) :
                   <td class=" center ">' . $NOMBRETETIQUETA . ' </td>
                   <td class=" center">' . $r['ENVASE'] . '</td>
                   <td class=" center">' . $r['NETO'] . '</td>
-                  <td class=" center">' . $r['BRUTO'] . '</td>
+                  <td class=" center">' . ($PESO_BRUTO_ESTANDAR*$r['ENVASE']). '</td>
                   <td class=" center ">' . $NOMBRERFINAL . ' </td>  
 
                   ';
@@ -737,9 +748,10 @@ foreach ($ARRAYDESPACHOEX as $s) :
 
                   $html=$html.'
 
-                                <td class=" center ">' . $TERMOGRAFODESPACHOEX . ' </td>   
+                               <td class=" center ">' . $termografoPallet . ' </td>   
                               </tr>
                               ';
+                              // <td class=" center ">' . $TERMOGRAFODESPACHOEX . ' </td>   
 
 
   endforeach;

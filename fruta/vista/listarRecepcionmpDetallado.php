@@ -146,14 +146,14 @@ include_once "../../assest/config/datosUrLP.php";
                 <div class="content-header">
                     <div class="d-flex align-items-center">
                         <div class="mr-auto">
-                            <h3 class="page-title">Recepcion Materia Prima</h3>
+                            <h3 class="page-title">Recepción Materia Prima</h3>
                             <div class="d-inline-block align-items-center">
                                 <nav>
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="index.php"><i class="mdi mdi-home-outline"></i></a></li>
                                         <li class="breadcrumb-item" aria-current="page">Módulo</li>
                                         <li class="breadcrumb-item" aria-current="page">Granel</li>
-                                        <li class="breadcrumb-item" aria-current="page">Recepcion</li>
+                                        <li class="breadcrumb-item" aria-current="page">Recepción</li>
                                         <li class="breadcrumb-item" aria-current="page">Materia Prima</li>
                                         <li class="breadcrumb-item active" aria-current="page"> <a href="#"> Detallado Recepción </a> </li>
                                     </ol>
@@ -196,7 +196,7 @@ include_once "../../assest/config/datosUrLP.php";
                                                     <th>Nombre Conductor </th>
                                                     <th>Patente Camión </th>
                                                     <th>Patente Carro </th>
-                                                    <th>Semana Recepcion </th>
+                                                    <th>Semana Recepción </th>
                                                     <th>Semana Guia </th>
                                                     <th>Empresa</th>
                                                     <th>Planta</th>
@@ -314,6 +314,13 @@ include_once "../../assest/config/datosUrLP.php";
                                                         } else {
                                                             $GASIFICADO = "Sin Datos";
                                                         }
+                                                       
+                                                        $ARRAYTRATAMIENTO1=$TTRATAMIENTO1_ADO->verTtratamiento($s['ID_TTRATAMIENTO1']);
+                                                        if($ARRAYTRATAMIENTO1){
+                                                            $NOMBRETTRATAMIENTO1 = $ARRAYTRATAMIENTO1[0]["NOMBRE_TTRATAMIENTO"];
+                                                        }else{
+                                                            $NOMBRETTRATAMIENTO1="Sin Datos";
+                                                        }
                                                         ?>
                                                         <tr class="text-center">
                                                             <td><?php echo $s['FOLIO_DRECEPCION']; ?></td>
@@ -334,7 +341,7 @@ include_once "../../assest/config/datosUrLP.php";
                                                             <td><?php echo $r['NUMERO_GUIA_RECEPCION']; ?></td>
                                                             <td><?php echo $r['FECHA_GUIA']; ?></td>
                                                             <td><?php echo $NOMBRETMANEJO; ?></td>
-                                                            <td><?php echo $GASIFICADO; ?></td>
+                                                            <td><?php echo $NOMBRETTRATAMIENTO1; ?></td>
                                                             <td><?php echo $NOMBRETRANSPORTE; ?></td>
                                                             <td><?php echo $NOMBRECONDUCTOR; ?></td>
                                                             <td><?php echo $r['PATENTE_CAMION']; ?></td>

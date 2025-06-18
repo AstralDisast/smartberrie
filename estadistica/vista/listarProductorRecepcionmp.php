@@ -161,7 +161,7 @@ $ARRAYEMPRESAPRODUCTOR=$EMPRESAPRODUCTOR_ADO->buscarEmpresaProductorPorUsuarioCB
                                                     <th>Origen Recepcion</th>
                                                     <th>Numero Guia </th>
                                                     <th>Fecha Guia </th>
-                                                    <th>Total Kilos Guia</th>
+                                                    <th>Total Envases Guia</th>
                                                     <th>Cantidad Envase</th>
                                                     <th>Total Kilos Neto</th>
                                                     <th>Total Kilos Bruto</th>
@@ -181,7 +181,7 @@ $ARRAYEMPRESAPRODUCTOR=$EMPRESAPRODUCTOR_ADO->buscarEmpresaProductorPorUsuarioCB
                                             <?php foreach ($ARRAYEMPRESAPRODUCTOR as $a) : ?>
                                                 <?php 
                                                     if ( $TEMPORADAS) {
-                                                        $ARRAYRECEPCION = $RECEPCIONMP_ADO->listarRecepcionEmpresaProductorTemporadaCBX($a["ID_EMPRESA"], $a["ID_PRODUCTOR"], $TEMPORADAS);
+                                                        $ARRAYRECEPCION = $RECEPCIONMP_ADO->listarRecepcionEmpresaProductorTemporadaCBXEst($a["ID_EMPRESA"], $a["ID_PRODUCTOR"], $TEMPORADAS, $ESPECIE);
                                                     }    
                                                 ?>
                                                 <?php foreach ($ARRAYRECEPCION as $r) : ?>                                                    
@@ -262,10 +262,10 @@ $ARRAYEMPRESAPRODUCTOR=$EMPRESAPRODUCTOR_ADO->buscarEmpresaProductorPorUsuarioCB
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <?php if ($r['ESTADO'] == "0") { ?>
+                                                            <?php if ($r['ESTADO_CIERRE'] == 0) { ?>
                                                                 <button type="button" class="btn btn-block btn-danger">Cerrado</button>
                                                             <?php  }  ?>
-                                                            <?php if ($r['ESTADO'] == "1") { ?>
+                                                            <?php if ($r['ESTADO_CIERRE'] == 1) { ?>
                                                                 <button type="button" class="btn btn-block btn-success">Abierto</button>
                                                             <?php  }  ?>
                                                         </td>

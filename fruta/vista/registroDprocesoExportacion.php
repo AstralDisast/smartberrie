@@ -530,7 +530,7 @@ if ($_POST) {
                     if (ESTANDAR == null || ESTANDAR == 0) {
                         document.form_reg_dato.ESTANDAR.focus();
                         document.form_reg_dato.ESTANDAR.style.borderColor = "#FF0000";
-                        document.getElementById('val_estandar').innerHTML = "NO HA SELECIONADO ALTERNATIVA";
+                        document.getElementById('val_estandar').innerHTML = "NO HA SELECCIONADO ALTERNATIVA";
                         repuesta = 1;
                     } else {
                         repuesta = 0;
@@ -570,6 +570,7 @@ if ($_POST) {
                     CANTIDADENVASE = document.getElementById("CANTIDADENVASE").value;
                     TCALIBRE = document.getElementById("TCALIBRE").selectedIndex;
                     TMANEJO = document.getElementById("TMANEJO").selectedIndex;
+                    EFOLIO = document.getElementById("EFOLIO").selectedIndex;
 
                     CATEGORIAESTANDAR = document.getElementById("CATEGORIAESTANDAR").value;
                     REFERENCIAESTANDAR = document.getElementById("REFERENCIAESTANDAR").value;                   
@@ -581,6 +582,7 @@ if ($_POST) {
                     document.getElementById('val_estandar').innerHTML = "";
                     document.getElementById('val_tcalibre').innerHTML = "";
                     document.getElementById('val_tmanejo').innerHTML = "";
+                    document.getElementById('val_estadofolio').innerHTML = "";
 
 
                     if (FOLIOMANUAL == true) {
@@ -625,10 +627,18 @@ if ($_POST) {
                     if (ESTANDAR == null || ESTANDAR == 0) {
                         document.form_reg_dato.ESTANDAR.focus();
                         document.form_reg_dato.ESTANDAR.style.borderColor = "#FF0000";
-                        document.getElementById('val_estandar').innerHTML = "NO HA SELECIONADO ALTERNATIVA";
+                        document.getElementById('val_estandar').innerHTML = "NO HA SELECCIONADO ALTERNATIVA";
                         return false;
                     }
                     document.form_reg_dato.ESTANDAR.style.borderColor = "#4AF575";
+
+                    if (EFOLIO == null || EFOLIO == 0) {
+                        document.form_reg_dato.EFOLIO.focus();
+                        document.form_reg_dato.EFOLIO.style.borderColor = "#FF0000";
+                        document.getElementById('val_estadofolio').innerHTML = "NO HA SELECCIONADO ALTERNATIVA";
+                        return false;
+                    }
+                    document.form_reg_dato.EFOLIO.style.borderColor = "#4AF575";
 
                     if (CANTIDADENVASE == null || CANTIDADENVASE.length == 0 || /^\s+$/.test(CANTIDADENVASE)) {
                         document.form_reg_dato.CANTIDADENVASE.focus();
@@ -649,7 +659,7 @@ if ($_POST) {
                     if (TCALIBRE == null || TCALIBRE == 0) {
                         document.form_reg_dato.TCALIBRE.focus();
                         document.form_reg_dato.TCALIBRE.style.borderColor = "#FF0000";
-                        document.getElementById('val_tcalibre').innerHTML = "NO HA SELECIONADO ALTERNATIVA";
+                        document.getElementById('val_tcalibre').innerHTML = "NO HA SELECCIONADO ALTERNATIVA";
                         return false;
                     }
                     document.form_reg_dato.TCALIBRE.style.borderColor = "#4AF575";
@@ -657,7 +667,7 @@ if ($_POST) {
                     if (TMANEJO == null || TMANEJO == 0) {
                         document.form_reg_dato.TMANEJO.focus();
                         document.form_reg_dato.TMANEJO.style.borderColor = "#FF0000";
-                        document.getElementById('val_tmanejo').innerHTML = "NO HA SELECIONADO ALTERNATIVA";
+                        document.getElementById('val_tmanejo').innerHTML = "NO HA SELECCIONADO ALTERNATIVA";
                         return false;
                     }
                     document.form_reg_dato.TMANEJO.style.borderColor = "#4AF575";
@@ -671,7 +681,7 @@ if ($_POST) {
                         if (TCATEGORIA == null || TCATEGORIA == 0) {
                             document.form_reg_dato.TCATEGORIA.focus();
                             document.form_reg_dato.TCATEGORIA.style.borderColor = "#FF0000";
-                            document.getElementById('val_tcategoria').innerHTML = "NO HA SELECIONADO ALTERNATIVA";
+                            document.getElementById('val_tcategoria').innerHTML = "NO HA SELECCIONADO ALTERNATIVA";
                             return false;
                         }
                         document.form_reg_dato.TCATEGORIA.style.borderColor = "#4AF575";
@@ -685,7 +695,7 @@ if ($_POST) {
                         if (ICARGA == null || ICARGA == 0) {
                             document.form_reg_dato.ICARGA.focus();
                             document.form_reg_dato.ICARGA.style.borderColor = "#FF0000";
-                            document.getElementById('val_icarga').innerHTML = "NO HA SELECIONADO ALTERNATIVA";
+                            document.getElementById('val_icarga').innerHTML = "NO HA SELECCIONADO ALTERNATIVA";
                             return false
                         }
                         document.form_reg_dato.ICARGA.style.borderColor = "#4AF575";
@@ -876,13 +886,14 @@ if ($_POST) {
                                         </div> 
                                         <div class="col-xxl-2 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 col-xs-6 ">
                                             <div class="form-group">
-                                                <label>Estado Folio</label><br>
+                                                <label>Estado Folio *</label><br>
                                                 <select class="form-control select2" id="EFOLIO" name="EFOLIO" style="width: 100%;" <?php echo $DISABLED; ?>>
-                                                    <option value="0">- Seleccione una Opcion -</option>
+                                                    <option value=""></option>
                                                     <option value="1">Pallet Completo</option>
                                                     <option value="2">Pallet Incompleto</option>
-                                                    <option value="3">Pallet de Muestra</option>
+                                                    <!--<option value="3">Pallet de Muestra</option>-->
                                                 </select>
+                                                <label id="val_estadofolio" class="validacion"> </label>
                                             </div>
                                         </div>                                        
                                         <?php if ($CATEGORIAESTANDAR == "1") { ?>
@@ -937,7 +948,7 @@ if ($_POST) {
                                 <!-- /.box-body -->
                                 <div class="box-footer">
                                     <div class="btn-group btn-block col-xxl-4 col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 col-xs-12" role="group" aria-label="Acciones generales">
-                                        <button type="button" class="btn btn-success  " data-toggle="tooltip" title="Volver" name="CANCELAR" value="CANCELAR" Onclick="irPagina('<?php echo $URLO; ?>.php?op&id=<?php echo $id_dato; ?>&a=<?php echo $accion_dato; ?>'&urlo=<?php echo $urlo_dato; ?>');">
+                                        <button type="button" class="btn btn-success  " data-toggle="tooltip" title="Volver" name="CANCELAR" value="CANCELAR" Onclick="irPagina('<?php echo $URLO; ?>.php?op&id=<?php echo $id_dato; ?>&a=<?php echo $accion_dato; ?>&urlo=<?php echo $urlo_dato; ?>');">
                                             <i class="ti-back-left "></i> Volver
                                         </button>
                                         <?php if ($OP == "") { ?>
@@ -1059,6 +1070,7 @@ if ($_POST) {
                     $ARRAYVERESTANDAR = $EEXPORTACION_ADO->verEstandar($_REQUEST['ESTANDAR']);
                     if ($ARRAYVERESTANDAR) {
                         $CANTIDADENVASE = $_REQUEST['CANTIDADENVASE'];
+                        $PESOBRUTOEESTANDAR = $ARRAYVERESTANDAR[0]['PESO_BRUTO_ESTANDAR'];
                         $PESONETOEESTANDAR = $ARRAYVERESTANDAR[0]['PESO_NETO_ESTANDAR'];
                         $PESOENVASEESTANDAR = $ARRAYVERESTANDAR[0]['PESO_ENVASE_ESTANDAR'];
                         $EMBOLSADO = $ARRAYVERESTANDAR[0]['EMBOLSADO'];
@@ -1067,7 +1079,7 @@ if ($_POST) {
                         $PDESHIDRATACIONEESTANDAR = $ARRAYVERESTANDAR[0]['PDESHIDRATACION_ESTANDAR'];
                         $KILOSNETODRECEPCION = $CANTIDADENVASE * $PESONETOEESTANDAR;
                         $KILOSDESHIDRATACION = $KILOSNETODRECEPCION * (1 + ($PDESHIDRATACIONEESTANDAR / 100));
-                        $KILOSBRUTORECEPCION = (($CANTIDADENVASE * $PESOENVASEESTANDAR) + $KILOSDESHIDRATACION) + $PESOPALLETEESTANDAR;
+                        $KILOSBRUTORECEPCION = $CANTIDADENVASE * $PESOBRUTOEESTANDAR;
                     }
 
                     $DPEXPORTACION->__SET('FOLIO_DPEXPORTACION', $NUMEROFOLIODEXPORTACION);
@@ -1168,7 +1180,7 @@ if ($_POST) {
                     $PDESHIDRATACIONEESTANDAR = $ARRAYVERESTANDAR[0]['PDESHIDRATACION_ESTANDAR'];
                     $KILOSNETODRECEPCION = $CANTIDADENVASE * $PESONETOEESTANDAR;
                     $KILOSDESHIDRATACION = $KILOSNETODRECEPCION * (1 + ($PDESHIDRATACIONEESTANDAR / 100));
-                    $KILOSBRUTORECEPCION = (($CANTIDADENVASE * $PESOENVASEESTANDAR) + $KILOSDESHIDRATACION) + $PESOPALLETEESTANDAR;
+                    $KILOSBRUTORECEPCION = $CANTIDADENVASE * $PESOBRUTOEESTANDAR;
                 }
 
 

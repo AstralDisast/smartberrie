@@ -1,5 +1,4 @@
 <?php
-
 require_once '../../api/vendor/autoload.php';
 $detect = new Mobile_Detect;
 // Any mobile device (phones or tablets).
@@ -94,22 +93,7 @@ if($_POST){
 
         
         <!- FUNCIONES BASES -!>
-            <script type="text/javascript">
-                function validacion() {
-                    TEMPORADA = document.getElementById("TEMPORADA").selectedIndex;
-                    document.getElementById('val_select_temporada').innerHTML = "";
 
-           
-                    if (TEMPORADA == null || TEMPORADA == 0) {
-                        document.form_reg_dato.TEMPORADA.focus();
-                        document.form_reg_dato.TEMPORADA.style.borderColor = "#FF0000";
-                        document.getElementById('val_select_temporada').innerHTML = "NO HA SELECCIONADO  NINGUNA ALTERNATIVA";
-                        return false;
-                    }
-                    document.form_reg_dato.TEMPORADA.style.borderColor = "#4AF575";
-
-                }
-            </script>
     </head>
 <!-- fin nuevo head -->
 
@@ -144,21 +128,26 @@ if($_POST){
                                     <span class="fas fa-user"></span>
                                 </div>
                             </div>
-                        </div>                        
+                        </div>  
+
                         <div class="input-group mb-3" id="input">
-                            <label id="label" for="TEMPORADA">Selecionar Temporada</label>
-                            <select class="form-control" id="TEMPORADA" name="TEMPORADA" style="width: 100%;" required>
-                                <option></option>
-                                <?php foreach ($ARRAYTEMPORADA as $r) : ?>
-                                    <?php if ($ARRAYTEMPORADA) {    ?>
-                                        <option value="<?php echo $r['ID_TEMPORADA']; ?>" <?php if ($TEMPORADA == $r['ID_TEMPORADA']) { echo "selected"; } ?>> <?php echo $r['NOMBRE_TEMPORADA'] ?> </option>
-                                    <?php } else { ?>
-                                        <option>No Hay Datos Registrados </option>
-                                    <?php } ?>
-                                <?php endforeach; ?>
+                            <label id="label" for="ESPECIE">Selecionar Especie</label>
+                            <select class="form-control" id="ESPECIE" name="ESPECIE" style="width: 100%;">
+                                <option value="0"> Seleccione una opción </option>
+                                <option value="1"> Arandanos </option>
+                                <option value="3"> Esparragos </option>
+                                
                             </select>
                         </div>
-                        <label id="val_select_temporada" class="validacion"> <?php echo  $MENSAJE; ?></label>
+                                              
+                        <div class="input-group mb-3" id="input">
+                            <label id="label" for="TEMPORADA">Selecionar Temporada</label>
+                            <select class="form-control" id="TEMPORADA" name="TEMPORADA" style="width: 100%;">
+                                <option value="4" selected> 2024-2025 </option>
+                                <option value="5"> Esparragos 2025 </option>
+                            </select>
+                        </div>
+
                         <div class="row">
                             <div class="col-12">
                                 <div class="btn-group col-12 d-flex">
@@ -191,6 +180,7 @@ if($_POST){
             } else {
                 $NOMBRE = $_REQUEST['NOMBRE'];
                 $CONTRASENA = $_REQUEST['CONTRASENA'];
+                
                 $ARRAYINICIOSESSION = $USUARIO_ADO->iniciarSession($NOMBRE, $CONTRASENA);
                 if (empty($ARRAYINICIOSESSION) ||  sizeof($ARRAYINICIOSESSION) == 0) {
                     $ARRAYINICIOSESSIONINTENTOS=$USUARIO_ADO->iniciarSessionNIntentos($NOMBRE);
@@ -262,7 +252,8 @@ if($_POST){
                             $_SESSION["ID_USUARIO"] = $ARRAYINICIOSESSION[0]['ID_USUARIO'];
                             $_SESSION["NOMBRE_USUARIO"] = $ARRAYINICIOSESSION[0]['NOMBRE_USUARIO'];
                             $_SESSION["TIPO_USUARIO"] = $ARRAYINICIOSESSION[0]['ID_TUSUARIO'];
-                            $_SESSION["ID_TEMPORADA"] = $_REQUEST['TEMPORADA'];   
+                            $_SESSION["ID_TEMPORADA"] = $_REQUEST['TEMPORADA'];  
+                            $_SESSION["ID_ESPECIE"] = $_REQUEST['ESPECIE'];   
                             
                             $USUARIO->__SET('ID_USUARIO', $ARRAYINICIOSESSION[0]['ID_USUARIO']);
                             $USUARIO_ADO->NintentoZero($USUARIO);   

@@ -341,7 +341,7 @@ $html = '
       </div>
       <div id="company">
         <h2 class="name">Soc. Agrícola El Álamo Ltda.</h2>
-        <div>Camino a Antuco, Kilómetro N°13</div>
+        <div>Fundo El Álamo</div>
         <div>Los Ángeles, Chile.</div>
         <div><a href="mailto:ti@fvolcan.com">ti@fvolcan.cl</a></div>
       </div>
@@ -363,7 +363,7 @@ $html = '
         </div>
 
         <div id="client">
-          <div class="address"><b>Tipo Proceso: </b>' . $TIPOPROCESO . '</div>
+         
           <div class="address"><b>Estado Proceso: </b> ' . $ESTADO . ' </div>
           <div class="address"><b>CSG: </b>' . $CSGPRODUCTOR . '</div>
           <div class="address"><b>Nombre Productor: </b>' . $NOMBREPRODUCTOR . '</div>
@@ -573,14 +573,14 @@ $html = $html . '
         <thead>
            
           <tr>
-            <th colspan="7" class="center">PRODUCTO INDUSTRIAL.</th>
+            <th colspan="6" class="center">PRODUCTO INDUSTRIAL/DIFERENCIA</th>
           </tr>
           <tr>
             <th class="color left">Folio</th>
             <th class="color center">Fecha Embalado</th>
             <th class="color center">Código Estandar</th>
             <th class="color center">Envase/Estandar</th>
-            <th class="color center">Calibre</th>
+            
             <th class="color center">Kilos Neto</th>
             <th class="color center">%</th>
             <th class="color center">Variedad </th>
@@ -589,6 +589,7 @@ $html = $html . '
          <tbody>
         ';
 foreach ($ARRAYDINDUSTRIAL as $r) :
+
   $ARRAYVERVESPECIESID = $VESPECIES_ADO->verVespecies($r['ID_VESPECIES']);
   if($ARRAYVERVESPECIESID){
     $NOMBREVARIEDAD=$ARRAYVERVESPECIESID[0]['NOMBRE_VESPECIES'];
@@ -623,7 +624,7 @@ foreach ($ARRAYDINDUSTRIAL as $r) :
             <td class=" center"> ' . $r['EMBALADO'] . '</td>
             <td class=" center"> ' . $CODIGOESTANDAR . '</td>
             <td class=" center"> ' . $NOMBREESTANDAR . '</td>
-            <td class=" center"> ' . $NOMBRETCALIBREIND . '</td>
+           
             <td class=" center"> ' . $r['NETO'] . '</td>
             <td class=" center"> ' . $NETOINDU . '%</td>
             <td class=" center "> ' . $NOMBREVARIEDAD . ' </td>
@@ -636,7 +637,7 @@ $html = $html . '
             <th class="color left"> </th>
             <th class="color center"> </th>
             <th class="color center"> </th>
-            <th class="color center"> </th>
+            
             <th class="color right">Sub Total </th>
             <th class="color center"> ' . $TOTALNETOINDV . '</th>
             <th class="color center "> ' . number_format($PDINDUSTRIAL, 2, ",", ".") . '% </th>

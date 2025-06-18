@@ -180,8 +180,7 @@ class DPINDUSTRIAL_ADO
           ID_VESPECIES = ? ,
           ID_ESTANDAR = ? ,
           ID_PRODUCTOR = ?,
-          ID_PROCESO = ? ,
-          ID_TCALIBREIND = ?           
+          ID_PROCESO = ?            
 		WHERE ID_DPINDUSTRIAL= ? ;";
             $this->conexion->prepare($query)
                 ->execute(
@@ -193,7 +192,6 @@ class DPINDUSTRIAL_ADO
                         $DPINDUSTRIAL->__GET('ID_ESTANDAR'),
                         $DPINDUSTRIAL->__GET('ID_PRODUCTOR'),
                         $DPINDUSTRIAL->__GET('ID_PROCESO'),
-                        $DPINDUSTRIAL->__GET('ID_TCALIBREIND'),
                         $DPINDUSTRIAL->__GET('ID_DPINDUSTRIAL')
 
                     )
@@ -322,10 +320,11 @@ class DPINDUSTRIAL_ADO
 
             $datos = $this->conexion->prepare("SELECT *  ,
                                                 DATE_FORMAT(FECHA_EMBALADO_DPINDUSTRIAL, '%d-%m-%Y') AS 'EMBALADO',
-                                                FORMAT(KILOS_NETO_DPINDUSTRIAL,2,'de_DE') AS 'NETO'
+                                                FORMAT(KILOS_NETO_DPINDUSTRIAL,2,'de_DE') AS 'NETO', NOMBRE_TCALIBREIND
                                         FROM fruta_dpindustrial 
-                                        WHERE ID_PROCESO= '" . $IDPROCESO . "' 
-                                        AND  ESTADO_REGISTRO = 1;");
+                                        LEFT JOIN fruta_tcalibreind FTC ON fruta_dpindustrial.ID_TCALIBREIND = FTC.ID_TCALIBREIND
+                                        WHERE fruta_dpindustrial.ID_PROCESO= '" . $IDPROCESO . "' 
+                                        AND  fruta_dpindustrial.ESTADO_REGISTRO = 1;");
             $datos->execute();
             $resultado = $datos->fetchAll();
             $datos=null;

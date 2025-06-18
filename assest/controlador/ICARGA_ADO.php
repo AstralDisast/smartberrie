@@ -127,6 +127,29 @@ class ICARGA_ADO
         }
     }
 
+    public function verReferencia($ID)
+    {
+        try {
+
+            $datos = $this->conexion->prepare(" SELECT *,
+                                                DATE_FORMAT(INGRESO, '%Y-%m-%d') AS 'INGRESO', 
+                                                DATE_FORMAT(MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION' 
+                                                FROM fruta_icarga 
+                                                WHERE ID_ICARGA= '" . $ID . "';");
+            $datos->execute();
+            $resultado = $datos->fetchAll();
+            $datos=null;
+
+            //	print_r($resultado);
+            //	var_dump($resultado);
+
+
+            return $resultado;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
 
     public function verIcarga2($IDICARGA)
     {
@@ -754,7 +777,9 @@ class ICARGA_ADO
                                                         IFNULL(TOTAL_ENVASE_ICAGRA,0) AS 'ENVASE',
                                                         IFNULL(TOTAL_NETO_ICARGA,0) AS 'NETO',
                                                         IFNULL(TOTAL_BRUTO_ICARGA,0) AS 'BRUTO',
-                                                        IFNULL(TOTAL_US_ICARGA,0) AS 'US'
+                                                        IFNULL(TOTAL_US_ICARGA,0) AS 'US',
+                                                        ID_ICARGA,
+														(select COUNT(ID_EXIEXPORTACION) FROM fruta_exiexportacion WHERE ESTADO = 2 AND REFERENCIA = fruta_icarga.ID_ICARGA)AS N_FOLIOS
                                             FROM fruta_icarga  
                                             WHERE ESTADO_REGISTRO = 1                                                                                                        
                                             AND ID_EMPRESA = '" . $EMPRESA . "' 

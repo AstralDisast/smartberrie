@@ -70,6 +70,7 @@ $CONDUCTOR = "";
 $TRANSPORTE = "";
 $PLANTADESTINO = "";
 $PLANTAEXTERNA = "";
+$DESPACHOINDUSTRIAL = "";
 $TDESPACHO = "";
 $COMPRADOR = "";
 $PRODUCTOR = "";
@@ -266,6 +267,10 @@ if (isset($id_dato) && isset($accion_dato)) {
                 $PLANTAEXTERNA = "" . $r['ID_PLANTA3'];
             }
 
+            if ($TDESPACHO == "6") {
+                $DESPACHOINDUSTRIAL = "" . $r['ID_PLANTA3'];
+            }
+
 
 
         endforeach;
@@ -321,6 +326,10 @@ if (isset($id_dato) && isset($accion_dato)) {
             }
             if ($TDESPACHO == "5") {
                 $PLANTAEXTERNA = "" . $r['ID_PLANTA3'];
+            }
+
+            if ($TDESPACHO == "6") {
+                $DESPACHOINDUSTRIAL = "" . $r['ID_PLANTA3'];
             }
 
 
@@ -380,6 +389,12 @@ if (isset($id_dato) && isset($accion_dato)) {
             if ($TDESPACHO == "5") {
                 $PLANTAEXTERNA = "" . $r['ID_PLANTA3'];
             }
+
+            if ($TDESPACHO == "6") {
+                $DESPACHOINDUSTRIAL = "" . $r['ID_PLANTA3'];
+            }
+
+            
 
 
 
@@ -470,6 +485,12 @@ if (isset($_POST)) {
         if ($TDESPACHO == "5") {
             if (isset($_REQUEST['PLANTAEXTERNA'])) {
                 $PLANTAEXTERNA = "" . $_REQUEST['PLANTAEXTERNA'];
+            }
+        }
+
+        if ($TDESPACHO == "6") {
+            if (isset($_REQUEST['DESPACHOINDUSTRIAL'])) {
+                $DESPACHOINDUSTRIAL = "" . $_REQUEST['DESPACHOINDUSTRIAL'];
             }
         }
     }
@@ -732,6 +753,21 @@ if (isset($_POST)) {
 
                     }
 
+                    if (TDESPACHO == 6) {
+
+                        DESPACHOINDUSTRIAL = document.getElementById("DESPACHOINDUSTRIAL").selectedIndex;
+                        document.getElementById('val_plantae').innerHTML = "";
+
+                        if (DESPACHOINDUSTRIAL == null || DESPACHOINDUSTRIAL == 0) {
+                            document.form_reg_dato.DESPACHOINDUSTRIAL.focus();
+                            document.form_reg_dato.DESPACHOINDUSTRIAL.style.borderColor = "#FF0000";
+                            document.getElementById('val_plantae').innerHTML = "NO HA SELECIONADO ALTERNATIVA";
+                            return false
+                        }
+                        document.form_reg_dato.DESPACHOINDUSTRIAL.style.borderColor = "#4AF575";
+
+                        }
+
                     /*
                     if (OBSERVACIONDESPACHOMP == null || OBSERVACIONDESPACHOMP.length == 0 || /^\s+$/.test(OBSERVACIONDESPACHOMP)) {
                         document.form_reg_dato.OBSERVACIONDESPACHOMP.focus();
@@ -870,6 +906,7 @@ if (isset($_POST)) {
                                                     <option value="3" <?php if ($TDESPACHO == "3") { echo "selected"; } ?>> Venta</option>
                                                     <option value="4" <?php if ($TDESPACHO == "4") { echo "selected"; } ?>> Despacho de Descarte(R)</option>
                                                     <option value="5" <?php if ($TDESPACHO == "5") { echo "selected"; } ?>> Planta Externa</option>
+                                                    <option value="6" <?php if ($TDESPACHO == "6") { echo "selected"; } ?>> Despacho Industrial</option>
                                                 </select>
                                                 <label id="val_tdespacho" class="validacion"> </label>
                                             </div>
@@ -1022,7 +1059,7 @@ if (isset($_POST)) {
                                                 </div>
                                             </div>
                                         <?php } ?>
-                                        <?php if ($TDESPACHO == "3") { ?>
+                                        <?php if ($TDESPACHO == "3" || $TDESPACHO == "6") { ?>
                                             <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Comprador</label>
@@ -1160,7 +1197,7 @@ if (isset($_POST)) {
                                                     </button>
                                                 </div>
                                             </form>   
-                                            <?php if ($TDESPACHO == "3"): ?>
+                                            <?php if ($TDESPACHO == "3" || $TDESPACHO == "6"): ?>
                                                 <div class="col-auto">
                                                         <button type="submit" form="form2" class="btn btn-primary btn-block" data-toggle="tooltip" title="Agregar Precios" name="PRECIOS" value="PRECIOS"
                                                             <?php echo $DISABLED2; ?> <?php if (empty($ARRAYTOMADO)) { echo "disabled style='background-color: #eeeeee;'"; } ?>
@@ -1200,7 +1237,7 @@ if (isset($_POST)) {
                                                     <input type="text" class="form-control" placeholder="Total Neto" id="TOTALENVASEV" name="TOTALENVASEV" value="<?php echo $TOTALBRUTOV; ?>" disabled />
                                                 </div>
                                             </div>                                        
-                                            <?php if ($TDESPACHO =="3"): ?>
+                                            <?php if ($TDESPACHO =="3" || $TDESPACHO == "6"): ?>
                                                 <div class="col-auto">
                                                     <label class="sr-only" for=""></label>
                                                     <div class="input-group mb-2">
@@ -1225,7 +1262,7 @@ if (isset($_POST)) {
                                                                 <th> N° Folio </th>
                                                                 <th>Condición </th>
                                                                 <th class="text-center">Operaciónes</th>
-                                                                <?php if ($TDESPACHO == "3") { ?>
+                                                                <?php if ($TDESPACHO == "3" || $TDESPACHO == "6") { ?>
                                                                     <th>Precio Por Envases </th>
                                                                 <?php } ?>
                                                                 <th>Fecha Embalado </th>
@@ -1233,13 +1270,14 @@ if (isset($_POST)) {
                                                                 <th>Envase/Estandar</th>
                                                                 <th>Variedad</th>
                                                                 <th>Cantidad Envase</th>
-                                                                <?php if ($TDESPACHO == "3") { ?>
-                                                                    <th>Total Precio</th>
-                                                                <?php } ?>
                                                                 <th>Kilos Neto</th>
                                                                 <th>% Deshidratacion</th>
                                                                 <th>Kilos Deshidratacion</th>
                                                                 <th>Kilos Bruto</th>
+                                                                <?php if ($TDESPACHO == "3" || $TDESPACHO == "6") { ?>
+                                                                    <th>Total Precio</th>
+                                                                <?php } ?>
+                                                               
                                                                 <th>CSG</th>
                                                                 <th>Productor</th>
                                                                 <th>Embolsado</th>
@@ -1320,7 +1358,12 @@ if (isset($_POST)) {
                                                                         $NOMBRETEMBALAJE = "Sin Datos";
                                                                     }
                                                                     if ($r['PRECIO_PALLET']) {
-                                                                        $TOTALPRECIO = $r['PRECIO_PALLET'] * $r['CANTIDAD_ENVASE_EXIEXPORTACION'];
+                                                                        if ($TDESPACHO == "6") {
+                                                                            $TOTALPRECIO = $r['PRECIO_PALLET'] * $r['DESHIRATACION'];
+                                                                        }else{
+                                                                            $TOTALPRECIO = $r['PRECIO_PALLET'] * $r['CANTIDAD_ENVASE_EXIEXPORTACION'];
+                                                                        }
+                                                                        
                                                                     }
 
                                                                     ?>
@@ -1337,7 +1380,7 @@ if (isset($_POST)) {
                                                                                 </div>
                                                                             </td>
                                                                         </form>
-                                                                        <?php if ($TDESPACHO == "3") { ?>
+                                                                        <?php if ($TDESPACHO == "3" || $TDESPACHO == "6") { ?>
                                                                             <td>
                                                                                 <div class="form-group">
                                                                                     <input type="hidden" class="form-control" placeholder="ID DESPACHO" id="IDP" name="IDP" value="<?php echo $IDOP; ?>" />
@@ -1355,13 +1398,14 @@ if (isset($_POST)) {
                                                                         <td><?php echo $NOMBREESTANDAR; ?></td>
                                                                         <td><?php echo $NOMBREVARIEDAD; ?></td>
                                                                         <td><?php echo $r['ENVASE']; ?></td>
-                                                                        <?php if ($TDESPACHO == "3") { ?>
-                                                                            <td><?php echo number_format($TOTALPRECIO, 2, ",", "."); ?></td>
-                                                                        <?php } ?>
                                                                         <td><?php echo $r['NETO']; ?></td>
                                                                         <td><?php echo $r['PORCENTAJE']; ?></td>
                                                                         <td><?php echo $r['DESHIRATACION']; ?></td>
                                                                         <td><?php echo $r['BRUTO']; ?></td>
+                                                                        <?php if ($TDESPACHO == "3" || $TDESPACHO == "6") { ?>
+                                                                            <td><?php echo number_format($TOTALPRECIO, 2, ",", "."); ?></td>
+                                                                        <?php } ?>
+                                                                        
                                                                         <td><?php echo $CSGPRODUCTOR; ?></td>
                                                                         <td><?php echo $NOMBREPRODUCTOR; ?></td>
                                                                         <td><?php echo $EMBOLSADO; ?></td>
@@ -1418,7 +1462,7 @@ if (isset($_POST)) {
                     $DESPACHOPT->__SET('NUMERO_GUIA_DESPACHO', $_REQUEST['NUMEROGUIADESPACHO']);
                     $DESPACHOPT->__SET('NUMERO_SELLO_DESPACHO', $_REQUEST['NUMEROSELLODESPACHO']);
                 }
-                if ($_REQUEST['TDESPACHO'] == "3") {
+                if ($_REQUEST['TDESPACHO'] == "3" || $_REQUEST['TDESPACHO'] == "6") {
                     $DESPACHOPT->__SET('ID_COMPRADOR', $_REQUEST['COMPRADOR']);
                     $DESPACHOPT->__SET('NUMERO_GUIA_DESPACHO', $_REQUEST['NUMEROGUIADESPACHO']);
                     $DESPACHOPT->__SET('NUMERO_SELLO_DESPACHO', $_REQUEST['NUMEROSELLODESPACHO']);
@@ -1492,7 +1536,7 @@ if (isset($_POST)) {
                     $DESPACHOPT->__SET('NUMERO_GUIA_DESPACHO', $_REQUEST['NUMEROGUIADESPACHO']);
                     $DESPACHOPT->__SET('NUMERO_SELLO_DESPACHO', $_REQUEST['NUMEROSELLODESPACHO']);
                 }
-                if ($_REQUEST['TDESPACHOE'] == "3") {
+                if ($_REQUEST['TDESPACHOE'] == "3" || $_REQUEST['TDESPACHOE'] == "6") {
                     $DESPACHOPT->__SET('ID_COMPRADOR', $_REQUEST['COMPRADORE']);
                     $DESPACHOPT->__SET('NUMERO_GUIA_DESPACHO', $_REQUEST['NUMEROGUIADESPACHO']);
                     $DESPACHOPT->__SET('NUMERO_SELLO_DESPACHO', $_REQUEST['NUMEROSELLODESPACHO']);
@@ -1565,7 +1609,7 @@ if (isset($_POST)) {
                                 closeOnConfirm:false
                             })
                         </script>';
-                } else if ($_REQUEST['TDESPACHOE'] == "3") {
+                } else if ($_REQUEST['TDESPACHOE'] == "3" || $_REQUEST['TDESPACHOE'] == "6") {
                     $ARRAYCONTEO = $EXIEXPORTACION_ADO->contarExistenciaPorDespachoPrecioNulo($_REQUEST['IDP']);
                     if ($ARRAYCONTEO) {
                         if ($ARRAYCONTEO[0]["CONTEO"] != 0) {
@@ -1611,7 +1655,7 @@ if (isset($_POST)) {
                         $DESPACHOPT->__SET('NUMERO_GUIA_DESPACHO', $_REQUEST['NUMEROGUIADESPACHO']);
                         $DESPACHOPT->__SET('NUMERO_SELLO_DESPACHO', $_REQUEST['NUMEROSELLODESPACHO']);
                     }
-                    if ($_REQUEST['TDESPACHOE'] == "3") {
+                    if ($_REQUEST['TDESPACHOE'] == "3" || $_REQUEST['TDESPACHOE'] == "6") {
                         $DESPACHOPT->__SET('ID_COMPRADOR', $_REQUEST['COMPRADORE']);
                         $DESPACHOPT->__SET('TOTAL_PRECIO', $_REQUEST['TOTALPRECIO']);
                         $DESPACHOPT->__SET('NUMERO_GUIA_DESPACHO', $_REQUEST['NUMEROGUIADESPACHO']);
