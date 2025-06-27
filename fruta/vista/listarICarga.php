@@ -329,7 +329,10 @@ include_once "../../assest/config/datosUrLP.php";
                                                                                         </button>    
                                                                                         <button type="button" class="btn  btn-danger  btn-sm" id="defecto" name="informe" data-toggle="tooltip"  title="Report Invoice v2" Onclick="abrirPestana('../../assest/documento/informeIcargaInvoicev2.php?parametro=<?php echo $r['ID_ICARGA']; ?>&&usuario=<?php echo $IDUSUARIOS; ?>'); ">
                                                                                                 <i class="fa fa-file-pdf-o"></i><br> Invoice v2
-                                                                                        </button>                                                                                 
+                                                                                        </button>  
+                                                                                        <button type="button" class="btn  btn-danger  btn-sm" id="defecto" name="informe" data-toggle="tooltip"  title="Report Invoice EU" Onclick="abrirPestana('../../assest/documento/informeIcargaInvoiceEU.php?parametro=<?php echo $r['ID_ICARGA']; ?>&&usuario=<?php echo $IDUSUARIOS; ?>'); ">
+                                                                                                <i class="fa fa-file-pdf-o"></i><br> Invoice EU
+                                                                                        </button>                                                                                    
                                                                                     </div> 
                                                                                     <hr> 
                                 

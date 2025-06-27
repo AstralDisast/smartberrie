@@ -573,6 +573,14 @@ if ($_POST) {
                                             </div>
                                         </div>
                                     <?php } ?>
+                                        <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 col-xs-12 ">
+                                            <div class="form-group">
+                                                <label>Cantidad de pallet </label>
+                                                <input type="hidden" class="form-control" placeholder="Cantidad de pallet" id="cpallet" name="cpallet" value="<?php echo $CANTIDADPALLET; ?>" />
+                                                <input type="text" class="form-control" placeholder="Cantidad pallet" id="cpallet" name="cpallet" value="<?php echo $CANTIDADPALLET; ?>" disabled style="background-color: #eeeeee;" />
+                                                <label id="val_cpallet" class="validacion"> </label>
+                                            </div>
+                                        </div> 
                                         <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 col-xs-12">
                                             <div class="form-group">
                                                 <label>Calibre</label>
@@ -662,6 +670,7 @@ if ($_POST) {
                                                 <label id="val_totalus" class="validacion"> </label>
                                             </div>
                                         </div>
+                                       
                                     </div>
                                     <!-- /.row -->
                                     <!-- /.box-body -->
