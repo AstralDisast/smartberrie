@@ -8,17 +8,10 @@ class BDCONFIG {
 
     public function __construct()
     {
-<<<<<<< Updated upstream
-        $this->HOST="localhost";
-        $this->USER = "root";
-        $this->PASS="MikeGuazaky0212";
-        $this->DBNAME="mscode_smartberrie";
-=======
         $this->HOST = "localhost";
         $this->USER = "sm_desarrollo";
         $this->PASS ="5a7O(yQlB)*5aNdl" ;
         $this->DBNAME = "smartberry_desarrollo";
->>>>>>> Stashed changes
 
     }
 
