@@ -49,6 +49,7 @@ $KILOSNETO = 0;
 $KILOSNETO = 0;
 $KILOSBRUTO = 0;
 $CANTIDADENVASE = 0;
+$CANTIDADPALLET = 0;
 $TOTALPRECIOUS = 0;
 $VESPECIES="";
 $IDDICARGA = "";
@@ -170,6 +171,7 @@ if (isset($id_dato) && isset($accion_dato) && isset($urlo_dato) && isset($idd_da
         $ARRAYDICARGA = $DICARGA_ADO->verDicarga($IDOP);
         foreach ($ARRAYDICARGA as $r) :
             $CANTIDADENVASE = "" . $r['CANTIDAD_ENVASE_DICARGA'];
+            $CANTIDADPALLET = "" . $r['CANTIDAD_PALLET_DICARGA'];
             $KILOSNETO = "" . $r['KILOS_NETO_DICARGA'];
             $KILOSBRUTO = "" . $r['KILOS_BRUTO_DICARGA'];
             $PRECIOUS = "" . $r['PRECIO_US_DICARGA'];
@@ -198,6 +200,7 @@ if (isset($id_dato) && isset($accion_dato) && isset($urlo_dato) && isset($idd_da
         $ARRAYDICARGA = $DICARGA_ADO->verDicarga($IDOP);
         foreach ($ARRAYDICARGA as $r) :
             $CANTIDADENVASE = "" . $r['CANTIDAD_ENVASE_DICARGA'];
+            $CANTIDADPALLET = "" . $r['CANTIDAD_PALLET_DICARGA'];
             $KILOSNETO = "" . $r['KILOS_NETO_DICARGA'];
             $KILOSBRUTO = "" . $r['KILOS_BRUTO_DICARGA'];
             $PRECIOUS = "" . $r['PRECIO_US_DICARGA'];
@@ -225,6 +228,7 @@ if (isset($id_dato) && isset($accion_dato) && isset($urlo_dato) && isset($idd_da
         $ARRAYDICARGA = $DICARGA_ADO->verDicarga($IDOP);
         foreach ($ARRAYDICARGA as $r) :
             $CANTIDADENVASE = "" . $r['CANTIDAD_ENVASE_DICARGA'];
+            $CANTIDADPALLET = "" . $r['CANTIDAD_PALLET_DICARGA'];
             $KILOSNETO = "" . $r['KILOS_NETO_DICARGA'];
             $KILOSBRUTO = "" . $r['KILOS_BRUTO_DICARGA'];
             $PRECIOUS = "" . $r['PRECIO_US_DICARGA'];
@@ -255,6 +259,7 @@ if (isset($id_dato) && isset($accion_dato) && isset($urlo_dato) && isset($idd_da
         $ARRAYDICARGA = $DICARGA_ADO->verDicarga($IDOP);
         foreach ($ARRAYDICARGA as $r) :
             $CANTIDADENVASE = "" . $r['CANTIDAD_ENVASE_DICARGA'];
+            $CANTIDADPALLET = "" . $r['CANTIDAD_PALLET_DICARGA'];
             $KILOSNETO = "" . $r['KILOS_NETO_DICARGA'];
             $KILOSBRUTO = "" . $r['KILOS_BRUTO_DICARGA'];
             $PRECIOUS = "" . $r['PRECIO_US_DICARGA'];
@@ -296,6 +301,9 @@ if ($_POST) {
     }
     if (isset($_REQUEST['CANTIDADENVASE'])) {
         $CANTIDADENVASE = $_REQUEST['CANTIDADENVASE'];
+    }
+    if (isset($_REQUEST['CANTIDADPALLET'])) {
+        $CANTIDADPALLET = $_REQUEST['CANTIDADPALLET'];
     }
     if (isset($_REQUEST['PRECIOUS'])) {
         $PRECIOUS = $_REQUEST['PRECIOUS'];
@@ -350,6 +358,7 @@ if ($_POST) {
                     TMANEJO = document.getElementById("TMANEJO").selectedIndex;
                     TMONEDA = document.getElementById("TMONEDA").selectedIndex;
                     CANTIDADENVASE = document.getElementById("CANTIDADENVASE").value;
+                    CANTIDADPALLET = document.getElementById("CANTIDADPALLET").value;
                     PRECIOUS = document.getElementById("PRECIOUS").value;
 
                     document.getElementById('val_estandar').innerHTML = "";
@@ -422,6 +431,22 @@ if ($_POST) {
                     }
                     document.form_reg_dato.CANTIDADENVASE.style.borderColor = "#4AF575";
 
+                    if (CANTIDADPALLET == null || CANTIDADPALLET.length == 0 || /^\s+$/.test(CANTIDADPALLET)) {
+                        document.form_reg_dato.CANTIDADPALLET.focus();
+                        document.form_reg_dato.CANTIDADPALLET.style.borderColor = "#FF0000";
+                        document.getElementById('val_cantidad').innerHTML = "NO HA INGRESADO DATOS";
+                        return false;
+                    }
+                    document.form_reg_dato.CANTIDADPALLET.style.borderColor = "#4AF575";
+
+                    if (CANTIDADPALLET == 0) {
+                        document.form_reg_dato.CANTIDADPALLET.focus();
+                        document.form_reg_dato.CANTIDADPALLET.style.borderColor = "#FF0000";
+                        document.getElementById('val_cantidad').innerHTML = "DEBE SER DISTINTO DE CERO";
+                        return false;
+                    }
+                    document.form_reg_dato.CANTIDADPALLET.style.borderColor = "#4AF575";
+
                     if (PRECIOUS == null || PRECIOUS.length == 0 || /^\s+$/.test(PRECIOUS)) {
                         document.form_reg_dato.PRECIOUS.focus();
                         document.form_reg_dato.PRECIOUS.style.borderColor = "#FF0000";
@@ -429,6 +454,7 @@ if ($_POST) {
                         return false;
                     }
                     document.form_reg_dato.PRECIOUS.style.borderColor = "#4AF575";
+                    
 
                     if (PRECIOUS == 0) {
                         document.form_reg_dato.PRECIOUS.focus();
@@ -573,6 +599,15 @@ if ($_POST) {
                                             </div>
                                         </div>
                                     <?php } ?>
+                                    
+                                        <div class="col-xxl-2 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6 col-xs-6 ">
+                                            <div class="form-group">
+                                                <label>Cantidad pallet</label>
+                                                <input type="hidden" id="CANTIDADPALLET" name="CANTIDADPALLET" value="<?php echo $CANTIDADPALLET; ?>" />
+                                                <input type="number" step="0.001" class="form-control" onchange="precio();" placeholder="CANTIDADPALLET" id="CANTIDADPALLET" name="CANTIDADPALLET" value="<?php echo $CANTIDADPALLET; ?>" <?php echo $DISABLED; ?> <?php echo $DISABLEDSTYLE; ?>/>
+                                                <label id="val_CANTIDADPALLET" class="validacion"> </label>
+                                            </div>
+                                        </div>
                                         <div class="col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 col-xs-12">
                                             <div class="form-group">
                                                 <label>Calibre</label>
@@ -662,6 +697,7 @@ if ($_POST) {
                                                 <label id="val_totalus" class="validacion"> </label>
                                             </div>
                                         </div>
+                                       
                                     </div>
                                     <!-- /.row -->
                                     <!-- /.box-body -->
@@ -729,6 +765,7 @@ if (isset($_REQUEST['CREAR'])) {
     }
 
     $DICARGA->__SET('CANTIDAD_ENVASE_DICARGA', $_REQUEST['CANTIDADENVASE']);
+    $DICARGA->__SET('CANTIDAD_PALLET_DICARGA', $_REQUEST['CANTIDADPALLET']);
     $DICARGA->__SET('KILOS_NETO_DICARGA', $KILOSNETO);
     $DICARGA->__SET('KILOS_BRUTO_DICARGA', $KILOSBRUTO);
     $DICARGA->__SET('PRECIO_US_DICARGA', $_REQUEST['PRECIOUS']);
@@ -781,6 +818,7 @@ if (isset($_REQUEST['EDITAR'])) {
     }
 
     $DICARGA->__SET('CANTIDAD_ENVASE_DICARGA', $_REQUEST['CANTIDADENVASE']);
+    $DICARGA->__SET('CANTIDAD_PALLET_DICARGA', $_REQUEST['CANTIDADPALLET']);
     $DICARGA->__SET('KILOS_NETO_DICARGA', $KILOSNETO);
     $DICARGA->__SET('KILOS_BRUTO_DICARGA', $KILOSBRUTO);
     $DICARGA->__SET('PRECIO_US_DICARGA', $_REQUEST['PRECIOUS']);

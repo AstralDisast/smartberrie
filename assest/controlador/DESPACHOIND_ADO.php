@@ -220,10 +220,17 @@ class DESPACHOIND_ADO
                                                 MODIFICACION, 
                                                 ESTADO, 
                                                 ESTADO_DESPACHO,  
-                                                ESTADO_REGISTRO
+                                                ESTADO_REGISTRO,
+                                                CANTIDADENVASE1,
+                                                CANTIDADENVASE2,
+                                                CANTIDADENVASE3,
+                                                CANTIDADENVASE4,
+                                                CANTIDADENVASE5,
+                                                CANTIDADENVASE6,
+                                                CANTIDADENVASE7
                                             )
              VALUES
-               ( ?, ?, ?,  ?, ?, ?, ?, ?, ?,   ?, ?, ?, ?, ?,   ?, ?, ?, ?, ?,    0, 0,  SYSDATE(),  SYSDATE(), 1, 1, 1);";
+               ( ?, ?, ?,  ?, ?, ?, ?, ?, ?,   ?, ?, ?, ?, ?,   ?, ?, ?, ?, ?,    0, 0,  SYSDATE(),  SYSDATE(), 1, 1, 1, ?, ?, ?, ?, ?, ?, ?);";
 
             $this->conexion->prepare($query)
                 ->execute(
@@ -249,7 +256,15 @@ class DESPACHOIND_ADO
                         $DESPACHOIND->__GET('ID_PLANTA'),
                         $DESPACHOIND->__GET('ID_TEMPORADA'),
                         $DESPACHOIND->__GET('ID_USUARIOI'),
-                        $DESPACHOIND->__GET('ID_USUARIOM')
+                        $DESPACHOIND->__GET('ID_USUARIOM'),
+
+                        $DESPACHOIND->__GET('CANTIDADENVASE1'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE2'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE3'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE4'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE5'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE6'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE7')
                     )
 
                 );
@@ -305,7 +320,14 @@ class DESPACHOIND_ADO
                         ID_COMPRADOR = ?,
                         ID_CONDUCTOR = ?,
                         ID_TRANSPORTE = ?, 
-                        ID_USUARIOM = ? 
+                        ID_USUARIOM = ?,
+                        CANTIDADENVASE1 = ?,
+                        CANTIDADENVASE2 = ?,
+                        CANTIDADENVASE3 = ?,
+                        CANTIDADENVASE4 = ?,
+                        CANTIDADENVASE5 = ?,
+                        CANTIDADENVASE6 = ?,
+                        CANTIDADENVASE7 = ?
                 WHERE ID_DESPACHO= ?  ;";
             $this->conexion->prepare($query)
                 ->execute(
@@ -325,7 +347,15 @@ class DESPACHOIND_ADO
                         $DESPACHOIND->__GET('ID_CONDUCTOR'),
                         $DESPACHOIND->__GET('ID_TRANSPORTE'),
                         $DESPACHOIND->__GET('ID_USUARIOM'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE1'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE2'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE3'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE4'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE5'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE6'),
+                        $DESPACHOIND->__GET('CANTIDADENVASE7'),
                         $DESPACHOIND->__GET('ID_DESPACHO')
+                        
 
                     )
 
@@ -525,6 +555,37 @@ class DESPACHOIND_ADO
             die($e->getMessage());
         }
     }
+
+    public function listarDespachompTemporadaCBXEst(  $TEMPORADA, $ESPECIE)
+    {
+        try {
+
+            $datos = $this->conexion->prepare("SELECT *,
+                                                    FDESIND.FECHA_DESPACHO AS 'FECHA',  
+                                                    WEEK(FDESIND.FECHA_DESPACHO,3) AS 'SEMANA',
+                                                    WEEKOFYEAR(FDESIND.FECHA_DESPACHO) AS 'SEMANAISO',    
+                                                    DATE_FORMAT(FDESIND.INGRESO, '%Y-%m-%d') AS 'INGRESO',
+                                                    DATE_FORMAT(FDESIND.MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION' ,
+                                                    IFNULL(KILOS_NETO_DESPACHO,0)  AS 'NETO'
+                                        FROM fruta_despachoind FDESIND
+																						LEFT JOIN fruta_exiindustrial FEXIND ON FDESIND.ID_DESPACHO = FEXIND.ID_DESPACHO
+                                            LEFT JOIN fruta_vespecies VES ON FEXIND.ID_VESPECIES = VES.ID_VESPECIES                                                                         
+                                        WHERE  FDESIND.ESTADO_REGISTRO = 1 
+                                        AND FDESIND.ID_TEMPORADA = '" . $TEMPORADA . "' AND VES.ID_ESPECIES = '" . $ESPECIE . "';	");
+            $datos->execute();
+            $resultado = $datos->fetchAll();
+            $datos=null;
+
+            //	print_r($resultado);
+            //	var_dump($resultado);
+
+
+            return $resultado;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
     public function listarDespachompEmpresaTemporadaCBX($EMPRESA,  $TEMPORADA)
     {
         try {

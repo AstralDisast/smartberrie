@@ -148,8 +148,10 @@ $BROKER = "";
 $RFINAL = "";
 $FECHAETD = "";
 $FECHAETA = "";
+$FECHAETDREAL = "";
 $FECHAETAREAL = "";
 $NCONTENEDOR="";
+$NCOURIER = "";
 $AADUANA = "";
 $AGCARGA = "";
 $TEMBARQUE = "";
@@ -448,7 +450,9 @@ if (isset($id_dato) && isset($accion_dato)) {
             $FECHAETD = $r['FECHAETD_ICARGA'];
             $FECHAETA = $r['FECHAETA_ICARGA'];
             $FECHAETAREAL = $r['FECHAETAREAL_ICARGA'];
+            $FECHAETDREAL = $r['FECHAETDREAL_ICARGA'];
             $NCONTENEDOR = $r['NCONTENEDOR_ICARGA'];
+            $NCOURIER = $r['NCOURIER_ICARGA'];
             $AADUANA = $r['ID_AADUANA'];
             $AGCARGA = $r['ID_AGCARGA'];
             $DFINAL = $r['ID_DFINAL'];
@@ -540,7 +544,9 @@ if (isset($id_dato) && isset($accion_dato)) {
             $FECHAETD = $r['FECHAETD_ICARGA'];
             $FECHAETA = $r['FECHAETA_ICARGA'];
             $FECHAETAREAL = $r['FECHAETAREAL_ICARGA'];
+            $FECHAETDREAL = $r['FECHAETDREAL_ICARGA'];
             $NCONTENEDOR = $r['NCONTENEDOR_ICARGA'];
+            $NCOURIER = $r['NCOURIER_ICARGA'];
             $AADUANA = $r['ID_AADUANA'];
             $AGCARGA = $r['ID_AGCARGA'];
             $DFINAL = $r['ID_DFINAL'];
@@ -634,7 +640,9 @@ if (isset($id_dato) && isset($accion_dato)) {
             $FECHAETD = $r['FECHAETD_ICARGA'];
             $FECHAETA = $r['FECHAETA_ICARGA'];
             $FECHAETAREAL = $r['FECHAETAREAL_ICARGA'];
+            $FECHAETAREAL = $r['FECHAETDREAL_ICARGA'];
             $NCONTENEDOR = $r['NCONTENEDOR_ICARGA'];
+            $NCOURIER = $r['NCOURIER_ICARGA'];
             $AADUANA = $r['ID_AADUANA'];
             $AGCARGA = $r['ID_AGCARGA'];
             $DFINAL = $r['ID_DFINAL'];
@@ -746,9 +754,15 @@ if (isset($_POST)) {
     if (isset($_REQUEST['FECHAETAREAL'])) {
         $FECHAETAREAL = $_REQUEST['FECHAETAREAL'];
     }
+    if (isset($_REQUEST['FECHAETDREAL'])) {
+        $FECHAETDREAL = $_REQUEST['FECHAETDREAL'];
+    }
     if (isset($_REQUEST['NCONTENEDOR'])) {
         $NCONTENEDOR = $_REQUEST['NCONTENEDOR'];
     }    
+    if (isset($_REQUEST['NCOURIER'])) {
+        $NCOURIER = $_REQUEST['NCOURIER'];
+    }   
     if (isset($_REQUEST['AADUANA'])) {
         $AADUANA = $_REQUEST['AADUANA'];
     }
@@ -1478,6 +1492,7 @@ if (isset($_POST)) {
                     FECHAETD = document.getElementById("FECHAETD").value;
                     FECHAETA = document.getElementById("FECHAETA").value;
                     FECHAETAREAL = document.getElementById("FECHAETAREAL").value;
+                    FECHAETDREAL = document.getElementById("FECHAETDREAL").value;
                     AGCARGA = document.getElementById("AGCARGA").selectedIndex;
 
                     
@@ -1524,6 +1539,7 @@ if (isset($_POST)) {
                     document.getElementById('val_agcarga').innerHTML = "";
                     document.getElementById('val_fechaetd').innerHTML = "";
                     document.getElementById('val_fechaeta').innerHTML = "";
+                    document.getElementById('val_fechaetdreal').innerHTML = "";
                     document.getElementById('val_fechaetareal').innerHTML = "";
                     
                     document.getElementById('val_atmosfera').innerHTML = "";
@@ -1683,14 +1699,21 @@ if (isset($_POST)) {
                     }
                     document.form_reg_dato.FECHAETA.style.borderColor = "#4AF575";
 
-
                     if (FECHAETAREAL == null || FECHAETAREAL.length == 0 || /^\s+$/.test(FECHAETAREAL)) {
                         document.form_reg_dato.FECHAETAREAL.focus();
                         document.form_reg_dato.FECHAETAREAL.style.borderColor = "#FF0000";
-                        document.getElementById('val_fechaetareal').innerHTML = "NO A INGRESADO DATO";
+                        document.getElementById('val_fechaetdreal').innerHTML = "NO A INGRESADO DATO";
                         return false;
                     }
                     document.form_reg_dato.FECHAETAREAL.style.borderColor = "#4AF575";
+
+                    if (FECHAETDREAL == null || FECHAETDREAL.length == 0 || /^\s+$/.test(FECHAETDREAL)) {
+                        document.form_reg_dato.FECHAETDREAL.focus();
+                        document.form_reg_dato.FECHAETDREAL.style.borderColor = "#FF0000";
+                        document.getElementById('val_fechaetdreal').innerHTML = "NO A INGRESADO DATO";
+                        return false;
+                    }
+                    document.form_reg_dato.FECHAETDREAL.style.borderColor = "#4AF575";
 
                     if (AGCARGA == null || AGCARGA == 0) {
                         document.form_reg_dato.AGCARGA.focus();
@@ -1702,13 +1725,13 @@ if (isset($_POST)) {
 
                     if (TEMBARQUE == 1) {
                         CRT = document.getElementById("CRT").value;
-                        TRANSPORTE = document.getElementById("TRANSPORTE").selectedIndex;
+                        // TRANSPORTE = document.getElementById("TRANSPORTE").selectedIndex;
                         LCARGA = document.getElementById("LCARGA").selectedIndex;
                         LDESTINO = document.getElementById("LDESTINO").selectedIndex;
 
 
                         document.getElementById('val_crt').innerHTML = "";
-                        document.getElementById('val_transporte').innerHTML = "";
+                        // document.getElementById('val_transporte').innerHTML = "";
                         document.getElementById('val_lcarga').innerHTML = "";
                         document.getElementById('val_ldestino').innerHTML = "";
 
@@ -1720,13 +1743,13 @@ if (isset($_POST)) {
                         }
                         document.form_reg_dato.CRT.style.borderColor = "#4AF575";
 
-                        if (TRANSPORTE == null || TRANSPORTE == 0) {
-                            document.form_reg_dato.TRANSPORTE.focus();
-                            document.form_reg_dato.TRANSPORTE.style.borderColor = "#FF0000";
-                            document.getElementById('val_transporte').innerHTML = "NO HA SELECIONADO ALTERNATIVA";
-                            return false;
-                        }
-                        document.form_reg_dato.TRANSPORTE.style.borderColor = "#4AF575";
+                        // if (TRANSPORTE == null || TRANSPORTE == 0) {
+                        //     document.form_reg_dato.TRANSPORTE.focus();
+                        //     document.form_reg_dato.TRANSPORTE.style.borderColor = "#FF0000";
+                        //     document.getElementById('val_transporte').innerHTML = "NO HA SELECIONADO ALTERNATIVA";
+                        //     return false;
+                        // }
+                        // document.form_reg_dato.TRANSPORTE.style.borderColor = "#4AF575";
 
 
                         if (LCARGA == null || LCARGA == 0) {
@@ -2086,7 +2109,7 @@ if (isset($_POST)) {
 
 <body class="hold-transition light-skin fixed sidebar-mini theme-primary" >
     <div class="wrapper">
-        <!- LLAMADA AL MENU PRINCIPAL DE LA PAGINA-!>
+        <!-- LLAMADA AL MENU PRINCIPAL DE LA PAGINA -->
             <?php include_once "../../assest/config/menuFruta.php";
             ?>
             <div class="content-wrapper">
@@ -2142,6 +2165,22 @@ if (isset($_POST)) {
                                         </div>                                    
                                         <div class="col-xxl-6 col-xl-1 col-lg-1 col-md-6 col-sm-6 col-6 col-xs-6">
                                         </div>
+                                        
+
+
+
+
+
+                                        
+  <!----------------------------------------------------------------------- DATOS GLOBALES ------------------------------------------------------------------------->
+                                        
+
+
+
+
+
+
+
                                         <div class="col-xxl-2 col-xl-4 col-lg-4 col-md-6 col-sm-6 col-6 col-xs-6">
                                                 <label>Fecha Ingreso</label>
                                                 <input type="hidden" class="form-control" placeholder="Fecha Ingreso " id="FECHAINGRESOE" name="FECHAINGRESOE" value="<?php echo $FECHAINGRESO; ?>" />
@@ -2153,16 +2192,17 @@ if (isset($_POST)) {
                                                     <input type="date" class="form-control " style="background-color: #eeeeee;" placeholder="FECHA MODIFICACION" id="FECHAMODIFCIACION" name="FECHAMODIFCIACION" value="<?php echo $FECHAMODIFCIACION; ?>" disabled />
                                                 <label id="val_fecham" class="validacion"> </label>
                                             </div>
+                                            
                                     </div>
                                     <div class="btn-group btn-block">
-                                        <button class="btn btn-success" id="btnHeaderSection1" type="button">Datos Generales</button>
-                                        <button class="btn btn-secondary" id="btnHeaderSection2" type="button">Datos Embarque</button>
-                                        <button class="btn btn-secondary" id="btnHeaderSection3" type="button">Datos Contenedor y Comercial</button>
+                                        <button class="btn btn-success" id="btnHeaderSection1" type="button">Paso 1</button>
+                                        <button class="btn btn-secondary" id="btnHeaderSection2" type="button">Paso 2</button>
+                                        <!-- <button class="btn btn-secondary" id="btnHeaderSection3" type="button">Datos Contenedor y Comercial</button> -->
                                     </div>
                                     <hr>
                                     <section id="section1">
                                         <div class="row">
-                                             <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
                                                 <div class="form-group">
                                                     <label>Fecha Instructivo</label>
                                                     <input type="hidden" class="form-control" placeholder="Instructivo Carga" id="FECHAINSTRUCTIVOE" name="FECHAINSTRUCTIVOE" value="<?php echo $FECHAINSTRUCTIVO; ?>" />
@@ -2170,15 +2210,55 @@ if (isset($_POST)) {
                                                     <label id="val_fecha" class="validacion"> </label>
                                                 </div>
                                             </div>
+                                             <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Tipo Embarque</label>
+                                                    <input type="hidden" class="form-control" placeholder="TEMBARQUEE" id="TEMBARQUEE" name="TEMBARQUEE" value="<?php echo $TEMBARQUE; ?>" />
+                                                    <select class="form-control select2" id="TEMBARQUE" name="TEMBARQUE" style="width: 100%;" onchange="this.form.submit()" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <option value="1" <?php if ($TEMBARQUE == "1") { echo "selected"; } ?>>Terrestre </option>
+                                                        <option value="2" <?php if ($TEMBARQUE == "2") { echo "selected"; } ?>> Aereo</option>
+                                                        <option value="3" <?php if ($TEMBARQUE == "3") { echo "selected"; } ?>> Maritimo</option>
+                                                    </select>
+                                                    <label id="val_tembarque" class="validacion"> </label>
+                                                </div>
+                                            </div>
                                              <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Número Referencia</label>
+                                                    <input type="hidden" class="form-control" placeholder="NUMEROREFERENCIAINSTRUCTIVOE" id="NUMEROREFERENCIAINSTRUCTIVOE" name="NUMEROREFERENCIAINSTRUCTIVOE" value="<?php echo $NUMEROREFERENCIAINSTRUCTIVO; ?>" />
+                                                    <input type="text" class="form-control" placeholder="Numero Referencia Instructivo" id="NUMEROREFERENCIAINSTRUCTIVO" name="NUMEROREFERENCIAINSTRUCTIVO" value="<?php echo $NUMEROREFERENCIAINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_nreferencia" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Fecha ETD</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA ETD" id="FECHAETDE" name="FECHAETDE" value="<?php echo $FECHAETD; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha  ETD" id="FECHAETD" name="FECHAETD" value="<?php echo $FECHAETD; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaetd" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Fecha ETA</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHAETAE" name="FECHAETAE" value="<?php echo $FECHAETA; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha ETA" id="FECHAETA" name="FECHAETA" value="<?php echo $FECHAETA; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaeta" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             
+                                            
+                                              <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6"> 
                                                 <div class="form-group">
                                                     <label>Fecha Corte Documental</label>
                                                     <input type="hidden" class="form-control" placeholder="Instructivo Carga" id="FECHACDOCUMENTALICARGAE" name="FECHACDOCUMENTALICARGAE" value="<?php echo $FECHACDOCUMENTALICARGA; ?>" />
                                                     <input type="date" class="form-control" placeholder="Fecha Corte Documental" id="FECHACDOCUMENTALICARGA" name="FECHACDOCUMENTALICARGA" value="<?php echo $FECHACDOCUMENTALICARGA; ?>" <?php echo $DISABLED; ?> />
                                                     <label id="val_fechacd" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                </div> 
+                                            </div>  -->
+                                            <!-- <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Tipo Servicio</label>
                                                     <input type="hidden" class="form-control" placeholder="TSERVICIOE" id="TSERVICIOE" name="TSERVICIOE" value="<?php echo $TSERVICIO; ?>" />
@@ -2196,37 +2276,134 @@ if (isset($_POST)) {
                                                     </select>
                                                     <label id="val_tservicio" class="validacion"> </label>
                                                 </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
-                                                <div class="form-group">
-                                                    <label>Tipo Embarque</label>
-                                                    <input type="hidden" class="form-control" placeholder="TEMBARQUEE" id="TEMBARQUEE" name="TEMBARQUEE" value="<?php echo $TEMBARQUE; ?>" />
-                                                    <select class="form-control select2" id="TEMBARQUE" name="TEMBARQUE" style="width: 100%;" onchange="this.form.submit()" <?php echo $DISABLED; ?>>
-                                                        <option></option>
-                                                        <option value="1" <?php if ($TEMBARQUE == "1") { echo "selected"; } ?>>Terrestre </option>
-                                                        <option value="2" <?php if ($TEMBARQUE == "2") { echo "selected"; } ?>> Aereo</option>
-                                                        <option value="3" <?php if ($TEMBARQUE == "3") { echo "selected"; } ?>> Maritimo</option>
-                                                    </select>
-                                                    <label id="val_tembarque" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                            </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
                                                 <div class="form-group">
                                                     <label>BKN/AWF/CRT</label>
                                                     <input type="hidden" class="form-control" placeholder="BOOKINGINSTRUCTIVOE" id="BOOKINGINSTRUCTIVOE" name="BOOKINGINSTRUCTIVOE" value="<?php echo $BOOKINGINSTRUCTIVO; ?>" />
                                                     <input type="text" class="form-control" placeholder="BKN/AWF/CRT" id="BOOKINGINSTRUCTIVO" name="BOOKINGINSTRUCTIVO" value="<?php echo $BOOKINGINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
                                                     <label id="val_booking" class="validacion"> </label>
                                                 </div>
+                                            </div> -->
+
+
+
+
+
+
+
+
+                                           
+ <!------------------------------------------------------------- vista terrestre paso 1 ------------------------------------------------------------------------------------------>
+
+
+
+
+
+
+
+
+
+                                        <?php if ($TEMBARQUE == "1") { ?>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Tipo Contenedor</label>
+                                                    <input type="hidden" class="form-control" placeholder="TCONTENEDORE" id="TCONTENEDORE" name="TCONTENEDORE" value="<?php echo $TCONTENEDOR; ?>" />
+                                                    <select class="form-control select2" id="TCONTENEDOR" name="TCONTENEDOR" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYTCONTENEDOR as $r) : ?>
+                                                            <?php if ($ARRAYTCONTENEDOR) {    ?>
+                                                                <option value="<?php echo $r['ID_TCONTENEDOR']; ?>" <?php if ($TCONTENEDOR == $r['ID_TCONTENEDOR']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_TCONTENEDOR'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_tcontenedor" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Tipo Contenedor" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopTcontenedor.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Atmósfera</label>
+                                                    <input type="hidden" class="form-control" placeholder="ATMOSFERAE" id="ATMOSFERAE" name="ATMOSFERAE" value="<?php echo $ATMOSFERA; ?>" />
+                                                    <select class="form-control select2" id="ATMOSFERA" name="ATMOSFERA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYATMOSFERA as $r) : ?>
+                                                            <?php if ($ARRAYATMOSFERA) {    ?>
+                                                                <option value="<?php echo $r['ID_ATMOSFERA']; ?>" <?php if ($ATMOSFERA == $r['ID_ATMOSFERA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_ATMOSFERA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_atmosfera" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Atmósfera" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAtmosfera.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                             <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
                                                 <div class="form-group">
-                                                    <label>Número Referencia</label>
-                                                    <input type="hidden" class="form-control" placeholder="NUMEROREFERENCIAINSTRUCTIVOE" id="NUMEROREFERENCIAINSTRUCTIVOE" name="NUMEROREFERENCIAINSTRUCTIVOE" value="<?php echo $NUMEROREFERENCIAINSTRUCTIVO; ?>" />
-                                                    <input type="text" class="form-control" placeholder="Numero Referencia Instructivo" id="NUMEROREFERENCIAINSTRUCTIVO" name="NUMEROREFERENCIAINSTRUCTIVO" value="<?php echo $NUMEROREFERENCIAINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_nreferencia" class="validacion"> </label>
+                                                    <label>% CO2 </label>
+                                                    <input type="hidden" class="form-control" placeholder="CO2INSTRUCTIVOE" id="CO2INSTRUCTIVOE" name="CO2INSTRUCTIVOE" value="<?php echo $CO2INSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="% CO2 Instructivo" id="CO2INSTRUCTIVO" name="CO2INSTRUCTIVO" value="<?php echo $CO2INSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_co2" class="validacion"> </label>
                                                 </div>
                                             </div>
-                                            <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>% O2 </label>
+                                                    <input type="hidden" class="form-control" placeholder="O2INSTRUCTIVOE" id="O2INSTRUCTIVOE" name="O2INSTRUCTIVOE" value="<?php echo $O2INSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="% O2 Instructivo" id="O2INSTRUCTIVO" name="O2INSTRUCTIVO" value="<?php echo $O2INSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_o2" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>T° </label>
+                                                    <input type="hidden" class="form-control" placeholder="TINSTRUCTIVOE" id="TINSTRUCTIVOE" name="TINSTRUCTIVOE" value="<?php echo $TINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="Temperatura Instructivo" id="TINSTRUCTIVO" name="TINSTRUCTIVO" value="<?php echo $TINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_t" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Fumigado </label>
+                                                    <input type="hidden" class="form-control" placeholder="FUMIGADOE" id="FUMIGADOE" name="FUMIGADOE" value="<?php echo $FUMIGADO; ?>" />
+                                                    <select class="form-control select2" id="FUMIGADO" name="FUMIGADO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <option value="1" <?php if ($FUMIGADO == "1") { echo "selected"; } ?>>Si </option>
+                                                        <option value="2" <?php if ($FUMIGADO == "2") { echo "selected"; } ?>> No</option>
+                                                    </select>
+                                                    <label id="val_fumigado" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label> Apertura Lampa (CBM)</label>
+                                                    <input type="hidden" class="form-control" placeholder="ALAMPAINSTRUCTIVOE" id="ALAMPAINSTRUCTIVOE" name="ALAMPAINSTRUCTIVOE" value="<?php echo $ALAMPAINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="Apertura Lampa Instructivo" id="ALAMPAINSTRUCTIVO" name="ALAMPAINSTRUCTIVO" value="<?php echo $ALAMPAINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_alampa" class="validacion"> </label>
+                                                </div>
+                                            </div> 
+                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
                                                 <div class="form-group">
                                                     <label>Exportadora</label>
                                                     <input type="hidden" class="form-control" placeholder="EXPORTADORAE" id="EXPORTADORAE" name="EXPORTADORAE" value="<?php echo $EXPORTADORA; ?>" />
@@ -2245,7 +2422,63 @@ if (isset($_POST)) {
                                                     <label id="val_exportadora" class="validacion"> </label>
                                                 </div>
                                             </div>
+<<<<<<< Updated upstream
                                             <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+=======
+                                            <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Mercado</label>
+                                                    <input type="hidden" class="form-control" placeholder="MERCADOE" id="MERCADOE" name="MERCADOE" value="<?php echo $MERCADO; ?>" />
+                                                    <select class="form-control select2" id="MERCADO" name="MERCADO" style="width: 100%;" value="<?php echo $MERCADO; ?>" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYMERCADO as $r) : ?>
+                                                            <?php if ($ARRAYMERCADO) {    ?>
+                                                                <option value="<?php echo $r['ID_MERCADO']; ?>" <?php if ($MERCADO == $r['ID_MERCADO']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_MERCADO'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_mercado" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Mercado" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopMercado.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Cliente</label>
+                                                    <input type="hidden" class="form-control" placeholder="BROKERE" id="BROKERE" name="BROKERE" value="<?php echo $BROKER; ?>" />
+                                                    <select class="form-control select2" id="BROKER" name="BROKER" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYBROKER as $r) : ?>
+                                                            <?php if ($ARRAYBROKER) {    ?>
+                                                                <option value="<?php echo $r['ID_BROKER']; ?>" <?php if ($BROKER == $r['ID_BROKER']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_BROKER'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_broker" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Cliente" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopBroker.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+>>>>>>> Stashed changes
                                             </div>
                                             <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
@@ -2274,7 +2507,11 @@ if (isset($_POST)) {
                                                     </button>
                                                 </div>
                                             </div>
+<<<<<<< Updated upstream
                                             <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+=======
+                                            <div class="col-xxl-3 col-xl-5 col-lg-7 col-md-7 col-sm-7 col-7 col-xs-7">
+>>>>>>> Stashed changes
                                                 <div class="form-group">
                                                     <label>Notificador</label>
                                                     <input type="hidden" class="form-control" placeholder="NOTIFICADORE" id="NOTIFICADORE" name="NOTIFICADORE" value="<?php echo $NOTIFICADOR; ?>" />
@@ -2297,6 +2534,393 @@ if (isset($_POST)) {
                                                 <div class="form-group">
                                                     <br>
                                                     <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Notificador" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopNotificador.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Planta Carga</label>
+                                                    <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
+                                                    <select class="form-control select2" id="LCARGA" name="LCARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYLCARGA as $r) : ?>
+                                                            <?php if ($ARRAYLCARGA) {    ?>
+                                                                <option value="<?php echo $r['ID_LCARGA']; ?>" <?php if ($LCARGA == $r['ID_LCARGA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_LCARGA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_lcarga" class="validacion"> </label>
+                                                 </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Ciudad Destino</label>
+                                                    <input type="hidden" class="form-control" placeholder="DFINALE" id="DFINALE" name="DFINALE" value="<?php echo $DFINAL; ?>" />
+                                                    <select class="form-control select2" id="DFINAL" name="DFINAL" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYDFINAL as $r) : ?>
+                                                            <?php if ($ARRAYDFINAL) {    ?>
+                                                                <option value="<?php echo $r['ID_DFINAL']; ?>" <?php if ($DFINAL == $r['ID_DFINAL']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_DFINAL'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_dfinal" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Pais Destino</label>
+                                                    <input type="hidden" class="form-control" placeholder="PAISE" id="PAISE" name="PAISE" value="<?php echo $PAIS; ?>" />
+                                                    <select class="form-control select2" id="PAIS" name="PAIS" style="width: 100%;" value="<?php echo $PAIS; ?>" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYPAIS as $r) : ?>
+                                                            <?php if ($ARRAYPAIS) {    ?>
+                                                                <option value="<?php echo $r['ID_PAIS']; ?>" <?php if ($PAIS == $r['ID_PAIS']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_PAIS'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_pais" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Agente Aduana</label>
+                                                    <input type="hidden" class="form-control" placeholder="AADUANAE" id="AADUANAE" name="AADUANAE" value="<?php echo $AADUANA; ?>" />
+                                                    <select class="form-control select2" id="AADUANA" name="AADUANA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYAADUANA as $r) : ?>
+                                                            <?php if ($ARRAYAADUANA) {    ?>
+                                                                <option value="<?php echo $r['ID_AADUANA']; ?>" <?php if ($AADUANA == $r['ID_AADUANA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_AADUANA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_aaduana" class="validacion"> </label>
+                                                </div>
+                                            </div> 
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Agente Aduana" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAaduana.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Agente Carga</label>
+                                                    <input type="hidden" class="form-control" placeholder="AGCARGAE" id="AGCARGAE" name="AGCARGAE" value="<?php echo $AGCARGA; ?>" />
+                                                    <select class="form-control select2" id="AGCARGA" name="AGCARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYAGCARGA as $r) : ?>
+                                                            <?php if ($ARRAYAGCARGA) {    ?>
+                                                                <option value="<?php echo $r['ID_AGCARGA']; ?>" <?php if ($AGCARGA == $r['ID_AGCARGA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_AGCARGA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_agcarga" class="validacion"> </label>
+                                                 </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Agente Carga" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAgcarga.php' ); ">
+                                                    <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Modalidad Venta</label>
+                                                    <input type="hidden" class="form-control" placeholder="MVENTAE" id="MVENTAE" name="MVENTAE" value="<?php echo $MVENTA; ?>" />
+                                                    <select class="form-control select2" id="MVENTA" name="MVENTA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYMVENTA as $r) : ?>
+                                                            <?php if ($ARRAYMVENTA) {    ?>
+                                                                <option value="<?php echo $r['ID_MVENTA']; ?>" <?php if ($MVENTA == $r['ID_MVENTA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_MVENTA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_mventa" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Modalidad Venta" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopMventa.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Cláusula Venta</label>
+                                                    <input type="hidden" class="form-control" placeholder="CVENTAE" id="CVENTAE" name="CVENTAE" value="<?php echo $CVENTA; ?>" />
+                                                    <select class="form-control select2" id="CVENTA" name="CVENTA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYCVENTA as $r) : ?>
+                                                            <?php if ($ARRAYCVENTA) {    ?>
+                                                                <option value="<?php echo $r['ID_CVENTA']; ?>" <?php if ($CVENTA == $r['ID_CVENTA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_CVENTA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_cventa" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Forma Pago</label>
+                                                    <input type="hidden" class="form-control" placeholder="FPAGOE" id="FPAGOE" name="FPAGOE" value="<?php echo $FPAGO; ?>" />
+                                                    <select class="form-control select2" id="FPAGO" name="FPAGO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYFPAGO as $r) : ?>
+                                                            <?php if ($ARRAYFPAGO) {    ?>
+                                                                <option value="<?php echo $r['ID_FPAGO']; ?>" <?php if ($FPAGO == $r['ID_FPAGO']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_FPAGO'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_fpago" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Tipo Flete</label>
+                                                    <input type="hidden" class="form-control" placeholder="TFLETEE" id="TFLETEE" name="TFLETEE" value="<?php echo $TFLETE; ?>" />
+                                                    <select class="form-control select2" id="TFLETE" name="TFLETE" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYTFLETE as $r) : ?>
+                                                            <?php if ($ARRAYTFLETE) {    ?>
+                                                                <option value="<?php echo $r['ID_TFLETE']; ?>" <?php if ($TFLETE == $r['ID_TFLETE']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_TFLETE'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_tflete" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Seguro Carga </label>
+                                                    <input type="hidden" class="form-control" placeholder="SEGUROE" id="SEGUROE" name="SEGUROE" value="<?php echo $SEGURO; ?>" />
+                                                    <select class="form-control select2" id="SEGURO" name="SEGURO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYSEGURO as $r) : ?>
+                                                            <?php if ($ARRAYSEGURO) {    ?>
+                                                                <option value="<?php echo $r['ID_SEGURO']; ?>" <?php if ($SEGURO == $r['ID_SEGURO']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_SEGURO'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_seguro" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>FDA </label>
+                                                    <input type="hidden" class="form-control" placeholder="FDA" id="FDA" name="FDA" value="<?php echo $FDA; ?>" />
+                                                    <input type="text" class="form-control" placeholder="FDA" id="FDAE" name="FDAE" value="<?php echo $FDA; ?>" disabled style='background-color: #eeeeee;' />
+                                                    <label id=" val_fda" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                <div class="form-group">
+                                                        <input type="hidden" class="form-control" placeholder="OBSERVACION PROCESO" id="OBSERVACIONINSTRUCTIVOE" name="OBSERVACIONINSTRUCTIVOE" value="<?php echo $OBSERVACIONINSTRUCTIVO; ?>" />
+                                                        <label>Observaciones </label>
+                                                        <textarea class="form-control" rows="1" placeholder="Ingrese Nota e Observacion  " id="OBSERVACIONINSTRUCTIVO" name="OBSERVACIONINSTRUCTIVO" <?php echo $DISABLED; ?>><?php echo $OBSERVACIONINSTRUCTIVO; ?></textarea>
+                                                        <label id="val_observacion" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <input type="hidden" class="form-control" placeholder="OBSERVACION PROCESO" id="OBSERVACIONIINSTRUCTIVOE" name="OBSERVACIONIINSTRUCTIVOE" value="<?php echo $OBSERVACIONIINSTRUCTIVO; ?>" />
+                                                        <label>Observaciones Invoice </label>
+                                                        <textarea class="form-control" rows="1" placeholder="Ingrese Nota e Observacion  " id="OBSERVACIONIINSTRUCTIVO" name="OBSERVACIONIINSTRUCTIVO" <?php echo $DISABLED; ?>><?php echo $OBSERVACIONIINSTRUCTIVO; ?></textarea>
+                                                        <label id="val_observacioni" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                            
+                                            <!-- <div class="col-xxl-2 col-xl-5 col-lg-8 col-md-8 col-sm-8 col-8 col-xs-8">
+                                                <div class="form-group">
+                                                    <label>Emision BL</label>
+                                                    <input type="hidden" class="form-control" placeholder="EMISIONBL" id="EMISIONBLE" name="EMISIONBLE" value="<?php echo $EMISIONBL; ?>" />
+                                                    <select class="form-control select2" id="EMISIONBL" name="EMISIONBL" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYEMISIONBL as $r) : ?>
+                                                            <?php if ($ARRAYEMISIONBL) {    ?>
+                                                                <option value="<?php echo $r['ID_EMISIONBL']; ?>" <?php if ($EMISIONBL == $r['ID_EMISIONBL']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_EMISIONBL'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_emisionbl" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Emision BL" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopEmisionbl.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div> -->
+                                           
+                                            <!-- <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Recibidor Final</label>
+                                                    <input type="hidden" class="form-control" placeholder="RFINALE" id="RFINALE" name="RFINALE" value="<?php echo $RFINAL; ?>" />
+                                                    <select class="form-control select2" id="RFINAL" name="RFINAL" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYRFINAL as $r) : ?>
+                                                            <?php if ($ARRAYRFINAL) {    ?>
+                                                                <option value="<?php echo $r['ID_RFINAL']; ?>" <?php if ($RFINAL == $r['ID_RFINAL']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_RFINAL'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_rfinal" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Recibidor Final" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopRfinal.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div> -->
+     
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Publica </label>
+                                                    <input type="hidden" class="form-control" placeholder="PUBLICAINSTRUCTIVO" id="PUBLICAINSTRUCTIVO" name="PUBLICAINSTRUCTIVO" value="<?php echo $PUBLICAINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1"  class="form-control" placeholder="$USD Flete Instructivo" id="PUBLICAINSTRUCTIVOE" name="PUBLICAINSTRUCTIVOE" value="<?php echo $PUBLICAINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> disabled />
+                                                    <label id="val_publica" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+
+                                            
+                                        <?php } ?>
+
+
+
+
+
+
+  <!------------------------------------------------------------ VISTA AEREA PARTE 1 --------------------------------------------------------------------------------------->
+
+
+
+
+
+
+
+                                             <?php if ($TEMBARQUE == "2") { ?>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Booking</label>
+                                                    <input type="hidden" class="form-control" placeholder="BOOKINGINSTRUCTIVOE" id="BOOKINGINSTRUCTIVOE" name="BOOKINGINSTRUCTIVOE" value="<?php echo $BOOKINGINSTRUCTIVO; ?>" />
+                                                    <input type="text" class="form-control" placeholder="Booking" id="BOOKINGINSTRUCTIVO" name="BOOKINGINSTRUCTIVO" value="<?php echo $BOOKINGINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_booking" class="validacion"> </label>
+                                                </div>
+                                            </div> 
+                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Fumigado </label>
+                                                    <input type="hidden" class="form-control" placeholder="FUMIGADOE" id="FUMIGADOE" name="FUMIGADOE" value="<?php echo $FUMIGADO; ?>" />
+                                                    <select class="form-control select2" id="FUMIGADO" name="FUMIGADO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <option value="1" <?php if ($FUMIGADO == "1") { echo "selected"; } ?>>Si </option>
+                                                        <option value="2" <?php if ($FUMIGADO == "2") { echo "selected"; } ?>> No</option>
+                                                    </select>
+                                                    <label id="val_fumigado" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Exportadora</label>
+                                                    <input type="hidden" class="form-control" placeholder="EXPORTADORAE" id="EXPORTADORAE" name="EXPORTADORAE" value="<?php echo $EXPORTADORA; ?>" />
+                                                    <select class="form-control select2" id="EXPORTADORA" name="EXPORTADORA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYEXPORTADORA as $r) : ?>
+                                                            <?php if ($ARRAYEXPORTADORA) {    ?>
+                                                                <option value="<?php echo $r['ID_EXPORTADORA']; ?>" <?php if ($EXPORTADORA == $r['ID_EXPORTADORA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_EXPORTADORA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_exportadora" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Mercado</label>
+                                                    <input type="hidden" class="form-control" placeholder="MERCADOE" id="MERCADOE" name="MERCADOE" value="<?php echo $MERCADO; ?>" />
+                                                    <select class="form-control select2" id="MERCADO" name="MERCADO" style="width: 100%;" value="<?php echo $MERCADO; ?>" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYMERCADO as $r) : ?>
+                                                            <?php if ($ARRAYMERCADO) {    ?>
+                                                                <option value="<?php echo $r['ID_MERCADO']; ?>" <?php if ($MERCADO == $r['ID_MERCADO']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_MERCADO'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_mercado" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Mercado" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopMercado.php' ); ">
                                                         <i class="glyphicon glyphicon-plus"></i>
                                                     </button>
                                                 </div>
@@ -2330,34 +2954,82 @@ if (isset($_POST)) {
                                             </div>
                                             <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
-                                                    <label>Recibidor Final</label>
-                                                    <input type="hidden" class="form-control" placeholder="RFINALE" id="RFINALE" name="RFINALE" value="<?php echo $RFINAL; ?>" />
-                                                    <select class="form-control select2" id="RFINAL" name="RFINAL" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                    <label>Consignatario</label>
+                                                    <input type="hidden" class="form-control" placeholder="CONSIGNATARIO" id="CONSIGNATARIOE" name="CONSIGNATARIOE" value="<?php echo $CONSIGNATARIO; ?>" />
+                                                    <select class="form-control select2" id="CONSIGNATARIO" name="CONSIGNATARIO" style="width: 100%;" <?php echo $DISABLED; ?>>
                                                         <option></option>
-                                                        <?php foreach ($ARRAYRFINAL as $r) : ?>
-                                                            <?php if ($ARRAYRFINAL) {    ?>
-                                                                <option value="<?php echo $r['ID_RFINAL']; ?>" <?php if ($RFINAL == $r['ID_RFINAL']) { echo "selected"; } ?>>
-                                                                    <?php echo $r['NOMBRE_RFINAL'] ?>
+                                                        <?php foreach ($ARRAYCONSIGNATARIO as $r) : ?>
+                                                            <?php if ($ARRAYCONSIGNATARIO) {    ?>
+                                                                <option value="<?php echo $r['ID_CONSIGNATARIO']; ?>" <?php if ($CONSIGNATARIO == $r['ID_CONSIGNATARIO']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_CONSIGNATARIO'] ?>
                                                                 </option>
                                                             <?php } else { ?>
                                                                 <option value="0">No Hay Datos Registrados </option>
                                                             <?php } ?>
                                                         <?php endforeach; ?>
                                                     </select>
-                                                    <label id="val_rfinal" class="validacion"> </label>
+                                                    <label id="val_consignatario" class="validacion"> </label>
                                                 </div>
                                             </div>
                                             <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
                                                 <div class="form-group">
                                                     <br>
-                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Recibidor Final" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopRfinal.php' ); ">
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Consignatario" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopConsignatorio.php' ); ">
                                                         <i class="glyphicon glyphicon-plus"></i>
                                                     </button>
                                                 </div>
                                             </div>
+                                            <div class="col-xxl-3 col-xl-5 col-lg-7 col-md-7 col-sm-7 col-7 col-xs-7">
+                                                <div class="form-group">
+                                                    <label>Notificador</label>
+                                                    <input type="hidden" class="form-control" placeholder="NOTIFICADORE" id="NOTIFICADORE" name="NOTIFICADORE" value="<?php echo $NOTIFICADOR; ?>" />
+                                                    <select class="form-control select2" id="NOTIFICADOR" name="NOTIFICADOR" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYNOTIFICADOR as $r) : ?>
+                                                            <?php if ($ARRAYNOTIFICADOR) {    ?>
+                                                                <option value="<?php echo $r['ID_NOTIFICADOR']; ?>" <?php if ($NOTIFICADOR == $r['ID_NOTIFICADOR']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_NOTIFICADOR'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_notificador" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Notificador" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopNotificador.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Planta Carga</label>
+                                                    <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
+                                                    <select class="form-control select2" id="LCARGA" name="LCARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYLCARGA as $r) : ?>
+                                                            <?php if ($ARRAYLCARGA) {    ?>
+                                                                <option value="<?php echo $r['ID_LCARGA']; ?>" <?php if ($LCARGA == $r['ID_LCARGA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_LCARGA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_lcarga" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            
+                                            
                                             <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label>Pais</label>
+                                                    <label>Pais Destino</label>
                                                     <input type="hidden" class="form-control" placeholder="PAISE" id="PAISE" name="PAISE" value="<?php echo $PAIS; ?>" />
                                                     <select class="form-control select2" id="PAIS" name="PAIS" style="width: 100%;" value="<?php echo $PAIS; ?>" <?php echo $DISABLED; ?>>
                                                         <option></option>
@@ -2372,96 +3044,6 @@ if (isset($_POST)) {
                                                         <?php endforeach; ?>
                                                     </select>
                                                     <label id="val_pais" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
-                                                <div class="form-group">
-                                                    <label>Mercado</label>
-                                                    <input type="hidden" class="form-control" placeholder="MERCADOE" id="MERCADOE" name="MERCADOE" value="<?php echo $MERCADO; ?>" />
-                                                    <select class="form-control select2" id="MERCADO" name="MERCADO" style="width: 100%;" value="<?php echo $MERCADO; ?>" <?php echo $DISABLED; ?>>
-                                                        <option></option>
-                                                        <?php foreach ($ARRAYMERCADO as $r) : ?>
-                                                            <?php if ($ARRAYMERCADO) {    ?>
-                                                                <option value="<?php echo $r['ID_MERCADO']; ?>" <?php if ($MERCADO == $r['ID_MERCADO']) { echo "selected"; } ?>>
-                                                                    <?php echo $r['NOMBRE_MERCADO'] ?>
-                                                                </option>
-                                                            <?php } else { ?>
-                                                                <option value="0">No Hay Datos Registrados </option>
-                                                            <?php } ?>
-                                                        <?php endforeach; ?>
-                                                    </select>
-                                                    <label id="val_mercado" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
-                                                <div class="form-group">
-                                                    <br>
-                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Mercado" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopMercado.php' ); ">
-                                                        <i class="glyphicon glyphicon-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
-                                                <div class="form-group">
-                                                    <label>Destino Final</label>
-                                                    <input type="hidden" class="form-control" placeholder="DFINALE" id="DFINALE" name="DFINALE" value="<?php echo $DFINAL; ?>" />
-                                                    <select class="form-control select2" id="DFINAL" name="DFINAL" style="width: 100%;" <?php echo $DISABLED; ?>>
-                                                        <option></option>
-                                                        <?php foreach ($ARRAYDFINAL as $r) : ?>
-                                                            <?php if ($ARRAYDFINAL) {    ?>
-                                                                <option value="<?php echo $r['ID_DFINAL']; ?>" <?php if ($DFINAL == $r['ID_DFINAL']) { echo "selected"; } ?>>
-                                                                    <?php echo $r['NOMBRE_DFINAL'] ?>
-                                                                </option>
-                                                            <?php } else { ?>
-                                                                <option value="0">No Hay Datos Registrados </option>
-                                                            <?php } ?>
-                                                        <?php endforeach; ?>
-                                                    </select>
-                                                    <label id="val_dfinal" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
-                                                <div class="form-group">
-                                                    <br>
-                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Destino Final" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopDfinal.php' ); ">
-                                                        <i class="glyphicon glyphicon-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                    <section id="section2">
-                                        <div class="row">
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>Fecha ETD</label>
-                                                    <input type="hidden" class="form-control" placeholder="FECHA ETD" id="FECHAETDE" name="FECHAETDE" value="<?php echo $FECHAETD; ?>" />
-                                                    <input type="date" class="form-control" placeholder="Fecha  ETD" id="FECHAETD" name="FECHAETD" value="<?php echo $FECHAETD; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_fechaetd" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>Fecha ETA</label>
-                                                    <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHAETAE" name="FECHAETAE" value="<?php echo $FECHAETA; ?>" />
-                                                    <input type="date" class="form-control" placeholder="Fecha ETA" id="FECHAETA" name="FECHAETA" value="<?php echo $FECHAETA; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_fechaeta" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>Fecha Real ETA</label>
-                                                    <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHAETAREALE" name="FECHAETAREALE" value="<?php echo $FECHAETA; ?>" />
-                                                    <input type="date" class="form-control" placeholder="Fecha ETA Real" id="FECHAETAREAL" name="FECHAETAREAL" value="<?php echo $FECHAETA; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_fechaetareal" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>N° Contenedor </label>
-                                                    <input type="hidden" class="form-control" placeholder="NCONTENEDORE" id="NCONTENEDORE" name="NCONTENEDORE" value="<?php echo $NCONTENEDOR; ?>" />
-                                                    <input type="text" class="form-control" placeholder="N° Contenedor" id="NCONTENEDOR" name="NCONTENEDOR" value="<?php echo $NCONTENEDOR; ?>" <?php echo $DISABLED; ?>/>
-                                                    <label id=" val_ncontenedor" class="validacion"> </label>
                                                 </div>
                                             </div>
                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
@@ -2483,14 +3065,6 @@ if (isset($_POST)) {
                                                     <label id="val_aaduana" class="validacion"> </label>
                                                 </div>
                                             </div>
-                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
-                                                <div class="form-group">
-                                                    <br>
-                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Agente Aduana" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAaduana.php' ); ">
-                                                        <i class="glyphicon glyphicon-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Agente Carga</label>
@@ -2510,184 +3084,174 @@ if (isset($_POST)) {
                                                     <label id="val_agcarga" class="validacion"> </label>
                                                 </div>
                                             </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                    <div class="form-group">
+                                                        <label>Modalidad Venta</label>
+                                                        <input type="hidden" class="form-control" placeholder="MVENTAE" id="MVENTAE" name="MVENTAE" value="<?php echo $MVENTA; ?>" />
+                                                        <select class="form-control select2" id="MVENTA" name="MVENTA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                            <option></option>
+                                                            <?php foreach ($ARRAYMVENTA as $r) : ?>
+                                                                <?php if ($ARRAYMVENTA) {    ?>
+                                                                    <option value="<?php echo $r['ID_MVENTA']; ?>" <?php if ($MVENTA == $r['ID_MVENTA']) { echo "selected"; } ?>>
+                                                                        <?php echo $r['NOMBRE_MVENTA'] ?>
+                                                                    </option>
+                                                                <?php } else { ?>
+                                                                    <option value="0">No Hay Datos Registrados </option>
+                                                                <?php } ?>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                        <label id="val_mventa" class="validacion"> </label>
+                                                </div>
+                                            </div>
                                             <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
                                                 <div class="form-group">
                                                     <br>
-                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Agente Carga" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAgcarga.php' ); ">
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Modalidad Venta" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopMventa.php' ); ">
                                                         <i class="glyphicon glyphicon-plus"></i>
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
-                                                    <label>FDA </label>
-                                                    <input type="hidden" class="form-control" placeholder="FDA" id="FDA" name="FDA" value="<?php echo $FDA; ?>" />
-                                                    <input type="text" class="form-control" placeholder="FDA" id="FDAE" name="FDAE" value="<?php echo $FDA; ?>" disabled style='background-color: #eeeeee;' />
-                                                    <label id=" val_fda" class="validacion"> </label>
+                                                    <label>Cláusula Venta</label>
+                                                    <input type="hidden" class="form-control" placeholder="CVENTAE" id="CVENTAE" name="CVENTAE" value="<?php echo $CVENTA; ?>" />
+                                                    <select class="form-control select2" id="CVENTA" name="CVENTA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYCVENTA as $r) : ?>
+                                                            <?php if ($ARRAYCVENTA) {    ?>
+                                                                <option value="<?php echo $r['ID_CVENTA']; ?>" <?php if ($CVENTA == $r['ID_CVENTA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_CVENTA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_cventa" class="validacion"> </label>
                                                 </div>
                                             </div>
-                                            <?php if ($TEMBARQUE == "1") { ?>
-                                                <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                    <div class="form-group">
-                                                        <label>CRT</label>
-                                                        <input type="hidden" class="form-control" placeholder="CRT" id="CRTE" name="CRTE" value="<?php echo $CRT; ?>" />
-                                                        <input type="text" class="form-control" placeholder="CRT" id="CRT" name="CRT" value="<?php echo $CRT; ?>" <?php echo $DISABLED; ?> />
-                                                        <label id="val_crt" class="validacion"> </label>
-                                                    </div>
+
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Forma Pago</label>
+                                                    <input type="hidden" class="form-control" placeholder="FPAGOE" id="FPAGOE" name="FPAGOE" value="<?php echo $FPAGO; ?>" />
+                                                    <select class="form-control select2" id="FPAGO" name="FPAGO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYFPAGO as $r) : ?>
+                                                            <?php if ($ARRAYFPAGO) {    ?>
+                                                                <option value="<?php echo $r['ID_FPAGO']; ?>" <?php if ($FPAGO == $r['ID_FPAGO']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_FPAGO'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_fpago" class="validacion"> </label>
                                                 </div>
-                                                 <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
-                                                    <div class="form-group">
-                                                        <label>Transporte</label>
-                                                        <input type="hidden" class="form-control" placeholder="TRANSPORTEE" id="TRANSPORTEE" name="TRANSPORTEE" value="<?php echo $TRANSPORTE; ?>" />
-                                                        <select class="form-control select2" id="TRANSPORTE" name="TRANSPORTE" style="width: 100%;" <?php echo $DISABLED; ?>>
-                                                            <option></option>
-                                                            <?php foreach ($ARRAYTRANSPORTE as $r) : ?>
-                                                                <?php if ($ARRAYTRANSPORTE) {    ?>
-                                                                    <option value="<?php echo $r['ID_TRANSPORTE']; ?>" <?php if ($TRANSPORTE == $r['ID_TRANSPORTE']) { echo "selected"; } ?>>
-                                                                        <?php echo $r['NOMBRE_TRANSPORTE'] ?>
-                                                                    </option>
-                                                                <?php } else { ?>
-                                                                    <option value="0">No Hay Datos Registrados </option>
-                                                                <?php } ?>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                        <label id="val_transporte" class="validacion"> </label>
-                                                    </div>
+                                            </div>    
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Tipo Flete</label>
+                                                    <input type="hidden" class="form-control" placeholder="TFLETEE" id="TFLETEE" name="TFLETEE" value="<?php echo $TFLETE; ?>" />
+                                                    <select class="form-control select2" id="TFLETE" name="TFLETE" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYTFLETE as $r) : ?>
+                                                            <?php if ($ARRAYTFLETE) {    ?>
+                                                                <option value="<?php echo $r['ID_TFLETE']; ?>" <?php if ($TFLETE == $r['ID_TFLETE']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_TFLETE'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_tflete" class="validacion"> </label>
                                                 </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Seguro Carga </label>
+                                                    <input type="hidden" class="form-control" placeholder="SEGUROE" id="SEGUROE" name="SEGUROE" value="<?php echo $SEGURO; ?>" />
+                                                    <select class="form-control select2" id="SEGURO" name="SEGURO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYSEGURO as $r) : ?>
+                                                            <?php if ($ARRAYSEGURO) {    ?>
+                                                                <option value="<?php echo $r['ID_SEGURO']; ?>" <?php if ($SEGURO == $r['ID_SEGURO']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_SEGURO'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_seguro" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Linea Aerea</label>
+                                                    <input type="hidden" class="form-control" placeholder="LAEREAE" id="LAEREAE" name="LAEREAE" value="<?php echo $LAEREA; ?>" />
+                                                    <select class="form-control select2" id="LAEREA" name="LAEREA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYLAEREA as $r) : ?>
+                                                            <?php if ($ARRAYLAEREA) {    ?>
+                                                                <option value="<?php echo $r['ID_LAEREA']; ?>" <?php if ($LAEREA == $r['ID_LAEREA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_LAEREA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_larea" class="validacion"> </label>
+                                                </div>
+                                            </div>
                                             <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
-                                                    <div class="form-group">
-                                                        <br>
-                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Transporte" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopTransporte.php' ); ">
-                                                            <i class="glyphicon glyphicon-plus"></i>
-                                                        </button>
-                                                    </div>
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Linea Aerea" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopLaerea.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
                                                 </div>
-                                                <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
-                                                    <div class="form-group">
-                                                        <label>Lugar Carga</label>
-                                                        <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
-                                                        <select class="form-control select2" id="LCARGA" name="LCARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
-                                                            <option></option>
-                                                            <?php foreach ($ARRAYLCARGA as $r) : ?>
-                                                                <?php if ($ARRAYLCARGA) {    ?>
-                                                                    <option value="<?php echo $r['ID_LCARGA']; ?>" <?php if ($LCARGA == $r['ID_LCARGA']) { echo "selected"; } ?>>
-                                                                        <?php echo $r['NOMBRE_LCARGA'] ?>
-                                                                    </option>
-                                                                <?php } else { ?>
-                                                                    <option value="0">No Hay Datos Registrados </option>
-                                                                <?php } ?>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                        <label id="val_lcarga" class="validacion"> </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
-                                                    <div class="form-group">
-                                                        <br>
-                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Lugar Carga" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopLcarga.php' ); ">
-                                                            <i class="glyphicon glyphicon-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
-                                                    <div class="form-group">
-                                                        <label>Lugar Destino</label>
-                                                        <input type="hidden" class="form-control" placeholder="LDESTINOE" id="LDESTINOE" name="LDESTINOE" value="<?php echo $LDESTINO; ?>" />
-                                                        <select class="form-control select2" id="LDESTINO" name="LDESTINO" style="width: 100%;" <?php echo $DISABLED; ?>>
-                                                            <option></option>
-                                                            <?php foreach ($ARRAYLDESTINO  as $r) : ?>
-                                                                <?php if ($ARRAYLDESTINO) {    ?>
-                                                                    <option value="<?php echo $r['ID_LDESTINO']; ?>" <?php if ($LDESTINO == $r['ID_LDESTINO']) { echo "selected"; } ?>>
-                                                                        <?php echo $r['NOMBRE_LDESTINO'] ?>
-                                                                    </option>
-                                                                <?php } else { ?>
-                                                                    <option value="0">No Hay Datos Registrados </option>
-                                                                <?php } ?>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                        <label id="val_ldestino" class="validacion"> </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
-                                                    <div class="form-group">
-                                                        <br>
-                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Lugar Destino" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopLdestino.php' ); ">
-                                                            <i class="glyphicon glyphicon-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            <?php } ?>
-                                            <?php if ($TEMBARQUE == "2") { ?>
-                                                <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
-                                                    <div class="form-group">
-                                                        <label>Linea Aerea</label>
-                                                        <input type="hidden" class="form-control" placeholder="LAEREAE" id="LAEREAE" name="LAEREAE" value="<?php echo $LAEREA; ?>" />
-                                                        <select class="form-control select2" id="LAEREA" name="LAEREA" style="width: 100%;" <?php echo $DISABLED; ?>>
-                                                            <option></option>
-                                                            <?php foreach ($ARRAYLAEREA as $r) : ?>
-                                                                <?php if ($ARRAYLAEREA) {    ?>
-                                                                    <option value="<?php echo $r['ID_LAEREA']; ?>" <?php if ($LAEREA == $r['ID_LAEREA']) { echo "selected"; } ?>>
-                                                                        <?php echo $r['NOMBRE_LAEREA'] ?>
-                                                                    </option>
-                                                                <?php } else { ?>
-                                                                    <option value="0">No Hay Datos Registrados </option>
-                                                                <?php } ?>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                        <label id="val_larea" class="validacion"> </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
-                                                    <div class="form-group">
-                                                        <br>
-                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Linea Aerea" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopLaerea.php' ); ">
-                                                            <i class="glyphicon glyphicon-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                            </div>
                                                 <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                    <div class="form-group">
-                                                        <label>Nave </label>
-                                                        <input type="hidden" class="form-control" placeholder="NAVEE" id="NAVEE" name="NAVEE" value="<?php echo $NAVE; ?>" />
-                                                        <input type="text" class="form-control" placeholder="NAVE" id="NAVE" name="NAVE" value="<?php echo $NAVE; ?>" <?php echo $DISABLED; ?> />
-                                                        <label id="val_nave" class="validacion"> </label>
-                                                    </div>
+                                                <div class="form-group">
+                                                    <label>Vuelo</label>
+                                                    <input type="hidden" class="form-control" placeholder="NVIAJEE" id="NVIAJEE" name="NVIAJEE" value="<?php echo $NVIAJE; ?>" />
+                                                    <input type="text" class="form-control" placeholder="Número Viaje" id="NVIAJE" name="NVIAJE" value="<?php echo $NVIAJE; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_nviaje" class="validacion"> </label>
                                                 </div>
-                                                <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                    <div class="form-group">
-                                                        <label>Número Viaje</label>
-                                                        <input type="hidden" class="form-control" placeholder="NVIAJEE" id="NVIAJEE" name="NVIAJEE" value="<?php echo $NVIAJE; ?>" />
-                                                        <input type="text" class="form-control" placeholder="Número Viaje" id="NVIAJE" name="NVIAJE" value="<?php echo $NVIAJE; ?>" <?php echo $DISABLED; ?> />
-                                                        <label id="val_nviaje" class="validacion"> </label>
-                                                    </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Aeropuerto Carga</label>
+                                                    <input type="hidden" class="form-control" placeholder="ACARGAE" id="ACARGAE" name="ACARGAE" value="<?php echo $ACARGA; ?>" />
+                                                    <select class="form-control select2" id="ACARGA" name="ACARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYACARGA as $r) : ?>
+                                                            <?php if ($ARRAYACARGA) {    ?>
+                                                                <option value="<?php echo $r['ID_ACARGA']; ?>" <?php if ($ACARGA == $r['ID_ACARGA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_ACARGA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_acarga" class="validacion"> </label>
                                                 </div>
-                                                <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
-                                                    <div class="form-group">
-                                                        <label>Aeropuerto Carga</label>
-                                                        <input type="hidden" class="form-control" placeholder="ACARGAE" id="ACARGAE" name="ACARGAE" value="<?php echo $ACARGA; ?>" />
-                                                        <select class="form-control select2" id="ACARGA" name="ACARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
-                                                            <option></option>
-                                                            <?php foreach ($ARRAYACARGA as $r) : ?>
-                                                                <?php if ($ARRAYACARGA) {    ?>
-                                                                    <option value="<?php echo $r['ID_ACARGA']; ?>" <?php if ($ACARGA == $r['ID_ACARGA']) { echo "selected"; } ?>>
-                                                                        <?php echo $r['NOMBRE_ACARGA'] ?>
-                                                                    </option>
-                                                                <?php } else { ?>
-                                                                    <option value="0">No Hay Datos Registrados </option>
-                                                                <?php } ?>
-                                                            <?php endforeach; ?>
-                                                        </select>
-                                                        <label id="val_acarga" class="validacion"> </label>
-                                                    </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Aeropuerto Carga" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAcarga.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
                                                 </div>
-                                                <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
-                                                    <div class="form-group">
-                                                        <br>
-                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Aeropuerto Carga" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAcarga.php' ); ">
-                                                            <i class="glyphicon glyphicon-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
+                                            </div>
+                                                
                                                 <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                     <div class="form-group">
                                                         <label>Aeropuerto Destino</label>
@@ -2715,10 +3279,227 @@ if (isset($_POST)) {
                                                         </button>
                                                     </div>
                                                 </div>
-
+                                                <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <label>FDA </label>
+                                                        <input type="hidden" class="form-control" placeholder="FDA" id="FDA" name="FDA" value="<?php echo $FDA; ?>" />
+                                                        <input type="text" class="form-control" placeholder="FDA" id="FDAE" name="FDAE" value="<?php echo $FDA; ?>" disabled style='background-color: #eeeeee;' />
+                                                        <label id=" val_fda" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <input type="hidden" class="form-control" placeholder="OBSERVACION PROCESO" id="OBSERVACIONINSTRUCTIVOE" name="OBSERVACIONINSTRUCTIVOE" value="<?php echo $OBSERVACIONINSTRUCTIVO; ?>" />
+                                                        <label>Observaciones </label>
+                                                        <textarea class="form-control" rows="1" placeholder="Ingrese Nota e Observacion  " id="OBSERVACIONINSTRUCTIVO" name="OBSERVACIONINSTRUCTIVO" <?php echo $DISABLED; ?>><?php echo $OBSERVACIONINSTRUCTIVO; ?></textarea>
+                                                        <label id="val_observacion" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <input type="hidden" class="form-control" placeholder="OBSERVACION PROCESO" id="OBSERVACIONIINSTRUCTIVOE" name="OBSERVACIONIINSTRUCTIVOE" value="<?php echo $OBSERVACIONIINSTRUCTIVO; ?>" />
+                                                        <label>Observaciones Invoice </label>
+                                                        <textarea class="form-control" rows="1" placeholder="Ingrese Nota e Observacion  " id="OBSERVACIONIINSTRUCTIVO" name="OBSERVACIONIINSTRUCTIVO" <?php echo $DISABLED; ?>><?php echo $OBSERVACIONIINSTRUCTIVO; ?></textarea>
+                                                        <label id="val_observacioni" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                    <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Publica </label>
+                                                    <input type="hidden" class="form-control" placeholder="PUBLICAINSTRUCTIVO" id="PUBLICAINSTRUCTIVO" name="PUBLICAINSTRUCTIVO" value="<?php echo $PUBLICAINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1"  class="form-control" placeholder="$USD Flete Instructivo" id="PUBLICAINSTRUCTIVOE" name="PUBLICAINSTRUCTIVOE" value="<?php echo $PUBLICAINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> disabled />
+                                                    <label id="val_publica" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                                      <!-- <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Ciudad Destino</label>
+                                                    <input type="hidden" class="form-control" placeholder="DFINALE" id="DFINALE" name="DFINALE" value="<?php echo $DFINAL; ?>" />
+                                                    <select class="form-control select2" id="DFINAL" name="DFINAL" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYDFINAL as $r) : ?>
+                                                            <?php if ($ARRAYDFINAL) {    ?>
+                                                                <option value="<?php echo $r['ID_DFINAL']; ?>" <?php if ($DFINAL == $r['ID_DFINAL']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_DFINAL'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_dfinal" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                                 <!-- <div class="col-xxl-2 col-xl-5 col-lg-8 col-md-8 col-sm-8 col-8 col-xs-8">
+                                                <div class="form-group">
+                                                    <label>Emision BL</label>
+                                                    <input type="hidden" class="form-control" placeholder="EMISIONBL" id="EMISIONBLE" name="EMISIONBLE" value="<?php echo $EMISIONBL; ?>" />
+                                                    <select class="form-control select2" id="EMISIONBL" name="EMISIONBL" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYEMISIONBL as $r) : ?>
+                                                            <?php if ($ARRAYEMISIONBL) {    ?>
+                                                                <option value="<?php echo $r['ID_EMISIONBL']; ?>" <?php if ($EMISIONBL == $r['ID_EMISIONBL']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_EMISIONBL'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_emisionbl" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Emision BL" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopEmisionbl.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Atmósfera</label>
+                                                    <input type="hidden" class="form-control" placeholder="ATMOSFERAE" id="ATMOSFERAE" name="ATMOSFERAE" value="<?php echo $ATMOSFERA; ?>" />
+                                                    <select class="form-control select2" id="ATMOSFERA" name="ATMOSFERA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYATMOSFERA as $r) : ?>
+                                                            <?php if ($ARRAYATMOSFERA) {    ?>
+                                                                <option value="<?php echo $r['ID_ATMOSFERA']; ?>" <?php if ($ATMOSFERA == $r['ID_ATMOSFERA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_ATMOSFERA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_atmosfera" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Atmósfera" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAtmosfera.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>T° </label>
+                                                    <input type="hidden" class="form-control" placeholder="TINSTRUCTIVOE" id="TINSTRUCTIVOE" name="TINSTRUCTIVOE" value="<?php echo $TINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="Temperatura Instructivo" id="TINSTRUCTIVO" name="TINSTRUCTIVO" value="<?php echo $TINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_t" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>% O2 </label>
+                                                    <input type="hidden" class="form-control" placeholder="O2INSTRUCTIVOE" id="O2INSTRUCTIVOE" name="O2INSTRUCTIVOE" value="<?php echo $O2INSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="% O2 Instructivo" id="O2INSTRUCTIVO" name="O2INSTRUCTIVO" value="<?php echo $O2INSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_o2" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>% CO2 </label>
+                                                    <input type="hidden" class="form-control" placeholder="CO2INSTRUCTIVOE" id="CO2INSTRUCTIVOE" name="CO2INSTRUCTIVOE" value="<?php echo $CO2INSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="% CO2 Instructivo" id="CO2INSTRUCTIVO" name="CO2INSTRUCTIVO" value="<?php echo $CO2INSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_co2" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label> Apertura Lampa (CBM)</label>
+                                                    <input type="hidden" class="form-control" placeholder="ALAMPAINSTRUCTIVOE" id="ALAMPAINSTRUCTIVOE" name="ALAMPAINSTRUCTIVOE" value="<?php echo $ALAMPAINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="Apertura Lampa Instructivo" id="ALAMPAINSTRUCTIVO" name="ALAMPAINSTRUCTIVO" value="<?php echo $ALAMPAINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_alampa" class="validacion"> </label>
+                                                </div>
+                                            </div>  -->
+                                            <!-- <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Recibidor Final</label>
+                                                    <input type="hidden" class="form-control" placeholder="RFINALE" id="RFINALE" name="RFINALE" value="<?php echo $RFINAL; ?>" />
+                                                    <select class="form-control select2" id="RFINAL" name="RFINAL" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYRFINAL as $r) : ?>
+                                                            <?php if ($ARRAYRFINAL) {    ?>
+                                                                <option value="<?php echo $r['ID_RFINAL']; ?>" <?php if ($RFINAL == $r['ID_RFINAL']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_RFINAL'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_rfinal" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Recibidor Final" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopRfinal.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div> -->
+                                             
+                                                <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>Nave </label>
+                                                        <input type="hidden" class="form-control" placeholder="NAVEE" id="NAVEE" name="NAVEE" value="<?php echo $NAVE; ?>" />
+                                                        <input type="text" class="form-control" placeholder="NAVE" id="NAVE" name="NAVE" value="<?php echo $NAVE; ?>" <?php echo $DISABLED; ?> />
+                                                        <label id="val_nave" class="validacion"> </label>
+                                                    </div>
+                                                </div> -->
+                                               
+                                                
                                             <?php } ?>
-                                            <?php if ($TEMBARQUE == "3") { ?>
-                                                <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+
+
+
+<!-------------------------------------------------------- VISTA NAVIERA PARTE 1 ------------------------------------------------------------------------------>
+
+
+
+
+                                             <?php if ($TEMBARQUE == "3") { ?>
+                                            
+
+                                               <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Booking</label>
+                                                    <input type="hidden" class="form-control" placeholder="BOOKINGINSTRUCTIVOE" id="BOOKINGINSTRUCTIVOE" name="BOOKINGINSTRUCTIVOE" value="<?php echo $BOOKINGINSTRUCTIVO; ?>" />
+                                                    <input type="text" class="form-control" placeholder="BKN/AWF/CRT" id="BOOKINGINSTRUCTIVO" name="BOOKINGINSTRUCTIVO" value="<?php echo $BOOKINGINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_booking" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6"> 
+                                                <div class="form-group">
+                                                    <label>Fecha Corte Documental</label>
+                                                    <input type="hidden" class="form-control" placeholder="Instructivo Carga" id="FECHACDOCUMENTALICARGAE" name="FECHACDOCUMENTALICARGAE" value="<?php echo $FECHACDOCUMENTALICARGA; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha Corte Documental" id="FECHACDOCUMENTALICARGA" name="FECHACDOCUMENTALICARGA" value="<?php echo $FECHACDOCUMENTALICARGA; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechacd" class="validacion"> </label>
+                                                </div> 
+                                            </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Inicio Stacking</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHASTACKINGE" name="FECHASTACKINGE" value="<?php echo $FECHASTACKING; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha Stacking" id="FECHASTACKING" name="FECHASTACKING" value="<?php echo $FECHASTACKING; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechastacking" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Cierre Stacking</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA FINAL PROCESO" id="FECHACIERRESTACKINGE" name="FECHACIERRESTACKINGE" value="<?php echo $FECHACIERRESTACKING; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha Cierre Stacking" id="FECHACIERRESTACKING" name="FECHACIERRESTACKING" value="<?php echo $FECHACIERRESTACKING; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechacierrestacking" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                     <div class="form-group">
                                                         <label>Naviera </label>
                                                         <input type="hidden" class="form-control" placeholder="NAVIERAE" id="NAVIERAE" name="NAVIERAE" value="<?php echo $NAVIERA; ?>" />
@@ -2756,14 +3537,6 @@ if (isset($_POST)) {
                                                 </div>
                                                 <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
                                                     <div class="form-group">
-                                                        <label>Fecha Stacking</label>
-                                                        <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHASTACKINGE" name="FECHASTACKINGE" value="<?php echo $FECHASTACKING; ?>" />
-                                                        <input type="date" class="form-control" placeholder="Fecha Stacking" id="FECHASTACKING" name="FECHASTACKING" value="<?php echo $FECHASTACKING; ?>" <?php echo $DISABLED; ?> />
-                                                        <label id="val_fechastacking" class="validacion"> </label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                    <div class="form-group">
                                                         <label>Número Viaje</label>
                                                         <input type="hidden" class="form-control" placeholder="NVIAJEE" id="NVIAJEE" name="NVIAJEE" value="<?php echo $NVIAJE; ?>" />
                                                         <input type="text" class="form-control" placeholder="Número Viaje" id="NVIAJE" name="NVIAJE" value="<?php echo $NVIAJE; ?>" <?php echo $DISABLED; ?> />
@@ -2771,6 +3544,253 @@ if (isset($_POST)) {
                                                     </div>
                                                 </div>
                                                 <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Tipo Contenedor</label>
+                                                    <input type="hidden" class="form-control" placeholder="TCONTENEDORE" id="TCONTENEDORE" name="TCONTENEDORE" value="<?php echo $TCONTENEDOR; ?>" />
+                                                    <select class="form-control select2" id="TCONTENEDOR" name="TCONTENEDOR" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYTCONTENEDOR as $r) : ?>
+                                                            <?php if ($ARRAYTCONTENEDOR) {    ?>
+                                                                <option value="<?php echo $r['ID_TCONTENEDOR']; ?>" <?php if ($TCONTENEDOR == $r['ID_TCONTENEDOR']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_TCONTENEDOR'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_tcontenedor" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Tipo Contenedor" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopTcontenedor.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Atmósfera</label>
+                                                    <input type="hidden" class="form-control" placeholder="ATMOSFERAE" id="ATMOSFERAE" name="ATMOSFERAE" value="<?php echo $ATMOSFERA; ?>" />
+                                                    <select class="form-control select2" id="ATMOSFERA" name="ATMOSFERA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYATMOSFERA as $r) : ?>
+                                                            <?php if ($ARRAYATMOSFERA) {    ?>
+                                                                <option value="<?php echo $r['ID_ATMOSFERA']; ?>" <?php if ($ATMOSFERA == $r['ID_ATMOSFERA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_ATMOSFERA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_atmosfera" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Atmósfera" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAtmosfera.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                                                                        <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>% CO2 </label>
+                                                    <input type="hidden" class="form-control" placeholder="CO2INSTRUCTIVOE" id="CO2INSTRUCTIVOE" name="CO2INSTRUCTIVOE" value="<?php echo $CO2INSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="% CO2 Instructivo" id="CO2INSTRUCTIVO" name="CO2INSTRUCTIVO" value="<?php echo $CO2INSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_co2" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>% O2 </label>
+                                                    <input type="hidden" class="form-control" placeholder="O2INSTRUCTIVOE" id="O2INSTRUCTIVOE" name="O2INSTRUCTIVOE" value="<?php echo $O2INSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="% O2 Instructivo" id="O2INSTRUCTIVO" name="O2INSTRUCTIVO" value="<?php echo $O2INSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_o2" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>T° </label>
+                                                    <input type="hidden" class="form-control" placeholder="TINSTRUCTIVOE" id="TINSTRUCTIVOE" name="TINSTRUCTIVOE" value="<?php echo $TINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="Temperatura Instructivo" id="TINSTRUCTIVO" name="TINSTRUCTIVO" value="<?php echo $TINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_t" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Fumigado </label>
+                                                    <input type="hidden" class="form-control" placeholder="FUMIGADOE" id="FUMIGADOE" name="FUMIGADOE" value="<?php echo $FUMIGADO; ?>" />
+                                                    <select class="form-control select2" id="FUMIGADO" name="FUMIGADO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <option value="1" <?php if ($FUMIGADO == "1") { echo "selected"; } ?>>Si </option>
+                                                        <option value="2" <?php if ($FUMIGADO == "2") { echo "selected"; } ?>> No</option>
+                                                    </select>
+                                                    <label id="val_fumigado" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label> Apertura Lampa (CBM)</label>
+                                                    <input type="hidden" class="form-control" placeholder="ALAMPAINSTRUCTIVOE" id="ALAMPAINSTRUCTIVOE" name="ALAMPAINSTRUCTIVOE" value="<?php echo $ALAMPAINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="Apertura Lampa Instructivo" id="ALAMPAINSTRUCTIVO" name="ALAMPAINSTRUCTIVO" value="<?php echo $ALAMPAINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_alampa" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             
+                                            <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Exportadora</label>
+                                                    <input type="hidden" class="form-control" placeholder="EXPORTADORAE" id="EXPORTADORAE" name="EXPORTADORAE" value="<?php echo $EXPORTADORA; ?>" />
+                                                    <select class="form-control select2" id="EXPORTADORA" name="EXPORTADORA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYEXPORTADORA as $r) : ?>
+                                                            <?php if ($ARRAYEXPORTADORA) {    ?>
+                                                                <option value="<?php echo $r['ID_EXPORTADORA']; ?>" <?php if ($EXPORTADORA == $r['ID_EXPORTADORA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_EXPORTADORA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_exportadora" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Mercado</label>
+                                                    <input type="hidden" class="form-control" placeholder="MERCADOE" id="MERCADOE" name="MERCADOE" value="<?php echo $MERCADO; ?>" />
+                                                    <select class="form-control select2" id="MERCADO" name="MERCADO" style="width: 100%;" value="<?php echo $MERCADO; ?>" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYMERCADO as $r) : ?>
+                                                            <?php if ($ARRAYMERCADO) {    ?>
+                                                                <option value="<?php echo $r['ID_MERCADO']; ?>" <?php if ($MERCADO == $r['ID_MERCADO']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_MERCADO'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_mercado" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Mercado" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopMercado.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Cliente</label>
+                                                    <input type="hidden" class="form-control" placeholder="BROKERE" id="BROKERE" name="BROKERE" value="<?php echo $BROKER; ?>" />
+                                                    <select class="form-control select2" id="BROKER" name="BROKER" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYBROKER as $r) : ?>
+                                                            <?php if ($ARRAYBROKER) {    ?>
+                                                                <option value="<?php echo $r['ID_BROKER']; ?>" <?php if ($BROKER == $r['ID_BROKER']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_BROKER'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_broker" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Cliente" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopBroker.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                           
+                                            <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Consignatario</label>
+                                                    <input type="hidden" class="form-control" placeholder="CONSIGNATARIO" id="CONSIGNATARIOE" name="CONSIGNATARIOE" value="<?php echo $CONSIGNATARIO; ?>" />
+                                                    <select class="form-control select2" id="CONSIGNATARIO" name="CONSIGNATARIO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYCONSIGNATARIO as $r) : ?>
+                                                            <?php if ($ARRAYCONSIGNATARIO) {    ?>
+                                                                <option value="<?php echo $r['ID_CONSIGNATARIO']; ?>" <?php if ($CONSIGNATARIO == $r['ID_CONSIGNATARIO']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_CONSIGNATARIO'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_consignatario" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Consignatario" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopConsignatorio.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-3 col-xl-5 col-lg-7 col-md-7 col-sm-7 col-7 col-xs-7">
+                                                <div class="form-group">
+                                                    <label>Notificador</label>
+                                                    <input type="hidden" class="form-control" placeholder="NOTIFICADORE" id="NOTIFICADORE" name="NOTIFICADORE" value="<?php echo $NOTIFICADOR; ?>" />
+                                                    <select class="form-control select2" id="NOTIFICADOR" name="NOTIFICADOR" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYNOTIFICADOR as $r) : ?>
+                                                            <?php if ($ARRAYNOTIFICADOR) {    ?>
+                                                                <option value="<?php echo $r['ID_NOTIFICADOR']; ?>" <?php if ($NOTIFICADOR == $r['ID_NOTIFICADOR']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_NOTIFICADOR'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_notificador" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Notificador" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopNotificador.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Planta Carga</label>
+                                                    <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
+                                                    <select class="form-control select2" id="LCARGA" name="LCARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYLCARGA as $r) : ?>
+                                                            <?php if ($ARRAYLCARGA) {    ?>
+                                                                <option value="<?php echo $r['ID_LCARGA']; ?>" <?php if ($LCARGA == $r['ID_LCARGA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_LCARGA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_lcarga" class="validacion"> </label>
+                                                 </div>
+                                            </div>
+                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                     <div class="form-group">
                                                         <label>Puerto Carga</label>
                                                         <input type="hidden" class="form-control" placeholder="PCARGAE" id="PCARGAE" name="PCARGAE" value="<?php echo $PCARGA; ?>" />
@@ -2824,125 +3844,99 @@ if (isset($_POST)) {
                                                         </button>
                                                     </div>
                                                 </div>
-                                            <?php } ?>
-                                        </div>
-                                    </section>
-                                    <section id="section3">
-                                        <div class="row">
-                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <label>Tipo Contenedor</label>
-                                                    <input type="hidden" class="form-control" placeholder="TCONTENEDORE" id="TCONTENEDORE" name="TCONTENEDORE" value="<?php echo $TCONTENEDOR; ?>" />
-                                                    <select class="form-control select2" id="TCONTENEDOR" name="TCONTENEDOR" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                    <label>Pais Destino</label>
+                                                    <input type="hidden" class="form-control" placeholder="PAISE" id="PAISE" name="PAISE" value="<?php echo $PAIS; ?>" />
+                                                    <select class="form-control select2" id="PAIS" name="PAIS" style="width: 100%;" value="<?php echo $PAIS; ?>" <?php echo $DISABLED; ?>>
                                                         <option></option>
-                                                        <?php foreach ($ARRAYTCONTENEDOR as $r) : ?>
-                                                            <?php if ($ARRAYTCONTENEDOR) {    ?>
-                                                                <option value="<?php echo $r['ID_TCONTENEDOR']; ?>" <?php if ($TCONTENEDOR == $r['ID_TCONTENEDOR']) { echo "selected"; } ?>>
-                                                                    <?php echo $r['NOMBRE_TCONTENEDOR'] ?>
+                                                        <?php foreach ($ARRAYPAIS as $r) : ?>
+                                                            <?php if ($ARRAYPAIS) {    ?>
+                                                                <option value="<?php echo $r['ID_PAIS']; ?>" <?php if ($PAIS == $r['ID_PAIS']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_PAIS'] ?>
                                                                 </option>
                                                             <?php } else { ?>
                                                                 <option value="0">No Hay Datos Registrados </option>
                                                             <?php } ?>
                                                         <?php endforeach; ?>
                                                     </select>
-                                                    <label id="val_tcontenedor" class="validacion"> </label>
+                                                    <label id="val_pais" class="validacion"> </label>
                                                 </div>
                                             </div>
-                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                             <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
                                                 <div class="form-group">
-                                                    <br>
-                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Tipo Contenedor" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopTcontenedor.php' ); ">
-                                                        <i class="glyphicon glyphicon-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
-                                                <div class="form-group">
-                                                    <label>Atmósfera</label>
-                                                    <input type="hidden" class="form-control" placeholder="ATMOSFERAE" id="ATMOSFERAE" name="ATMOSFERAE" value="<?php echo $ATMOSFERA; ?>" />
-                                                    <select class="form-control select2" id="ATMOSFERA" name="ATMOSFERA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                    <label>Pais Destino Final</label>
+                                                    <input type="hidden" class="form-control" placeholder="PAISE" id="PAISE" name="PAISE" value="<?php echo $PAIS; ?>" />
+                                                    <select class="form-control select2" id="PAIS" name="PAIS" style="width: 100%;" value="<?php echo $PAIS; ?>" <?php echo $DISABLED; ?>>
                                                         <option></option>
-                                                        <?php foreach ($ARRAYATMOSFERA as $r) : ?>
-                                                            <?php if ($ARRAYATMOSFERA) {    ?>
-                                                                <option value="<?php echo $r['ID_ATMOSFERA']; ?>" <?php if ($ATMOSFERA == $r['ID_ATMOSFERA']) { echo "selected"; } ?>>
-                                                                    <?php echo $r['NOMBRE_ATMOSFERA'] ?>
+                                                        <?php foreach ($ARRAYPAIS as $r) : ?>
+                                                            <?php if ($ARRAYPAIS) {    ?>
+                                                                <option value="<?php echo $r['ID_PAIS']; ?>" <?php if ($PAIS == $r['ID_PAIS']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_PAIS'] ?>
                                                                 </option>
                                                             <?php } else { ?>
                                                                 <option value="0">No Hay Datos Registrados </option>
                                                             <?php } ?>
                                                         <?php endforeach; ?>
                                                     </select>
-                                                    <label id="val_atmosfera" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
-                                                <div class="form-group">
-                                                    <br>
-                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Atmósfera" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAtmosfera.php' ); ">
-                                                        <i class="glyphicon glyphicon-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>T° </label>
-                                                    <input type="hidden" class="form-control" placeholder="TINSTRUCTIVOE" id="TINSTRUCTIVOE" name="TINSTRUCTIVOE" value="<?php echo $TINSTRUCTIVO; ?>" />
-                                                    <input type="number" step="0.1" class="form-control" placeholder="Temperatura Instructivo" id="TINSTRUCTIVO" name="TINSTRUCTIVO" value="<?php echo $TINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_t" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>% O2 </label>
-                                                    <input type="hidden" class="form-control" placeholder="O2INSTRUCTIVOE" id="O2INSTRUCTIVOE" name="O2INSTRUCTIVOE" value="<?php echo $O2INSTRUCTIVO; ?>" />
-                                                    <input type="number" step="0.1" class="form-control" placeholder="% O2 Instructivo" id="O2INSTRUCTIVO" name="O2INSTRUCTIVO" value="<?php echo $O2INSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_o2" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>% CO2 </label>
-                                                    <input type="hidden" class="form-control" placeholder="CO2INSTRUCTIVOE" id="CO2INSTRUCTIVOE" name="CO2INSTRUCTIVOE" value="<?php echo $CO2INSTRUCTIVO; ?>" />
-                                                    <input type="number" step="0.1" class="form-control" placeholder="% CO2 Instructivo" id="CO2INSTRUCTIVO" name="CO2INSTRUCTIVO" value="<?php echo $CO2INSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_co2" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label> Apertura Lampa (CBM)</label>
-                                                    <input type="hidden" class="form-control" placeholder="ALAMPAINSTRUCTIVOE" id="ALAMPAINSTRUCTIVOE" name="ALAMPAINSTRUCTIVOE" value="<?php echo $ALAMPAINSTRUCTIVO; ?>" />
-                                                    <input type="number" step="0.1" class="form-control" placeholder="Apertura Lampa Instructivo" id="ALAMPAINSTRUCTIVO" name="ALAMPAINSTRUCTIVO" value="<?php echo $ALAMPAINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_alampa" class="validacion"> </label>
+                                                    <label id="val_pais" class="validacion"> </label>
                                                 </div>
                                             </div>
                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
-                                                    <label>Forma Pago</label>
-                                                    <input type="hidden" class="form-control" placeholder="FPAGOE" id="FPAGOE" name="FPAGOE" value="<?php echo $FPAGO; ?>" />
-                                                    <select class="form-control select2" id="FPAGO" name="FPAGO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                    <label>Agente Aduana</label>
+                                                    <input type="hidden" class="form-control" placeholder="AADUANAE" id="AADUANAE" name="AADUANAE" value="<?php echo $AADUANA; ?>" />
+                                                    <select class="form-control select2" id="AADUANA" name="AADUANA" style="width: 100%;" <?php echo $DISABLED; ?>>
                                                         <option></option>
-                                                        <?php foreach ($ARRAYFPAGO as $r) : ?>
-                                                            <?php if ($ARRAYFPAGO) {    ?>
-                                                                <option value="<?php echo $r['ID_FPAGO']; ?>" <?php if ($FPAGO == $r['ID_FPAGO']) { echo "selected"; } ?>>
-                                                                    <?php echo $r['NOMBRE_FPAGO'] ?>
+                                                        <?php foreach ($ARRAYAADUANA as $r) : ?>
+                                                            <?php if ($ARRAYAADUANA) {    ?>
+                                                                <option value="<?php echo $r['ID_AADUANA']; ?>" <?php if ($AADUANA == $r['ID_AADUANA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_AADUANA'] ?>
                                                                 </option>
                                                             <?php } else { ?>
                                                                 <option value="0">No Hay Datos Registrados </option>
                                                             <?php } ?>
                                                         <?php endforeach; ?>
                                                     </select>
-                                                    <label id="val_fpago" class="validacion"> </label>
+                                                    <label id="val_aaduana" class="validacion"> </label>
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
                                                 <div class="form-group">
                                                     <br>
-                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Forma Pago" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopFpago.php' ); ">
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Agente Aduana" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAaduana.php' ); ">
                                                         <i class="glyphicon glyphicon-plus"></i>
                                                     </button>
                                                 </div>
                                             </div>
                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Agente Carga</label>
+                                                    <input type="hidden" class="form-control" placeholder="AGCARGAE" id="AGCARGAE" name="AGCARGAE" value="<?php echo $AGCARGA; ?>" />
+                                                    <select class="form-control select2" id="AGCARGA" name="AGCARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYAGCARGA as $r) : ?>
+                                                            <?php if ($ARRAYAGCARGA) {    ?>
+                                                                <option value="<?php echo $r['ID_AGCARGA']; ?>" <?php if ($AGCARGA == $r['ID_AGCARGA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_AGCARGA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_agcarga" class="validacion"> </label>
+                                                 </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Agente Carga" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAgcarga.php' ); ">
+                                                    <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Modalidad Venta</label>
                                                     <input type="hidden" class="form-control" placeholder="MVENTAE" id="MVENTAE" name="MVENTAE" value="<?php echo $MVENTA; ?>" />
@@ -2988,15 +3982,53 @@ if (isset($_POST)) {
                                                     <label id="val_cventa" class="validacion"> </label>
                                                 </div>
                                             </div>
-                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
-                                                    <br>
-                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Cláusula Venta" <?php echo $DISABLED; ?>  id="defecto" name="pop" Onclick="abrirVentana('registroPopCventa.php' ); ">
-                                                        <i class="glyphicon glyphicon-plus"></i>
-                                                    </button>
+                                                    <label>Forma Pago</label>
+                                                    <input type="hidden" class="form-control" placeholder="FPAGOE" id="FPAGOE" name="FPAGOE" value="<?php echo $FPAGO; ?>" />
+                                                    <select class="form-control select2" id="FPAGO" name="FPAGO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYFPAGO as $r) : ?>
+                                                            <?php if ($ARRAYFPAGO) {    ?>
+                                                                <option value="<?php echo $r['ID_FPAGO']; ?>" <?php if ($FPAGO == $r['ID_FPAGO']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_FPAGO'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_fpago" class="validacion"> </label>
                                                 </div>
                                             </div>
                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Lugar Carga</label>
+                                                    <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
+                                                    <select class="form-control select2" id="LCARGA" name="LCARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYLCARGA as $r) : ?>
+                                                            <?php if ($ARRAYLCARGA) {    ?>
+                                                                <option value="<?php echo $r['ID_LCARGA']; ?>" <?php if ($LCARGA == $r['ID_LCARGA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_LCARGA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_lcarga" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Planta Carga" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopLcarga.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div> 
+                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Tipo Flete</label>
                                                     <input type="hidden" class="form-control" placeholder="TFLETEE" id="TFLETEE" name="TFLETEE" value="<?php echo $TFLETE; ?>" />
@@ -3015,72 +4047,31 @@ if (isset($_POST)) {
                                                     <label id="val_tflete" class="validacion"> </label>
                                                 </div>
                                             </div>
+                                            <div class="col-xxl-2 col-xl-5 col-lg-8 col-md-8 col-sm-8 col-8 col-xs-8">
+                                                <div class="form-group">
+                                                    <label>Emision BL</label>
+                                                    <input type="hidden" class="form-control" placeholder="EMISIONBL" id="EMISIONBLE" name="EMISIONBLE" value="<?php echo $EMISIONBL; ?>" />
+                                                    <select class="form-control select2" id="EMISIONBL" name="EMISIONBL" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYEMISIONBL as $r) : ?>
+                                                            <?php if ($ARRAYEMISIONBL) {    ?>
+                                                                <option value="<?php echo $r['ID_EMISIONBL']; ?>" <?php if ($EMISIONBL == $r['ID_EMISIONBL']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_EMISIONBL'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_emisionbl" class="validacion"> </label>
+                                                </div>
+                                            </div>
                                             <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
                                                 <div class="form-group">
                                                     <br>
-                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Cláusula Venta" <?php echo $DISABLED; ?>  id="defecto" name="pop" Onclick="abrirVentana('registroPopTflete.php' ); ">
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Emision BL" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopEmisionbl.php' ); ">
                                                         <i class="glyphicon glyphicon-plus"></i>
                                                     </button>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
-                                                <div class="form-group">
-                                                    <label>Fumigado </label>
-                                                    <input type="hidden" class="form-control" placeholder="FUMIGADOE" id="FUMIGADOE" name="FUMIGADOE" value="<?php echo $FUMIGADO; ?>" />
-                                                    <select class="form-control select2" id="FUMIGADO" name="FUMIGADO" style="width: 100%;" <?php echo $DISABLED; ?>>
-                                                        <option></option>
-                                                        <option value="1" <?php if ($FUMIGADO == "1") { echo "selected"; } ?>>Si </option>
-                                                        <option value="2" <?php if ($FUMIGADO == "2") { echo "selected"; } ?>> No</option>
-                                                    </select>
-                                                    <label id="val_fumigado" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>Costo Flete </label>
-                                                    <input type="hidden" class="form-control" placeholder="COSTOFLETEE" id="COSTOFLETEE" name="COSTOFLETEE" value="<?php echo $COSTOFLETE; ?>" />
-                                                    <input type="number" step="0.1" class="form-control" placeholder="Costo Flete" id="COSTOFLETE" name="COSTOFLETE" value="<?php echo $COSTOFLETE; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_costoflete" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>DUS </label>
-                                                    <input type="hidden" class="form-control" placeholder="DUSINSTRUCTIVOE" id="DUSINSTRUCTIVOE" name="DUSINSTRUCTIVOE" value="<?php echo $DUSINSTRUCTIVO; ?>" />
-                                                    <input type="text" class="form-control" placeholder="Dus Instructivo" id="DUSINSTRUCTIVO" name="DUSINSTRUCTIVO" value="<?php echo $DUSINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_dus" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>BL/AWB </label>
-                                                    <input type="hidden" class="form-control" placeholder="BOLAWBCRTINSTRUCTIVOE" id="BOLAWBCRTINSTRUCTIVOE" name="BOLAWBCRTINSTRUCTIVOE" value="<?php echo $BOLAWBCRTINSTRUCTIVO; ?>" />
-                                                    <input type="text" class="form-control" placeholder="BL/AWB Instructivo" id="BOLAWBCRTINSTRUCTIVO" name="BOLAWBCRTINSTRUCTIVO" value="<?php echo $BOLAWBCRTINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_bolawbcrt" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>Tarifa Flete(Neto) </label>
-                                                    <input type="hidden" class="form-control" placeholder="NETOINSTRUCTIVOE" id="NETOINSTRUCTIVOE" name="NETOINSTRUCTIVOE" value="<?php echo $NETOINSTRUCTIVO; ?>" />
-                                                    <input type="number" step="0.1" class="form-control" placeholder="Tarifa Flete(Neto) Instructivo" id="NETOINSTRUCTIVO" name="NETOINSTRUCTIVO" onchange="publica()" value="<?php echo $NETOINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_neto" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>Rebate </label>
-                                                    <input type="hidden" class="form-control" placeholder="REBATEINSTRUCTIVOE" id="REBATEINSTRUCTIVOE" name="REBATEINSTRUCTIVOE" value="<?php echo $REBATEINSTRUCTIVO; ?>" />
-                                                    <input type="number" step="0.1" class="form-control" placeholder="Rebate Instructivo " id="REBATEINSTRUCTIVO" name="REBATEINSTRUCTIVO" onchange="publica()" value="<?php echo $REBATEINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_rebate" class="validacion"> </label>
-                                                </div>
-                                            </div>
-                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
-                                                <div class="form-group">
-                                                    <label>Publica </label>
-                                                    <input type="hidden" class="form-control" placeholder="PUBLICAINSTRUCTIVO" id="PUBLICAINSTRUCTIVO" name="PUBLICAINSTRUCTIVO" value="<?php echo $PUBLICAINSTRUCTIVO; ?>" />
-                                                    <input type="number" step="0.1"  class="form-control" placeholder="$USD Flete Instructivo" id="PUBLICAINSTRUCTIVOE" name="PUBLICAINSTRUCTIVOE" value="<?php echo $PUBLICAINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> disabled />
-                                                    <label id="val_publica" class="validacion"> </label>
                                                 </div>
                                             </div>
                                             <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
@@ -3102,9 +4093,897 @@ if (isset($_POST)) {
                                                     <label id="val_seguro" class="validacion"> </label>
                                                 </div>
                                             </div>
+                                            <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>FDA </label>
+                                                    <input type="hidden" class="form-control" placeholder="FDA" id="FDA" name="FDA" value="<?php echo $FDA; ?>" />
+                                                    <input type="text" class="form-control" placeholder="FDA" id="FDAE" name="FDAE" value="<?php echo $FDA; ?>" disabled style='background-color: #eeeeee;' />
+                                                    <label id=" val_fda" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <input type="hidden" class="form-control" placeholder="OBSERVACION PROCESO" id="OBSERVACIONINSTRUCTIVOE" name="OBSERVACIONINSTRUCTIVOE" value="<?php echo $OBSERVACIONINSTRUCTIVO; ?>" />
+                                                        <label>Observaciones </label>
+                                                        <textarea class="form-control" rows="1" placeholder="Ingrese Nota e Observacion  " id="OBSERVACIONINSTRUCTIVO" name="OBSERVACIONINSTRUCTIVO" <?php echo $DISABLED; ?>><?php echo $OBSERVACIONINSTRUCTIVO; ?></textarea>
+                                                        <label id="val_observacion" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                    <div class="form-group">
+                                                        <input type="hidden" class="form-control" placeholder="OBSERVACION PROCESO" id="OBSERVACIONIINSTRUCTIVOE" name="OBSERVACIONIINSTRUCTIVOE" value="<?php echo $OBSERVACIONIINSTRUCTIVO; ?>" />
+                                                        <label>Observaciones Invoice </label>
+                                                        <textarea class="form-control" rows="1" placeholder="Ingrese Nota e Observacion  " id="OBSERVACIONIINSTRUCTIVO" name="OBSERVACIONIINSTRUCTIVO" <?php echo $DISABLED; ?>><?php echo $OBSERVACIONIINSTRUCTIVO; ?></textarea>
+                                                        <label id="val_observacioni" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Publica </label>
+                                                    <input type="hidden" class="form-control" placeholder="PUBLICAINSTRUCTIVO" id="PUBLICAINSTRUCTIVO" name="PUBLICAINSTRUCTIVO" value="<?php echo $PUBLICAINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1"  class="form-control" placeholder="$USD Flete Instructivo" id="PUBLICAINSTRUCTIVOE" name="PUBLICAINSTRUCTIVOE" value="<?php echo $PUBLICAINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> disabled />
+                                                    <label id="val_publica" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            
+                                            <!-- <div class="col-xxl-2 col-xl-5 col-lg-8 col-md-8 col-sm-8 col-8 col-xs-8">
+                                                <div class="form-group">
+                                                    <label>Emision BL</label>
+                                                    <input type="hidden" class="form-control" placeholder="EMISIONBL" id="EMISIONBLE" name="EMISIONBLE" value="<?php echo $EMISIONBL; ?>" />
+                                                    <select class="form-control select2" id="EMISIONBL" name="EMISIONBL" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYEMISIONBL as $r) : ?>
+                                                            <?php if ($ARRAYEMISIONBL) {    ?>
+                                                                <option value="<?php echo $r['ID_EMISIONBL']; ?>" <?php if ($EMISIONBL == $r['ID_EMISIONBL']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_EMISIONBL'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_emisionbl" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Emision BL" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopEmisionbl.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div> -->
+                                             <!-- <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Recibidor Final</label>
+                                                    <input type="hidden" class="form-control" placeholder="RFINALE" id="RFINALE" name="RFINALE" value="<?php echo $RFINAL; ?>" />
+                                                    <select class="form-control select2" id="RFINAL" name="RFINAL" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYRFINAL as $r) : ?>
+                                                            <?php if ($ARRAYRFINAL) {    ?>
+                                                                <option value="<?php echo $r['ID_RFINAL']; ?>" <?php if ($RFINAL == $r['ID_RFINAL']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_RFINAL'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_rfinal" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Recibidor Final" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopRfinal.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div> -->
+                                             <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Destino Final" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopDfinal.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div> -->
+
+                                             <?php } ?>
+
+                                            
+                                           
                                         </div>
                                     </section>
-                                    <div class="row">
+
+
+
+
+<!-------------------------------------------- SECCION DE PASO 2 ----------------------------------------------------------->
+
+
+
+
+                                    <section id="section2">
+                                        <div class="row">
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Fecha ETD</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA ETD" id="FECHAETDE" name="FECHAETDE" value="<?php echo $FECHAETD; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha  ETD" id="FECHAETD" name="FECHAETD" value="<?php echo $FECHAETD; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaetd" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Fecha ETA</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHAETAE" name="FECHAETAE" value="<?php echo $FECHAETA; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha ETA" id="FECHAETA" name="FECHAETA" value="<?php echo $FECHAETA; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaeta" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Fecha Real ETA</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHAETAREALE" name="FECHAETAREALE" value="<?php echo $FECHAETA; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha ETA Real" id="FECHAETAREAL" name="FECHAETAREAL" value="<?php echo $FECHAETA; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaetareal" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>N° Contenedor </label>
+                                                    <input type="hidden" class="form-control" placeholder="NCONTENEDORE" id="NCONTENEDORE" name="NCONTENEDORE" value="<?php echo $NCONTENEDOR; ?>" />
+                                                    <input type="text" class="form-control" placeholder="N° Contenedor" id="NCONTENEDOR" name="NCONTENEDOR" value="<?php echo $NCONTENEDOR; ?>" <?php echo $DISABLED; ?>/>
+                                                    <label id=" val_ncontenedor" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Agente Aduana</label>
+                                                    <input type="hidden" class="form-control" placeholder="AADUANAE" id="AADUANAE" name="AADUANAE" value="<?php echo $AADUANA; ?>" />
+                                                    <select class="form-control select2" id="AADUANA" name="AADUANA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYAADUANA as $r) : ?>
+                                                            <?php if ($ARRAYAADUANA) {    ?>
+                                                                <option value="<?php echo $r['ID_AADUANA']; ?>" <?php if ($AADUANA == $r['ID_AADUANA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_AADUANA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_aaduana" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Agente Aduana" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAaduana.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Agente Carga</label>
+                                                    <input type="hidden" class="form-control" placeholder="AGCARGAE" id="AGCARGAE" name="AGCARGAE" value="<?php echo $AGCARGA; ?>" />
+                                                    <select class="form-control select2" id="AGCARGA" name="AGCARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYAGCARGA as $r) : ?>
+                                                            <?php if ($ARRAYAGCARGA) {    ?>
+                                                                <option value="<?php echo $r['ID_AGCARGA']; ?>" <?php if ($AGCARGA == $r['ID_AGCARGA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_AGCARGA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_agcarga" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Agente Carga" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAgcarga.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>FDA </label>
+                                                    <input type="hidden" class="form-control" placeholder="FDA" id="FDA" name="FDA" value="<?php echo $FDA; ?>" />
+                                                    <input type="text" class="form-control" placeholder="FDA" id="FDAE" name="FDAE" value="<?php echo $FDA; ?>" disabled style='background-color: #eeeeee;' />
+                                                    <label id=" val_fda" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+
+
+
+  <!--------------------------------------------------- PARTE 2 TERRESTRE -------------------------------------------------------------------------->
+
+
+
+                                            <?php if ($TEMBARQUE == "1") { ?>
+                                                <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>CRT</label>
+                                                        <input type="hidden" class="form-control" placeholder="CRT" id="CRTE" name="CRTE" value="<?php echo $CRT; ?>" />
+                                                        <input type="text" class="form-control" placeholder="CRT" id="CRT" name="CRT" value="<?php echo $CRT; ?>" <?php echo $DISABLED; ?> />
+                                                        <label id="val_crt" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Fecha Real ETD</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA ETD" id="FECHAETDREALE" name="FECHAETDREALE" value="<?php echo $FECHAETDREAL; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha  ETD" id="FECHAETDREAL" name="FECHAETDREAL" value="<?php echo $FECHAETDREAL; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaetdreal" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Fecha Real ETA</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHAETAREALE" name="FECHAETAREALE" value="<?php echo $FECHAETA; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha ETA Real" id="FECHAETAREAL" name="FECHAETAREAL" value="<?php echo $FECHAETA; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaetareal" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>DUS </label>
+                                                    <input type="hidden" class="form-control" placeholder="DUSINSTRUCTIVOE" id="DUSINSTRUCTIVOE" name="DUSINSTRUCTIVOE" value="<?php echo $DUSINSTRUCTIVO; ?>" />
+                                                    <input type="text" class="form-control" placeholder="Dus Instructivo" id="DUSINSTRUCTIVO" name="DUSINSTRUCTIVO" value="<?php echo $DUSINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_dus" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                                 <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                    <div class="form-group">
+                                                        <label>Transporte</label>
+                                                        <input type="hidden" class="form-control" placeholder="TRANSPORTEE" id="TRANSPORTEE" name="TRANSPORTEE" value="<?php echo $TRANSPORTE; ?>" />
+                                                        <select class="form-control select2" id="TRANSPORTE" name="TRANSPORTE" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                            <option></option>
+                                                            <?php foreach ($ARRAYTRANSPORTE as $r) : ?>
+                                                                <?php if ($ARRAYTRANSPORTE) {    ?>
+                                                                    <option value="<?php echo $r['ID_TRANSPORTE']; ?>" <?php if ($TRANSPORTE == $r['ID_TRANSPORTE']) { echo "selected"; } ?>>
+                                                                        <?php echo $r['NOMBRE_TRANSPORTE'] ?>
+                                                                    </option>
+                                                                <?php } else { ?>
+                                                                    <option value="0">No Hay Datos Registrados </option>
+                                                                <?php } ?>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                        <label id="val_transporte" class="validacion"> </label>
+                                                    </div>
+                                                </div> -->
+                                            <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                    <div class="form-group">
+                                                        <br>
+                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Transporte" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopTransporte.php' ); ">
+                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div> -->
+                                        
+                                            
+                                                <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                    <div class="form-group">
+                                                        <label>Lugar Carga</label>
+                                                        <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
+                                                        <select class="form-control select2" id="LCARGA" name="LCARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                            <option></option>
+                                                            <?php foreach ($ARRAYLCARGA as $r) : ?>
+                                                                <?php if ($ARRAYLCARGA) {    ?>
+                                                                    <option value="<?php echo $r['ID_LCARGA']; ?>" <?php if ($LCARGA == $r['ID_LCARGA']) { echo "selected"; } ?>>
+                                                                        <?php echo $r['NOMBRE_LCARGA'] ?>
+                                                                    </option>
+                                                                <?php } else { ?>
+                                                                    <option value="0">No Hay Datos Registrados </option>
+                                                                <?php } ?>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                        <label id="val_lcarga" class="validacion"> </label>
+                                                    </div>
+                                                </div> -->
+                                                <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                    <div class="form-group">
+                                                        <br>
+                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Lugar Carga" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopLcarga.php' ); ">
+                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div> -->
+                                                <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                    <div class="form-group">
+                                                        <label>Lugar Destino</label>
+                                                        <input type="hidden" class="form-control" placeholder="LDESTINOE" id="LDESTINOE" name="LDESTINOE" value="<?php echo $LDESTINO; ?>" />
+                                                        <select class="form-control select2" id="LDESTINO" name="LDESTINO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                            <option></option>
+                                                            <?php foreach ($ARRAYLDESTINO  as $r) : ?>
+                                                                <?php if ($ARRAYLDESTINO) {    ?>
+                                                                    <option value="<?php echo $r['ID_LDESTINO']; ?>" <?php if ($LDESTINO == $r['ID_LDESTINO']) { echo "selected"; } ?>>
+                                                                        <?php echo $r['NOMBRE_LDESTINO'] ?>
+                                                                    </option>
+                                                                <?php } else { ?>
+                                                                    <option value="0">No Hay Datos Registrados </option>
+                                                                <?php } ?>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                        <label id="val_ldestino" class="validacion"> </label>
+                                                    </div>
+                                                </div> -->
+                                                <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                    <div class="form-group">
+                                                        <br>
+                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Lugar Destino" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopLdestino.php' ); ">
+                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div> -->
+                                            <?php } ?>
+
+
+
+
+
+<!------------------------------------------------- PARTE 2 AEREA ------------------------------------------------------------------------------->
+
+
+
+
+
+                                            <?php if ($TEMBARQUE == "2") { ?>
+
+
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Fecha Real ETD</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA ETD" id="FECHAETDREALE" name="FECHAETDREALE" value="<?php echo $FECHAETDREAL; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha  ETD" id="FECHAETDREAL" name="FECHAETDREAL" value="<?php echo $FECHAETDREAL; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaetdreal" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Fecha Real ETA</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHAETAREALE" name="FECHAETAREALE" value="<?php echo $FECHAETA; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha ETA Real" id="FECHAETAREAL" name="FECHAETAREAL" value="<?php echo $FECHAETA; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaetareal" class="validacion"> </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>AWB </label>
+                                                    <input type="hidden" class="form-control" placeholder="BOLAWBCRTINSTRUCTIVOE" id="BOLAWBCRTINSTRUCTIVOE" name="BOLAWBCRTINSTRUCTIVOE" value="<?php echo $BOLAWBCRTINSTRUCTIVO; ?>" />
+                                                    <input type="text" class="form-control" placeholder="BL/AWB Instructivo" id="BOLAWBCRTINSTRUCTIVO" name="BOLAWBCRTINSTRUCTIVO" value="<?php echo $BOLAWBCRTINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_bolawbcrt" class="validacion"> </label>
+                                                </div>
+                                            </div>
+
+
+
+
+
+                                                <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6"> 
+                                                <div class="form-group">
+                                                    <label>Fecha Corte Documental</label>
+                                                    <input type="hidden" class="form-control" placeholder="Instructivo Carga" id="FECHACDOCUMENTALICARGAE" name="FECHACDOCUMENTALICARGAE" value="<?php echo $FECHACDOCUMENTALICARGA; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha Corte Documental" id="FECHACDOCUMENTALICARGA" name="FECHACDOCUMENTALICARGA" value="<?php echo $FECHACDOCUMENTALICARGA; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechacd" class="validacion"> </label>
+                                                </div> 
+                                            </div> -->
+                                                <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                    <div class="form-group">
+                                                        <label>Linea Aerea</label>
+                                                        <input type="hidden" class="form-control" placeholder="LAEREAE" id="LAEREAE" name="LAEREAE" value="<?php echo $LAEREA; ?>" />
+                                                        <select class="form-control select2" id="LAEREA" name="LAEREA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                            <option></option>
+                                                            <?php foreach ($ARRAYLAEREA as $r) : ?>
+                                                                <?php if ($ARRAYLAEREA) {    ?>
+                                                                    <option value="<?php echo $r['ID_LAEREA']; ?>" <?php if ($LAEREA == $r['ID_LAEREA']) { echo "selected"; } ?>>
+                                                                        <?php echo $r['NOMBRE_LAEREA'] ?>
+                                                                    </option>
+                                                                <?php } else { ?>
+                                                                    <option value="0">No Hay Datos Registrados </option>
+                                                                <?php } ?>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                        <label id="val_larea" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                    <div class="form-group">
+                                                        <br>
+                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Linea Aerea" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopLaerea.php' ); ">
+                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>Nave </label>
+                                                        <input type="hidden" class="form-control" placeholder="NAVEE" id="NAVEE" name="NAVEE" value="<?php echo $NAVE; ?>" />
+                                                        <input type="text" class="form-control" placeholder="NAVE" id="NAVE" name="NAVE" value="<?php echo $NAVE; ?>" <?php echo $DISABLED; ?> />
+                                                        <label id="val_nave" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>Vuelo</label>
+                                                        <input type="hidden" class="form-control" placeholder="NVIAJEE" id="NVIAJEE" name="NVIAJEE" value="<?php echo $NVIAJE; ?>" />
+                                                        <input type="text" class="form-control" placeholder="Número Viaje" id="NVIAJE" name="NVIAJE" value="<?php echo $NVIAJE; ?>" <?php echo $DISABLED; ?> />
+                                                        <label id="val_nviaje" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                    <div class="form-group">
+                                                        <label>Aeropuerto Carga</label>
+                                                        <input type="hidden" class="form-control" placeholder="ACARGAE" id="ACARGAE" name="ACARGAE" value="<?php echo $ACARGA; ?>" />
+                                                        <select class="form-control select2" id="ACARGA" name="ACARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                            <option></option>
+                                                            <?php foreach ($ARRAYACARGA as $r) : ?>
+                                                                <?php if ($ARRAYACARGA) {    ?>
+                                                                    <option value="<?php echo $r['ID_ACARGA']; ?>" <?php if ($ACARGA == $r['ID_ACARGA']) { echo "selected"; } ?>>
+                                                                        <?php echo $r['NOMBRE_ACARGA'] ?>
+                                                                    </option>
+                                                                <?php } else { ?>
+                                                                    <option value="0">No Hay Datos Registrados </option>
+                                                                <?php } ?>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                        <label id="val_acarga" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                    <div class="form-group">
+                                                        <br>
+                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Aeropuerto Carga" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAcarga.php' ); ">
+                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                    <div class="form-group">
+                                                        <label>Aeropuerto Destino</label>
+                                                        <input type="hidden" class="form-control" placeholder="ADESTINOE" id="ADESTINOE" name="ADESTINOE" value="<?php echo $ADESTINO; ?>" />
+                                                        <select class="form-control select2" id="ADESTINO" name="ADESTINO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                            <option></option>
+                                                            <?php foreach ($ARRAYADESTINO as $r) : ?>
+                                                                <?php if ($ARRAYADESTINO) {    ?>
+                                                                    <option value="<?php echo $r['ID_ADESTINO']; ?>" <?php if ($ADESTINO == $r['ID_ADESTINO']) { echo "selected"; } ?>>
+                                                                        <?php echo $r['NOMBRE_ADESTINO'] ?>
+                                                                    </option>
+                                                                <?php } else { ?>
+                                                                    <option value="0">No Hay Datos Registrados </option>
+                                                                <?php } ?>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                        <label id="val_adestino" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                    <div class="form-group">
+                                                        <br>
+                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Aeropuerto Destino" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAdestino.php' ); ">
+                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div> -->
+
+
+
+ <!------------------------------------------------------PARTE 2 MARITIMA ------------------------------------------------------------>
+
+
+
+                                            <?php } ?>
+                                            <?php if ($TEMBARQUE == "3") { ?>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Fecha Real ETD</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA ETD" id="FECHAETDREALE" name="FECHAETDREALE" value="<?php echo $FECHAETDREAL; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha  ETD" id="FECHAETDREAL" name="FECHAETDREAL" value="<?php echo $FECHAETDREAL; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaetdreal" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Fecha Real ETA</label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHAETAREALE" name="FECHAETAREALE" value="<?php echo $FECHAETA; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha ETA Real" id="FECHAETAREAL" name="FECHAETAREAL" value="<?php echo $FECHAETA; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechaetareal" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                             
+                                            <div class="col-xxl-2 col-xl-5 col-lg-8 col-md-8 col-sm-8 col-8 col-xs-8">
+                                                <div class="form-group">
+                                                    <label>BL</label>
+                                                    <input type="hidden" class="form-control" placeholder="EMISIONBL" id="EMISIONBLE" name="EMISIONBLE" value="<?php echo $EMISIONBL; ?>" />
+                                                    <select class="form-control select2" id="EMISIONBL" name="EMISIONBL" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYEMISIONBL as $r) : ?>
+                                                            <?php if ($ARRAYEMISIONBL) {    ?>
+                                                                <option value="<?php echo $r['ID_EMISIONBL']; ?>" <?php if ($EMISIONBL == $r['ID_EMISIONBL']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_EMISIONBL'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_emisionbl" class="validacion"> </label>
+                                                </div>
+                                            </div> 
+                                             <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Emision BL" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopEmisionbl.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Numero courier</label>
+                                                    <input type="hidden" class="form-control" placeholder="NUMERO COURIER" id="NCOURIER" name="NCOURIER" value="" />
+                                                    <input type="text" class="form-control" placeholder="numero courier" id="NCOURIER" name="NCOURIER" value="" <?php echo $DISABLED; ?> />
+                                                    <label id="val_ncourier" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                                <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>DUS </label>
+                                                    <input type="hidden" class="form-control" placeholder="DUSINSTRUCTIVOE" id="DUSINSTRUCTIVOE" name="DUSINSTRUCTIVOE" value="<?php echo $DUSINSTRUCTIVO; ?>" />
+                                                    <input type="text" class="form-control" placeholder="Dus Instructivo" id="DUSINSTRUCTIVO" name="DUSINSTRUCTIVO" value="<?php echo $DUSINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_dus" class="validacion"> </label>
+                                                </div>
+                                            </div>
+                                                <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>Nave </label>
+                                                        <input type="hidden" class="form-control" placeholder="NAVEE" id="NAVEE" name="NAVEE" value="<?php echo $NAVE; ?>" />
+                                                        <input type="text" class="form-control" placeholder="NAVE" id="NAVE" name="NAVE" value="<?php echo $NAVE; ?>" <?php echo $DISABLED; ?> />
+                                                        <label id="val_nave" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>Inicio Stacking</label>
+                                                        <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHASTACKINGE" name="FECHASTACKINGE" value="<?php echo $FECHASTACKING; ?>" />
+                                                        <input type="date" class="form-control" placeholder="Fecha Stacking" id="FECHASTACKING" name="FECHASTACKING" value="<?php echo $FECHASTACKING; ?>" <?php echo $DISABLED; ?> />
+                                                        <label id="val_fechastacking" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                 <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>Fecha Cierre</label>
+                                                        <input type="hidden" class="form-control" placeholder="FECHA PROCESO" id="FECHACIERRE" name="FECHACIERRE" value="<?php echo $FECHASTACKING; ?>" />
+                                                        <input type="date" class="form-control" placeholder="Fecha Cierre" id="FECHACIERRE" name="FECHACIERRE" value="<?php echo $FECHASTACKING; ?>" <?php echo $DISABLED; ?> />
+                                                        <label id="val_fechacierre" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>Número Viaje</label>
+                                                        <input type="hidden" class="form-control" placeholder="NVIAJEE" id="NVIAJEE" name="NVIAJEE" value="<?php echo $NVIAJE; ?>" />
+                                                        <input type="text" class="form-control" placeholder="Número Viaje" id="NVIAJE" name="NVIAJE" value="<?php echo $NVIAJE; ?>" <?php echo $DISABLED; ?> />
+                                                        <label id="val_nviaje" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                    <div class="form-group">
+                                                        <label>Puerto Carga</label>
+                                                        <input type="hidden" class="form-control" placeholder="PCARGAE" id="PCARGAE" name="PCARGAE" value="<?php echo $PCARGA; ?>" />
+                                                        <select class="form-control select2" id="PCARGA" name="PCARGA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                            <option></option>
+                                                            <?php foreach ($ARRAYPCARGA as $r) : ?>
+                                                                <?php if ($ARRAYPCARGA) {    ?>
+                                                                    <option value="<?php echo $r['ID_PCARGA']; ?>" <?php if ($PCARGA == $r['ID_PCARGA']) { echo "selected"; } ?>>
+                                                                        <?php echo $r['NOMBRE_PCARGA'] ?>
+                                                                    </option>
+                                                                <?php } else { ?>
+                                                                    <option value="0">No Hay Datos Registrados </option>
+                                                                <?php } ?>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                        <label id="val_pcarga" class="validacion"> </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                    <div class="form-group">
+                                                        <br>
+                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Puerto Carga" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopPcarga.php' ); ">
+                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div> -->
+
+
+
+
+                                                <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                    <div class="form-group">
+                                                        <label>Puerto Destino</label>
+                                                        <input type="hidden" class="form-control" placeholder="PDESTINOE" id="PDESTINOE" name="PDESTINOE" value="<?php echo $PDESTINO; ?>" />
+                                                        <select class="form-control select2" id="PDESTINO" name="PDESTINO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                            <option></option>
+                                                            <?php foreach ($ARRAYPDESTINO as $r) : ?>
+                                                                <?php if ($ARRAYPDESTINO) {    ?>
+                                                                    <option value="<?php echo $r['ID_PDESTINO']; ?>" <?php if ($PDESTINO == $r['ID_PDESTINO']) { echo "selected"; } ?>>
+                                                                        <?php echo $r['NOMBRE_PDESTINO'] ?>
+                                                                    </option>
+                                                                <?php } else { ?>
+                                                                    <option value="0">No Hay Datos Registrados </option>
+                                                                <?php } ?>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                        <label id="val_pdestino" class="validacion"> </label>
+                                                    </div>
+                                                </div> -->
+                                                <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                    <div class="form-group">
+                                                        <br>
+                                                        <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Puerto Destino" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopPdestino.php' ); ">
+                                                            <i class="glyphicon glyphicon-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                </div> -->
+                                            <?php } ?>
+                                        
+                                    </section>
+                                    <section id="section3">
+                                        <div class="row">
+                                            
+                                            <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Atmósfera</label>
+                                                    <input type="hidden" class="form-control" placeholder="ATMOSFERAE" id="ATMOSFERAE" name="ATMOSFERAE" value="<?php echo $ATMOSFERA; ?>" />
+                                                    <select class="form-control select2" id="ATMOSFERA" name="ATMOSFERA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYATMOSFERA as $r) : ?>
+                                                            <?php if ($ARRAYATMOSFERA) {    ?>
+                                                                <option value="<?php echo $r['ID_ATMOSFERA']; ?>" <?php if ($ATMOSFERA == $r['ID_ATMOSFERA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_ATMOSFERA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_atmosfera" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Atmósfera" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopAtmosfera.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>T° </label>
+                                                    <input type="hidden" class="form-control" placeholder="TINSTRUCTIVOE" id="TINSTRUCTIVOE" name="TINSTRUCTIVOE" value="<?php echo $TINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="Temperatura Instructivo" id="TINSTRUCTIVO" name="TINSTRUCTIVO" value="<?php echo $TINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_t" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>% O2 </label>
+                                                    <input type="hidden" class="form-control" placeholder="O2INSTRUCTIVOE" id="O2INSTRUCTIVOE" name="O2INSTRUCTIVOE" value="<?php echo $O2INSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="% O2 Instructivo" id="O2INSTRUCTIVO" name="O2INSTRUCTIVO" value="<?php echo $O2INSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_o2" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>% CO2 </label>
+                                                    <input type="hidden" class="form-control" placeholder="CO2INSTRUCTIVOE" id="CO2INSTRUCTIVOE" name="CO2INSTRUCTIVOE" value="<?php echo $CO2INSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="% CO2 Instructivo" id="CO2INSTRUCTIVO" name="CO2INSTRUCTIVO" value="<?php echo $CO2INSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_co2" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label> Apertura Lampa (CBM)</label>
+                                                    <input type="hidden" class="form-control" placeholder="ALAMPAINSTRUCTIVOE" id="ALAMPAINSTRUCTIVOE" name="ALAMPAINSTRUCTIVOE" value="<?php echo $ALAMPAINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="Apertura Lampa Instructivo" id="ALAMPAINSTRUCTIVO" name="ALAMPAINSTRUCTIVO" value="<?php echo $ALAMPAINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_alampa" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Forma Pago</label>
+                                                    <input type="hidden" class="form-control" placeholder="FPAGOE" id="FPAGOE" name="FPAGOE" value="<?php echo $FPAGO; ?>" />
+                                                    <select class="form-control select2" id="FPAGO" name="FPAGO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYFPAGO as $r) : ?>
+                                                            <?php if ($ARRAYFPAGO) {    ?>
+                                                                <option value="<?php echo $r['ID_FPAGO']; ?>" <?php if ($FPAGO == $r['ID_FPAGO']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_FPAGO'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_fpago" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Forma Pago" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopFpago.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Modalidad Venta</label>
+                                                    <input type="hidden" class="form-control" placeholder="MVENTAE" id="MVENTAE" name="MVENTAE" value="<?php echo $MVENTA; ?>" />
+                                                    <select class="form-control select2" id="MVENTA" name="MVENTA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYMVENTA as $r) : ?>
+                                                            <?php if ($ARRAYMVENTA) {    ?>
+                                                                <option value="<?php echo $r['ID_MVENTA']; ?>" <?php if ($MVENTA == $r['ID_MVENTA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_MVENTA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_mventa" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            
+                                            <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Cláusula Venta</label>
+                                                    <input type="hidden" class="form-control" placeholder="CVENTAE" id="CVENTAE" name="CVENTAE" value="<?php echo $CVENTA; ?>" />
+                                                    <select class="form-control select2" id="CVENTA" name="CVENTA" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYCVENTA as $r) : ?>
+                                                            <?php if ($ARRAYCVENTA) {    ?>
+                                                                <option value="<?php echo $r['ID_CVENTA']; ?>" <?php if ($CVENTA == $r['ID_CVENTA']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_CVENTA'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_cventa" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Cláusula Venta" <?php echo $DISABLED; ?>  id="defecto" name="pop" Onclick="abrirVentana('registroPopCventa.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                                <div class="form-group">
+                                                    <label>Tipo Flete</label>
+                                                    <input type="hidden" class="form-control" placeholder="TFLETEE" id="TFLETEE" name="TFLETEE" value="<?php echo $TFLETE; ?>" />
+                                                    <select class="form-control select2" id="TFLETE" name="TFLETE" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYTFLETE as $r) : ?>
+                                                            <?php if ($ARRAYTFLETE) {    ?>
+                                                                <option value="<?php echo $r['ID_TFLETE']; ?>" <?php if ($TFLETE == $r['ID_TFLETE']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_TFLETE'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_tflete" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                                <div class="form-group">
+                                                    <br>
+                                                    <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Cláusula Venta" <?php echo $DISABLED; ?>  id="defecto" name="pop" Onclick="abrirVentana('registroPopTflete.php' ); ">
+                                                        <i class="glyphicon glyphicon-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Fumigado </label>
+                                                    <input type="hidden" class="form-control" placeholder="FUMIGADOE" id="FUMIGADOE" name="FUMIGADOE" value="<?php echo $FUMIGADO; ?>" />
+                                                    <select class="form-control select2" id="FUMIGADO" name="FUMIGADO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <option value="1" <?php if ($FUMIGADO == "1") { echo "selected"; } ?>>Si </option>
+                                                        <option value="2" <?php if ($FUMIGADO == "2") { echo "selected"; } ?>> No</option>
+                                                    </select>
+                                                    <label id="val_fumigado" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Costo Flete </label>
+                                                    <input type="hidden" class="form-control" placeholder="COSTOFLETEE" id="COSTOFLETEE" name="COSTOFLETEE" value="<?php echo $COSTOFLETE; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="Costo Flete" id="COSTOFLETE" name="COSTOFLETE" value="<?php echo $COSTOFLETE; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_costoflete" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                                <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                    <div class="form-group">
+                                                        <label>DUS </label>
+                                                        <input type="hidden" class="form-control" placeholder="DUSINSTRUCTIVOE" id="DUSINSTRUCTIVOE" name="DUSINSTRUCTIVOE" value="<?php echo $DUSINSTRUCTIVO; ?>" />
+                                                        <input type="text" class="form-control" placeholder="Dus Instructivo" id="DUSINSTRUCTIVO" name="DUSINSTRUCTIVO" value="<?php echo $DUSINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                        <label id="val_dus" class="validacion"> </label>
+                                                        </div>
+                                                </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>BL/AWB </label>
+                                                    <input type="hidden" class="form-control" placeholder="BOLAWBCRTINSTRUCTIVOE" id="BOLAWBCRTINSTRUCTIVOE" name="BOLAWBCRTINSTRUCTIVOE" value="<?php echo $BOLAWBCRTINSTRUCTIVO; ?>" />
+                                                    <input type="text" class="form-control" placeholder="BL/AWB Instructivo" id="BOLAWBCRTINSTRUCTIVO" name="BOLAWBCRTINSTRUCTIVO" value="<?php echo $BOLAWBCRTINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_bolawbcrt" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Tarifa Flete(Neto) </label>
+                                                    <input type="hidden" class="form-control" placeholder="NETOINSTRUCTIVOE" id="NETOINSTRUCTIVOE" name="NETOINSTRUCTIVOE" value="<?php echo $NETOINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="Tarifa Flete(Neto) Instructivo" id="NETOINSTRUCTIVO" name="NETOINSTRUCTIVO" onchange="publica()" value="<?php echo $NETOINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_neto" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Rebate </label>
+                                                    <input type="hidden" class="form-control" placeholder="REBATEINSTRUCTIVOE" id="REBATEINSTRUCTIVOE" name="REBATEINSTRUCTIVOE" value="<?php echo $REBATEINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1" class="form-control" placeholder="Rebate Instructivo " id="REBATEINSTRUCTIVO" name="REBATEINSTRUCTIVO" onchange="publica()" value="<?php echo $REBATEINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_rebate" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
+                                                <div class="form-group">
+                                                    <label>Publica </label>
+                                                    <input type="hidden" class="form-control" placeholder="PUBLICAINSTRUCTIVO" id="PUBLICAINSTRUCTIVO" name="PUBLICAINSTRUCTIVO" value="<?php echo $PUBLICAINSTRUCTIVO; ?>" />
+                                                    <input type="number" step="0.1"  class="form-control" placeholder="$USD Flete Instructivo" id="PUBLICAINSTRUCTIVOE" name="PUBLICAINSTRUCTIVOE" value="<?php echo $PUBLICAINSTRUCTIVO; ?>" <?php echo $DISABLED; ?> disabled />
+                                                    <label id="val_publica" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                            <!-- <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
+                                                <div class="form-group">
+                                                    <label>Seguro Carga </label>
+                                                    <input type="hidden" class="form-control" placeholder="SEGUROE" id="SEGUROE" name="SEGUROE" value="<?php echo $SEGURO; ?>" />
+                                                    <select class="form-control select2" id="SEGURO" name="SEGURO" style="width: 100%;" <?php echo $DISABLED; ?>>
+                                                        <option></option>
+                                                        <?php foreach ($ARRAYSEGURO as $r) : ?>
+                                                            <?php if ($ARRAYSEGURO) {    ?>
+                                                                <option value="<?php echo $r['ID_SEGURO']; ?>" <?php if ($SEGURO == $r['ID_SEGURO']) { echo "selected"; } ?>>
+                                                                    <?php echo $r['NOMBRE_SEGURO'] ?>
+                                                                </option>
+                                                            <?php } else { ?>
+                                                                <option value="0">No Hay Datos Registrados </option>
+                                                            <?php } ?>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                    <label id="val_seguro" class="validacion"> </label>
+                                                </div>
+                                            </div> -->
+                                        </div>
+                                    </section>
+                                    <!-- <div class="row">
                                         <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
                                             <div class="form-group">
                                                 <input type="hidden" class="form-control" placeholder="OBSERVACION PROCESO" id="OBSERVACIONINSTRUCTIVOE" name="OBSERVACIONINSTRUCTIVOE" value="<?php echo $OBSERVACIONINSTRUCTIVO; ?>" />
@@ -3121,11 +5000,11 @@ if (isset($_POST)) {
                                                 <label id="val_observacioni" class="validacion"> </label>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="btn-group  col-xxl-3 col-xl-3 col-lg-4 col-md-6 col-sm-12 col-12 col-xs-12 float-right" id="botonesSteps" role="group">
                                         <button type="button" class="btn btn-primary" id="btnPaso1"><strong>Paso 1</strong></button>
                                         <button type="button" class="btn btn-info" id="btnPaso2"><strong>Paso 2</strong></button>
-                                        <button type="button" class="btn btn-info" id="btnPaso3"><strong>Paso 3</strong></button>
+                                        <!-- <button type="button" class="btn btn-info" id="btnPaso3"><strong>Paso 3</strong></button> -->
                                     </div>
                                     <br>
                                 </div>                                                     
@@ -3167,6 +5046,9 @@ if (isset($_POST)) {
                                                         </button>
                                                         <button type="button" class="btn btn-info  btn-sm" data-toggle="tooltip" title="Report Invoice v2" id="defecto" name="tarjas" Onclick="abrirPestana('../../assest/documento/informeIcargaInvoicev2.php?parametro=<?php echo $IDOP; ?>&&usuario=<?php echo $IDUSUARIOS; ?>');">
                                                             <i class="fa fa-file-pdf-o"></i><br> Invoice 2
+                                                        </button>
+                                                        <button type="button" class="btn btn-info  btn-sm" data-toggle="tooltip" title="Report Invoice EU" id="defecto" name="tarjas" Onclick="abrirPestana('../../assest/documento/informeIcargaInvoiceEU.php?parametro=<?php echo $IDOP; ?>&&usuario=<?php echo $IDUSUARIOS; ?>');">
+                                                            <i class="fa fa-file-pdf-o"></i><br> Invoice EU
                                                         </button>
                                                         <button type="button" class="btn btn-info  btn-sm" data-toggle="tooltip" title="Informe Carga Real" id="defecto" name="tarjas" Onclick="abrirPestana('../../assest/documento/informeICargaReal.php?parametro=<?php echo $IDOP; ?>&&usuario=<?php echo $IDUSUARIOS; ?>');">
                                                         <i class="fa fa-file-pdf-o"></i><br> Carga Real
@@ -3256,6 +5138,7 @@ if (isset($_POST)) {
                                                 <th>Peso Neto </th>
                                                 <th>Peso Bruto </th>
                                                 <th>Cantidad Envase </th>
+                                                <th>Cantidad Pallet </th>
                                                 <th>Kilo Neto </th>
                                                 <th>Kilo Bruto </th>
                                                 <th>Calibre </th>
@@ -3342,6 +5225,7 @@ if (isset($_POST)) {
                                                         <td><?php echo number_format($NETOESTANTAR, 2, ",", ".") ?></td>
                                                         <td><?php echo number_format($BRUTOESTANTAR, 2, ",", ".") ?></td>
                                                         <td><?php echo $s['ENVASE']; ?></td>
+                                                        <td><?php echo $s['PALLET']; ?></td>
                                                         <td><?php echo $s['NETO']; ?></td>
                                                         <td><?php echo $s['BRUTO']; ?></td>
                                                         <td><?php echo $NOMBRECALIBRE; ?></td>
@@ -3408,6 +5292,7 @@ if (isset($_POST)) {
                                                 <th>Peso Neto </th>
                                                 <th>Peso Bruto </th>
                                                 <th>Cantidad Envases </th>
+                                                <th>Cantidad Pallet </th>
                                                 <th>Kilos Neto </th>
                                                 <th>Kilos Bruto </th>
                                                 <th>Fecha Embalado </th>
@@ -3509,7 +5394,9 @@ if (isset($_POST)) {
                 $ICARGA->__SET('FECHAETD_ICARGA', $_REQUEST['FECHAETD']);
                 $ICARGA->__SET('FECHAETA_ICARGA', $_REQUEST['FECHAETA']);
                 $ICARGA->__SET('FECHAETAREAL_ICARGA', $_REQUEST['FECHAETAREAL']);
-                $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);                
+                $ICARGA->__SET('FECHAETDREAL_ICARGA', $_REQUEST['FECHAETDREAL']);
+                $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);  
+                $ICARGA->__SET('NCOURIER_ICARGA', $_REQUEST['NCOURIER']);               
                 $ICARGA->__SET('FDA_ICARGA', $_REQUEST['FDA']);
                 $ICARGA->__SET('TEMBARQUE_ICARGA', $_REQUEST['TEMBARQUE']);
                 $ICARGA->__SET('FUMIGADO_ICARGA', $_REQUEST['FUMIGADO']);
@@ -3610,7 +5497,9 @@ if (isset($_POST)) {
                 $ICARGA->__SET('FECHAETD_ICARGA', $_REQUEST['FECHAETD']);
                 $ICARGA->__SET('FECHAETA_ICARGA', $_REQUEST['FECHAETA']);
                 $ICARGA->__SET('FECHAETAREAL_ICARGA', $_REQUEST['FECHAETAREAL']);
-                $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);      
+                $ICARGA->__SET('FECHAETDREAL_ICARGA', $_REQUEST['FECHAETDREAL']);
+                $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);     
+                $ICARGA->__SET('NCOURIER_ICARGA', $_REQUEST['NCOURIER']);  
                 $ICARGA->__SET('FDA_ICARGA', $_REQUEST['FDA']);
                 $ICARGA->__SET('TEMBARQUE_ICARGA', $_REQUEST['TEMBARQUE']);
                 $ICARGA->__SET('FUMIGADO_ICARGA', $_REQUEST['FUMIGADO']);
@@ -3746,7 +5635,9 @@ if (isset($_POST)) {
                     $ICARGA->__SET('FECHAETD_ICARGA', $_REQUEST['FECHAETD']);
                     $ICARGA->__SET('FECHAETA_ICARGA', $_REQUEST['FECHAETA']);
                     $ICARGA->__SET('FECHAETAREAL_ICARGA', $_REQUEST['FECHAETAREAL']);
-                    $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);      
+                    $ICARGA->__SET('FECHAETDEAL_ICARGA', $_REQUEST['FECHAETDREAL']);
+                    $ICARGA->__SET('NCONTENEDOR_ICARGA', $_REQUEST['NCONTENEDOR']);  
+                    $ICARGA->__SET('NCOURIER_ICARGA', $_REQUEST['NCOURIER']);    
                     $ICARGA->__SET('FDA_ICARGA', $_REQUEST['FDA']);
                     $ICARGA->__SET('TEMBARQUE_ICARGA', $_REQUEST['TEMBARQUE']);
                     $ICARGA->__SET('FUMIGADO_ICARGA', $_REQUEST['FUMIGADO']);
@@ -3837,7 +5728,7 @@ if (isset($_POST)) {
                                 confirmButtonText:"Cerrar",
                                 closeOnConfirm:false
                             }).then((result)=>{
-                                location.href = "registroICarga.php?op&id='.$id_dato.'&a='.$accion_dato.'";                            
+                                location.href = "registroICarga.php?op&id='.$id_dato.'&a='.$accion_dato.'";                              
                             })
                         </script>';
                     }

@@ -520,7 +520,46 @@ class RECEPCIONMP_ADO
                                                 AND  ID_EMPRESA = '" . $EMPRESA . "' 
                                                 AND ID_PRODUCTOR = '" . $PRODUCTOR . "'
                                                 AND ID_TEMPORADA = '" . $TEMPORADA . "'
-                                            ;	");
+                                                AND FECHA_RECEPCION < CURRENT_DATE;	");
+            $datos->execute();
+            $resultado = $datos->fetchAll();
+            $datos=null;
+
+            //	print_r($resultado);
+            //	var_dump($resultado);
+
+
+            return $resultado;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+
+    public function listarRecepcionEmpresaProductorTemporadaCBXEst( $EMPRESA,$PRODUCTOR, $TEMPORADA, $ESPECIE)
+    {
+        try {
+
+            $datos = $this->conexion->prepare("SELECT *  ,
+                                                    FECHA_GUIA_RECEPCION AS 'FECHA_GUIA',
+                                                    FECHA_RECEPCION AS 'FECHA',
+                                                    DATE_FORMAT(FRECMP.INGRESO, '%Y-%m-%d') AS 'INGRESO',
+                                                    DATE_FORMAT(FRECMP.MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION',
+                                                    IFNULL(CANTIDAD_ENVASE_RECEPCION,0)  AS 'ENVASE',
+                                                    IFNULL(KILOS_NETO_RECEPCION,0) AS 'NETO',
+                                                    IFNULL(KILOS_BRUTO_RECEPCION,0)  AS 'BRUTO',
+                                                    IFNULL(TOTAL_KILOS_GUIA_RECEPCION,0)  AS 'GUIA',
+                                                    (FRECMP.ESTADO)AS ESTADO_CIERRE
+                                            FROM fruta_recepcionmp FRECMP
+											LEFT JOIN fruta_drecepcionmp FDRECMP ON FRECMP.ID_RECEPCION = FDRECMP.ID_RECEPCION
+                                            LEFT JOIN fruta_vespecies VES ON FDRECMP.ID_VESPECIES = VES.ID_VESPECIES
+                                            WHERE  FRECMP.ESTADO_REGISTRO = 1 
+                                                AND  FRECMP.ID_EMPRESA = '" . $EMPRESA . "' 
+                                                AND FRECMP.ID_PRODUCTOR = '" . $PRODUCTOR . "'
+                                                AND FRECMP.ID_TEMPORADA = '" . $TEMPORADA . "'
+                                                AND VES.ID_ESPECIES = '" . $ESPECIE . "' 
+                                                AND FRECMP.FECHA_RECEPCION < CURRENT_DATE 
+                                            GROUP BY FRECMP.ID_RECEPCION;	");
             $datos->execute();
             $resultado = $datos->fetchAll();
             $datos=null;
@@ -551,6 +590,40 @@ class RECEPCIONMP_ADO
                                             FROM fruta_recepcionmp 
                                             WHERE  ESTADO_REGISTRO = 1 
                                             AND ID_TEMPORADA = '" . $TEMPORADA . "'   
+                                            ;	");
+            $datos->execute();
+            $resultado = $datos->fetchAll();
+            $datos=null;
+
+            //	print_r($resultado);
+            //	var_dump($resultado);
+
+
+            return $resultado;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+
+    public function listarRecepcionTemporadaCBXEst( $TEMPORADA, $ESPECIE)
+    {
+        try {
+
+            $datos = $this->conexion->prepare("SELECT *  ,
+                                                    FECHA_GUIA_RECEPCION AS 'FECHA_GUIA',
+                                                    FECHA_RECEPCION AS 'FECHA',
+                                                    DATE_FORMAT(FRECMP.INGRESO, '%Y-%m-%d') AS 'INGRESO',
+                                                    DATE_FORMAT(FRECMP.MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION',
+                                                    IFNULL(CANTIDAD_ENVASE_RECEPCION,0)  AS 'ENVASE',
+                                                    IFNULL(KILOS_NETO_RECEPCION,0) AS 'NETO',
+                                                    IFNULL(KILOS_BRUTO_RECEPCION,0)  AS 'BRUTO',
+                                                    IFNULL(TOTAL_KILOS_GUIA_RECEPCION,0)  AS 'GUIA'
+                                            FROM fruta_recepcionmp FRECMP 
+											LEFT JOIN fruta_drecepcionmp FDRECMP ON FRECMP.ID_RECEPCION = FDRECMP.ID_RECEPCION
+                                            LEFT JOIN fruta_vespecies VES ON FDRECMP.ID_VESPECIES = VES.ID_VESPECIES
+                                            WHERE  FRECMP.ESTADO_REGISTRO = 1 
+                                            AND FRECMP.ID_TEMPORADA = '" . $TEMPORADA . "' AND VES.ID_ESPECIES = '" . $ESPECIE . "'  
                                             ;	");
             $datos->execute();
             $resultado = $datos->fetchAll();

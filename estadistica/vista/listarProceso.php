@@ -55,7 +55,7 @@ $ARRAYEXISMATERIPRIMAPROCESO = "";
 
 
 if ( $TEMPORADAS) {
-    $ARRAYPROCESO = $PROCESO_ADO->listarProcesoTemporadaCBX( $TEMPORADAS);
+    $ARRAYPROCESO = $PROCESO_ADO->listarProcesoTemporadaCBXEst( $TEMPORADAS, $ESPECIE);
 }
 //include_once "../../assest/config/validarDatosUrl.php";
 //include_once "../../assest/config/datosUrLP.php";
@@ -133,7 +133,7 @@ if ( $TEMPORADAS) {
                             <div class="row">
                                 <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
                                     <div class="table-responsive">
-                                        <table id="proceso" class="table-hover " style="width: 100%;">
+                                        <table id="procesoEstadistica" class="table-hover " style="width: 100%;">
                                             <thead>
                                                 <tr class="text-center">
                                                     <th>Numero</th>
@@ -151,7 +151,8 @@ if ( $TEMPORADAS) {
                                                     <th>Kg. Deshi. </th>
                                                     <th>Kg. Con Deshi. </th>
                                                     <th>Kg. IQF</th>
-                                                    <th>Kg. Merma/Desecho</th>
+                                                    <th>Kg. Merma</th>
+                                                    <th>Kg. Desecho</th>
                                                     <th>Kg. Industrial</th>
                                                     <th>Kg. Diferencia</th>
                                                     <th>% Exportación</th>
@@ -267,7 +268,8 @@ if ( $TEMPORADAS) {
                                                         <td><?php echo $r['EXPORTACION']-$r['NETO']; ?></td>
                                                         <td><?php echo $r['EXPORTACION']; ?></td>
                                                         <td><?php echo $r['INDUSTRIALSC']; ?></td>
-                                                        <td><?php echo $r['INDUSTRIALNC']; ?></td>
+                                                        <td><?php echo $r['MERMA']; ?></td>
+                                                            <td><?php echo $r['DESECHO']; ?></td>
                                                         <td><?php echo $r['INDUSTRIAL']; ?></td>
                                                         <td><?php echo number_format( $r['ENTRADA']-$r['EXPORTACION']-$r['INDUSTRIAL'],2,".",""); ?></td>                                                        
                                                         <td><?php echo $r['PDEXPORTACION_PROCESO']; ?></td>

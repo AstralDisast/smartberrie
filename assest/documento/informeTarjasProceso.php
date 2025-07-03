@@ -121,6 +121,7 @@ $CSGPRODUCTOR=$ARRAYPRODUCTOR[0]['CSG_PRODUCTOR'];
 $ARRAYEMPRESA=$EMPRESA_ADO->verEmpresa($ARRAYPROCESO[0]['ID_EMPRESA']);
 $EMPRESA=$ARRAYEMPRESA[0]['NOMBRE_EMPRESA'];
 $COC=$ARRAYEMPRESA[0]['COC'];
+$coc_empresa=$ARRAYEMPRESA[0]['COC'];
 $EMPRESAURL=$ARRAYEMPRESA[0]['LOGO_EMPRESA'];
 
 if($EMPRESAURL==""){
@@ -210,7 +211,7 @@ $html='
 
 ';
 //PRODUCTO TERMINADO
-
+$total_envases = 0;
 foreach ($ARRAYDEXPORTACION as $r) :
 
     $ARRAYVERPRODUCTORID = $PRODUCTOR_ADO->verProductor($r['ID_PRODUCTOR']);   
@@ -224,65 +225,86 @@ foreach ($ARRAYDEXPORTACION as $r) :
         $EMBOLSADO="NO";
     }
 
-
-
-	$html = $html . '
-    <div class=" " >
-		<div class="titulotarja" style="text-align: center; >
-             <b  "> 
-				 <img src="../../assest/img/logo.png" width="90px" height="25px"/>
-             </b><br>
-            <b > 
-				PRODUCTO TERMINADO :   ' . $r['FOLIO_DPEXPORTACION'] . ' 
-			</b>	
-		</div>							
-		<div class="subtitulotarja " > 
-			&nbsp;<b> Estandar : </b> ' . $ARRAYEVEEXPORTACIONID[0]['NOMBRE_ESTANDAR'] . '<br>
-			&nbsp;<b> Total Envase : </b> ' . $r['ENVASE'] . '<br>
-			&nbsp;<b> Total Neto : </b>   ' . $r['NETO'] . '<br>       
-		</div>	
-';
-
-
-
-
-  $html=$html.'   <br>
-  <table border="0" cellspacing="0" cellpadding="0" >
-    <thead>   
-	  <tr>
-            <th colspan="8" class="center color2"></th>
+    $html = $html . '
+    <table style="width: 100%;">
+    <tbody>   	  
+      <tr>
+        <td style="border: solid 3 black; width: 50px; text-align: center;" colspan="1">
+            <b><p style="font-size: 40px;">' . $r['NOMBRE_TCALIBRE'] . ' </p></b>
+            <b><p style="font-size: 20px;">Size</p></b>
+        </td>
+        <td style="border: solid 3 black; text-align: center;" colspan="2">
+            <b>
+                <p style="font-size: 50px;">' . $r['FOLIO_DPEXPORTACION'] . ' </p>
+                <p style="font-size: 12px;">'.$ARRAYEVEEXPORTACIONID[0]['NOMBRE_ESTANDAR'].'</p>
+                <p style="font-size: 12px;">N° '.$coc_empresa.'</p>
+            </b>
+        </td>
       </tr>
       <tr>
-        <th class=" center">Fecha Embalado</th>
-        <th class=" center ">CSG </th>
-        <th class=" center ">Nombre Productor </th>
-        <th class=" center">Cant. Envase</th>
-        <th class=" center">Kilos Neto</th>
-        <th class=" center">Calibre</th>
-        <th class=" center ">Embolsado </th>
-        <th class=" center ">Variedad </th>
-      </tr>
-    </thead>
-     <tbody>
-	 
-    ';
+        <td style="border: solid 3 black; text-align: center;">
+            <b>
+               <p style="font-size: 12px;">Grower</p>
+            </b>
+        </td>
+        <td style="border: solid 3 black; text-align: center;">
+            <b>
+               <p style="font-size: 12px;">Variety</p>
+            </b>
+        </td>
+        <td style="border: solid 3 black; text-align: center;">
+            <b>
+               <p style="font-size: 12px;">Boxes</p>
+            </b>
+        </td>
+      </tr>';
 
-    $html=$html.' 
-    <tr >
-        <td class="center"> '.$r['EMBALADO'].'</td>
-        <td  class="center  ">'.$ARRAYVERPRODUCTORID[0]['CSG_PRODUCTOR'].'</td>
-        <td  class="center  ">'.$ARRAYVERPRODUCTORID[0]['NOMBRE_PRODUCTOR'].'</td>
-        <td  class="center  ">'.$r['ENVASE'].'</td>
-        <td  class="center ">'.$r['NETO'].'</td>
-        <td  class="center  ">'.$ARRAYCALIBRE[0]['NOMBRE_TCALIBRE'].'</td>
-        <td  class="center  ">'.$EMBOLSADO.'</td>
-        <td  class="center  ">'.$ARRAYVERVESPECIESID[0]['NOMBRE_VESPECIES'].'</td>
-    </tr>
-    ';  
+
+
+
+
+$html .='
+        <tr>
+            <td style="border: solid 3 black; text-align: center;">
+                <b>
+                <p style="font-size: 12px;">' . $ARRAYVERPRODUCTORID[0]['CSG_PRODUCTOR'] . '</p>
+                </b>
+            </td>
+            <td style="border: solid 3 black; text-align: center;">
+                <b>
+                <p style="font-size: 12px;">' . $ARRAYVERVESPECIESID[0]['NOMBRE_VESPECIES'] . '</p>
+                </b>
+            </td>
+            <td style="border: solid 3 black; text-align: center;">
+                <b>
+                <p style="font-size: 12px;">' . $r['ENVASE'] . '</p>
+                </b>
+            </td>
+        </tr>';
+
+
+
+   
+      $html .='
+        <tr>
+            <td style="border: solid 3 black; text-align: center;">
+
+            </td>
+            <td style="border: solid 3 black; text-align: center;">
+                <b>
+                <p style="font-size: 12px;">TOTAL</p>
+                </b>
+            </td>
+            <td style="border: solid 3 black; text-align: center;">
+                <b>
+                <p style="font-size: 12px;">' . $r['ENVASE'] . '</p>
+                </b>
+            </td>
+        </tr>';
  
     $html=$html.'
-    </tbody>
-  </table><br>
+   </tbody>
+    </table><br>
   
   ';
 
@@ -300,50 +322,86 @@ foreach ($ARRAYDINDUSTRIAL as $r) :
     $ARRAYVERVESPECIESID = $VESPECIES_ADO->verVespecies($r['ID_VESPECIES']);
     $ARRAYEVEEXPORTACIONID = $EINDUSTRIAL_ADO->verEstandar($r['ID_ESTANDAR']);
 
+    if($r['NOMBRE_TCALIBREIND'] == ''){
+        $calibre_ind = 'No Definido';
+    }else{
+        $calibre_ind = $r['NOMBRE_TCALIBREIND'];
+    }
 
-
-	$html = $html . '
-    <div class=" " >
-		<div class="titulotarja" style="text-align: center; >
-             <b  "> 
-				 <img src="../../assest/img/logo.png" width="90px" height="25px"/>
-             </b><br>
-            <b > 
-				PRODUCTO INDUSTRIAL :   ' . $r['FOLIO_DPINDUSTRIAL'] . ' 
-			</b>	
-		</div>							
-		<div class="subtitulotarja " > 
-            &nbsp;<b> Numero Proceso : </b> '.$NUMEROPROCESO.'<br>
-			&nbsp;<b> Estandar : </b> ' . $ARRAYEVEEXPORTACIONID[0]['NOMBRE_ESTANDAR'] . '<br>
-			&nbsp;<b> Total Neto : </b>   ' . $r['NETO'] . '<br>       
-		</div>	
-';
-
-
-  
-  $html=$html.'   
-  <table border="0" cellspacing="0" cellpadding="0" >
-    <thead>    
+    $html = $html . '
+    <table style="width: 100%;">
+    <tbody>   	  
       <tr>
-        <th class=" center">Fecha Embalado</th>
-        <th class=" center ">CSG </th>
-        <th class=" center ">Nombre Productor </th>
-        <th class=" center">Kilos Neto</th>
-        <th class=" center ">Variedad </th>
+        <td style="border: solid 3 black; width: 50px; text-align: center;" colspan="1">
+            <b><p style="font-size: 30px;">'. $calibre_ind.' </p></b>
+        </td>
+        <td style="border: solid 3 black; text-align: center;" colspan="2">
+            <b>
+                <p style="font-size: 50px;">' . $r['FOLIO_DPINDUSTRIAL'] . ' </p>
+                <p style="font-size: 12px;">'.$ARRAYEVEEXPORTACIONID[0]['NOMBRE_ESTANDAR'].'</p>
+                <p style="font-size: 12px;">N° '.$coc_empresa.'</p>
+            </b>
+        </td>
       </tr>
-    </thead>
-     <tbody>
-    ';
+      <tr>
+        <td style="border: solid 3 black; text-align: center;">
+            <b>
+               <p style="font-size: 12px;">Grower</p>
+            </b>
+        </td>
+        <td style="border: solid 3 black; text-align: center;">
+            <b>
+               <p style="font-size: 12px;">Variety</p>
+            </b>
+        </td>
+        <td style="border: solid 3 black; text-align: center;">
+            <b>
+               <p style="font-size: 12px;">Weight</p>
+            </b>
+        </td>
+      </tr>';
 
-    $html=$html.' 
-    <tr >
-        <td class="center"> '.$r['EMBALADO'].'</td>
-        <td  class="center  ">'.$ARRAYVERPRODUCTORID[0]['CSG_PRODUCTOR'].'</td>
-        <td  class="center  ">'.$ARRAYVERPRODUCTORID[0]['NOMBRE_PRODUCTOR'].'</td>
-        <td  class="center ">'.$r['NETO'].'</td>
-        <td  class="center  ">'.$ARRAYVERVESPECIESID[0]['NOMBRE_VESPECIES'].'</td>
-    </tr>
-    ';  
+
+
+
+      $html .='
+      <tr>
+          <td style="border: solid 3 black; text-align: center;">
+              <b>
+              <p style="font-size: 12px;">' . $ARRAYVERPRODUCTORID[0]['CSG_PRODUCTOR'] . '</p>
+              </b>
+          </td>
+          <td style="border: solid 3 black; text-align: center;">
+              <b>
+              <p style="font-size: 12px;">' . $ARRAYVERVESPECIESID[0]['NOMBRE_VESPECIES'] . '</p>
+              </b>
+          </td>
+          <td style="border: solid 3 black; text-align: center;">
+              <b>
+              <p style="font-size: 12px;">'.$r['NETO'].'</p>
+              </b>
+          </td>
+      </tr>';
+
+      $html .='
+      <tr>
+          <td style="border: solid 3 black; text-align: center;">
+
+          </td>
+          <td style="border: solid 3 black; text-align: center;">
+              <b>
+              <p style="font-size: 12px;">TOTAL</p>
+              </b>
+          </td>
+          <td style="border: solid 3 black; text-align: center;">
+              <b>
+              <p style="font-size: 12px;">'.$r['NETO'].'</p>
+              </b>
+          </td>
+      </tr>';
+
+
+ 
 
     
     $html=$html.'

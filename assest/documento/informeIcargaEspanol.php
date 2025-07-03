@@ -657,31 +657,31 @@ $html='
     <main>
     <div class="titulo bcolor" >
       <div class="f20 titulo"  style="text-align: left; font-weight: bold;">  INSTRUCTIVO EMBARQUE  </div>    
-      <div class="f15 titulo"  style="text-align: right;">  <b>  Numero Referencia: ' . $NUMEROIREFERENCIA . '   </b>  </div>      
+      <div class="f15 titulo"  style="text-align: right;">  <b>  Número Referencia: ' . $NUMEROIREFERENCIA . '   </b>  </div>      
     </div>   
     <br>
       <div id="details" class="clearfix">            
         <div id="invoice">
           <div class="date"><b>Fecha Instructivo: </b> '.$FECHA.'</div>
-          <div class="date"><b> Numero Instructivo </b>: '.$NUMEROICARGA.'  </div>
-          <div class="date"><b> Numero Referencia </b>: '.$NUMEROIREFERENCIA.'  </div>
+          <div class="date"><b> Número Instructivo </b>: '.$NUMEROICARGA.'  </div>
+          <div class="date"><b> Número Referencia </b>: '.$NUMEROIREFERENCIA.'  </div>
           <div class="date"><b> Estado Instructivo </b>: '.$ESTADO.' </div>
           <div class="date"><b>Temporada: </b> '.$NOMBRETEMPORADA.'</div>
         </div>
         <div id="invoicer"> 
           <div class="dater"> <b> Consignatario  </b></div>
           <div class="dater"> <b> Nombre: </b>'.$NOMBRECONSIGNATARIO.'  </div>
-          <div class="dater"> <b> Direccion: </b>'.$DIRECCIONCONSIGNATARIO.'  </div>
+          <div class="dater"> <b> Dirección: </b>'.$DIRECCIONCONSIGNATARIO.'  </div>
           <div class="dater"> <b> Id Tributario: </b>'.$EORICONSIGNATARIO.'  </div>
-          <div class="dater"> <b> Telefono / Fax: </b>'.$TELEFONOCONSIGNATARIO.'  </div>
+          <div class="dater"> <b> Teléfono / Fax: </b>'.$TELEFONOCONSIGNATARIO.'  </div>
           <div class="dater"> <b> Email: </b>'.$EMAIL1CONSIGNATARIO.'  </div>
         </div> 
         <div id="invoicer"> 
           <div class="dater"> <b> Notificador  </b></div>
           <div class="dater"> <b> Nombre: </b>'.$NOMBRENOTIFICADOR.'  </div>
-          <div class="dater"> <b> Direccion: </b>'.$DIRECCIONNOTIFICADOR.'  </div>
+          <div class="dater"> <b> Dirección: </b>'.$DIRECCIONNOTIFICADOR.'  </div>
           <div class="dater"> <b> Id Tributario: </b>'.$EORINOTIFICADOR.'  </div>
-          <div class="dater"> <b> Telefono / Fax: </b>'.$TELEFONONOTIFICADOR.'  </div>
+          <div class="dater"> <b> Teléfono / Fax: </b>'.$TELEFONONOTIFICADOR.'  </div>
           <div class="dater"> <b> Email: </b>'.$EMAIL1NOTIFICADOR.'  </div>
         </div>     
       </div> 
@@ -764,11 +764,11 @@ $html='
            $html = $html . '
            
            <tr>
-             <th class="color2 left">Nombre Linea Aerea: </th>    
+             <th class="color2 left">Nombre Linea Aérea: </th>    
              <td class="color2 left">'.$NOMBRETRANSPORTE.'</td>     
              <th class="color2 left">Nave: </th> 
              <td class="color2 left">'.$NAVE.'</td>     
-             <th class="color2 left">Numero Vuelo: </th> 
+             <th class="color2 left">Número Vuelo: </th> 
              <td class="color2 left">'.$NVIAJE.'</td>     
            </tr>    
            ';
@@ -781,7 +781,7 @@ $html='
              <td class="color2 left">'.$NOMBRETRANSPORTE.'</td>     
              <th class="color2 left">Nave: </th> 
              <td class="color2 left">'.$NAVE.'</td>   
-             <th class="color2 left">Numero Viaje: </th> 
+             <th class="color2 left">Número Viaje: </th> 
              <td class="color2 left">'.$NVIAJE.'</td>       
            </tr>   
            <tr>
@@ -809,7 +809,7 @@ $html='
        </thead>
        <tbody>
          <tr>                       
-           <th class="color2 left">Clausula de Venta: </th> 
+           <th class="color2 left">Cláusula de Venta: </th> 
            <td class="color2 left">'.$NOMBRECVENTA.'</td>     
            <th class="color2 left">Tipo Flete: </th>     
            <td class="color2 left">'.$NOMBRETFLETE.'</td>      
@@ -841,7 +841,7 @@ $html=$html.'
   </thead>
   <tbody>
     <tr>                       
-      <th class="color2 left">Atmosfera: </th> 
+      <th class="color2 left">Atmósfera: </th> 
       <td class="color2 left">'.$NOMBREATMOSFERA.'</td>         
       <th class="color2 left">Tipo Contenedor: </th>    
       <td class="color2 left">'.$NOMBRETCONTENEDOR.'</td>          
@@ -871,7 +871,7 @@ $html=$html.'
     <tr>                       
       <th class="color2 left">Tipo Embarque: </th> 
       <td class="color2 left">'.$NOMBRETEMBARQUE.'</td>        
-      <th class="color2 left">Destino Final: </th> 
+      <th class="color2 left">Destinó Final: </th> 
       <td class="color2 left">'.$NOMBREDFINAL.'</td>         
     </tr>     
     ';
@@ -881,7 +881,7 @@ $html=$html.'
       <tr>
         <th class="color2 left">Lugar Carga: </th>     
         <td class="color2 left">'.$NOMBREORIGEN.'</td>      
-        <th class="color2 left">Lugar Destino: </th>  
+        <th class="color2 left">Lugar Destinó: </th>  
         <td class="color2 left">'.$NOMBREDESTINO.'</td>      
       </tr>    
       ';
@@ -893,7 +893,7 @@ $html=$html.'
       <tr>
       <th class="color2 left">Aeropuerto Carga: </th>     
       <td class="color2 left">'.$NOMBREORIGEN.'</td>  
-      <th class="color2 left">Aeropuerto Destino: </th>  
+      <th class="color2 left">Aeropuerto Destinó: </th>  
       <td class="color2 left">'.$NOMBREDESTINO.'</td>      
       </tr>    
       ';
@@ -904,7 +904,7 @@ $html=$html.'
       <tr>
       <th class="color2 left">Puerto Carga: </th>     
       <td class="color2 left">'.$NOMBREORIGEN.'</td>  
-      <th class="color2 left">Puerto Destino: </th>  
+      <th class="color2 left">Puerto Destinó: </th>  
       <td class="color2 left">'.$NOMBREDESTINO.'</td>      
       </tr>   
         
@@ -919,9 +919,9 @@ $html = $html . '
       <td class="color2 left">'.$NOMBREEXPPORTADORA.'</td>       
     </tr>         
     <tr>                         
-      <th class="color2 left">Pais Origen: </th> 
+      <th class="color2 left">País Origen: </th> 
       <td class="color2 left">Chile</td>        
-      <th class="color2 left">Pais Destino: </th> 
+      <th class="color2 left">País Destinó: </th> 
       <td class="color2 left">'.$NOMBREPAIS.'</td>        
     </tr>      
   </tbody>    
@@ -943,13 +943,13 @@ $html=$html.'
       <td class="color2 left">'.$RUTAGCARGA.'</td>         
       <th class="color2 left">Nombre: </th>    
       <td class="color2 left">'.$NOMBREAGCARGA.'</td>            
-      <th class="color2 left">Direccion: </th>       
+      <th class="color2 left">Dirección: </th>       
       <td class="color2 left">'.$DIRECCIONAGCARGA.'</td>        
     </tr> 
     <tr>   
       <th class="color2 left">Contacto:</th> 
       <td class="color2 left">'.$CONTACTOAGCARGA.'</td>         
-      <th class="color2 left">Telefono Contacto: </th>  
+      <th class="color2 left">Teléfono Contacto: </th>  
       <td class="color2 left">'.$TELEFONOAGCARGA.'</td>   
       <th class="color2 left">Email Contacto: </th>  
       <td class="color2 left">'.$EMAILAGCARGA.'</td>          
@@ -974,13 +974,13 @@ $html=$html.'
       <td class="color2 left">'.$RUTAADUANA.'</td>         
       <th class="color2 left">Nombre: </th>    
       <td class="color2 left">'.$NOMBREAADUANA.'</td>              
-      <th class="color2 left">Direccion: </th>  
+      <th class="color2 left">Dirección: </th>  
       <td class="color2 left">'.$DIRECCIONAADUANA.'</td>             
     </tr> 
     <tr>   
       <th class="color2 left">Contacto: </th> 
       <td class="color2 left">'.$CONTACTOAADUANA.'</td>         
-      <th class="color2 left">Telefono Contacto: </th>   
+      <th class="color2 left">Teléfono Contacto: </th>   
       <td class="color2 left">'.$TELEFONOAADUANA.'</td>     
       <th class="color2 left">Email Contacto: </th>  
       <td class="color2 left">'.$EMAILAADUANA.'</td>           
@@ -994,10 +994,10 @@ $html=$html.'
 <table  border="0" cellspacing="0" cellpadding="0">
   <thead>
     <tr>
-      <th colspan="13" class="center ">Carga Instruidad</th>
+      <th colspan="13" class="center ">Carga Instruida</th>
     </tr>
     <tr>                       
-      <th class="color center ">Codigo Estandar </th>
+      <th class="color center ">Código Estándar </th>
       <th class="color center ">Descripción De Producto </th>
       <th class="color center ">Tipo Manejo </th>
       <th class="color center ">Peso Neto </th>

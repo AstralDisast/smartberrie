@@ -132,6 +132,8 @@ $ARRAYVERPTUSUARIO="";
 
 
 
+
+
     <!-- entrar -->
     <?php
         if (isset($_REQUEST['ENTRAR'])) {
@@ -166,7 +168,7 @@ $ARRAYVERPTUSUARIO="";
                                 '<script>
                                     Swal.fire({
                                         icon:"error",
-                                        title:"Usuario bloquiado.",
+                                        title:"Usuario bloqueado.",
                                         text:"Se supero los numeros de intentos permitidos, contactarse con el administrador."
                                     }).then((result)=>{
                                         if(result.value){

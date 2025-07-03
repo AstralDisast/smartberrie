@@ -233,7 +233,7 @@ $html = '
       <div id="company">
         <h2 class="name">Exportadora Volcán Foods Ltda.</h2>
         <h2 class="name">77.223.122-9.</h2>
-        <div>Fundo El Álamo, Los Ángeles.</div>
+        <div>Fundo El Álamo</div>
         <div>Los Ángeles, Chile.</div>
     
       </div>
@@ -315,7 +315,7 @@ $html = $html . '
             <th class="color left">Unidad Medida</th>
             <th class="color center">Cantidad</th>
             <th class="color center">Valor Unitario</th>
-            <th class="color center">Valor Total</th>
+            <th class="color center">Valor Neto</th>
           </tr>
         </thead>
          <tbody>

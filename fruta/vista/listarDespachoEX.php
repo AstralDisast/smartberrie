@@ -234,6 +234,7 @@ include_once "../../assest/config/datosUrLP.php";
                                                     <th>Empresa</th>
                                                     <th>Planta</th>
                                                     <th>Temporada</th>
+                                                  
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -478,6 +479,7 @@ include_once "../../assest/config/datosUrLP.php";
                                                         <td><?php echo $NOMBREEMPRESA; ?></td>
                                                         <td><?php echo $NOMBREPLANTA; ?></td>
                                                         <td><?php echo $NOMBRETEMPORADA; ?></td>
+                                                       
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>

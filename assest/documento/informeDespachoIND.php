@@ -124,6 +124,14 @@ if($ARRAYDESPACHO){
   $TOTALDELTA= $ARRAYDESPACHOTOTAL[0]['DELTA'];
   $TOTALPRECIO = $ARRAYDESPACHOTOTAL[0]['PRECIO'];
   
+
+  $CANTIDADENVASE1 = $ARRAYDESPACHO[0]['CANTIDADENVASE1'];
+  $CANTIDADENVASE2 = $ARRAYDESPACHO[0]['CANTIDADENVASE2'];
+  $CANTIDADENVASE3 = $ARRAYDESPACHO[0]['CANTIDADENVASE3'];
+  $CANTIDADENVASE4 = $ARRAYDESPACHO[0]['CANTIDADENVASE4'];
+  $CANTIDADENVASE5 = $ARRAYDESPACHO[0]['CANTIDADENVASE5'];
+  $CANTIDADENVASE6 = $ARRAYDESPACHO[0]['CANTIDADENVASE6'];
+  $CANTIDADENVASE7 = $ARRAYDESPACHO[0]['CANTIDADENVASE7'];
   
   
   $NUMERO = $ARRAYDESPACHO[0]['NUMERO_DESPACHO'];
@@ -311,7 +319,7 @@ $html = '
       </div>
       <div id="company">
         <h2 class="name">Soc. Agrícola El Álamo Ltda.</h2>
-        <div>Camino a Antuco, Kilómetro N°13</div>
+        <div>Fundo El Álamo</div>
         <div>Los Ángeles, Chile.</div>
         <div><a href="mailto:ti@fvolcan.com">ti@fvolcan.cl</a></div>
       </div>
@@ -523,7 +531,23 @@ $html = $html . '
       <div class="address">Conductor: ' . $CONDUCTOR . '</div>
       <div class="address">Patente Camion: ' . $PATENTECAMION . '</div>
       <div class="address">Patente Carro: ' . $PATENTECARRO . '</div>
+      <br>
+      <br/>
+      <div class="address"><b>Informacion De Envases</b></div>
+      <br/>
+      <div class="address"><b>Bandeja cosechera blanca:</b>  ' . $CANTIDADENVASE1 . ' </div>
+      <div class="address"><b>Bandeja cosechera verde:</b>  ' . $CANTIDADENVASE2 . ' </div>
+      <br/>
+      <div class="address"><b>Bandeja Bulk:</b>  ' . $CANTIDADENVASE3 . ' </div>
+      <div class="address"><b>Bandeja esparraguera:</b>  ' . $CANTIDADENVASE4 . ' </div>
+      <br/>
+      <div class="address"><b>Bandeja cosechera frutillera:</b>  ' . $CANTIDADENVASE5 . ' </div>
+      <div class="address"><b>Tote cerecero:</b>  ' . $CANTIDADENVASE6 . ' </div>
+      <br/>
+      <div class="address"><b>Tote amarillo:</b>  ' . $CANTIDADENVASE7 . ' </div>
+      
     </div>
+
     <div id="client">
       <div class="address"><b>Observaciones</b></div>
       <div class="address">  ' . $OBSERVACIONES . ' </div>
@@ -566,7 +590,12 @@ $ASUNTO = "Informe";
 //API DE GENERACION DE PDF
 require_once '../../api/mpdf/mpdf/autoload.php';
 //$PDF = new \Mpdf\Mpdf();W
-$PDF = new \Mpdf\Mpdf(['format' => 'letter']);
+$PDF = new \Mpdf\Mpdf([
+  'format' => 'letter',
+  'mode' => 'utf-8',
+  'in_charset' => 'UTF-8',
+  'out_charset' => 'UTF-8'
+]);
 
 //CONFIGURACION FOOTER Y HEADER DEL PDF
 //CONFIGURACION FOOTER Y HEADER DEL PDF
@@ -618,6 +647,6 @@ $PDF->WriteHTML($stylesheet, 1);
 $PDF->WriteHTML($stylesheet2, 1);
 
 //GENERAR PDF
-$PDF->WriteHTML($html);
+$PDF->WriteHTML(utf8_encode($html));
 //METODO DE SALIDA
 $PDF->Output($NOMBREARCHIVOFINAL, \Mpdf\Output\Destination::INLINE);

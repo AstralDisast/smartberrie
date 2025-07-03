@@ -294,7 +294,6 @@ if (isset($id_dato) && isset($accion_dato) && isset($urlo_dato)) {
 
                                                 <label>Estado Folio</label><br>
                                                 <select class="form-control select2" id="EFOLIO" name="EFOLIO" style="width: 100%;">
-                                                    <option value="0">- Seleccione una Opcion -</option>
                                                     <option value="1">Pallet Completo</option>
                                                     <option value="2">Pallet Incompleto</option>
                                                     <option value="3">Pallet de Muestra</option>
@@ -429,13 +428,13 @@ if (isset($id_dato) && isset($accion_dato) && isset($urlo_dato)) {
                                                                     <tr class="text-center">
                                                                         <?php 
                                                                             switch($r['ESTADO_FOLIO']){
-                                                                                case 1: echo '<td style="background: #18d26b; color: white;">P. Completado</td>';
+                                                                                case 1: echo '<td style="background: #18d26b; color: white; display: none;">P. Completado</td>';
                                                                                     break;
-                                                                                case 2: echo '<td style="background: #ffa800; color: white;">P. Incompleto</td>';
+                                                                                case 2: echo '<td style="background: #ffa800; color: white; display: none;">P. Incompleto</td>';
                                                                                     break;
-                                                                                case 3: echo '<td style="background: #3085f5; color: white;">P. Muestra</td>';
+                                                                                case 3: echo '<td style="background: #3085f5; color: white; display: none;">P. Muestra</td>';
                                                                                     break;
-                                                                                default: echo '<td style="background: #93b4d4; color: white;">No identificado</td>';
+                                                                                default: echo '<td style="background: #93b4d4; color: white; display: none;">No identificado</td>';
                                                                             }
                                                                         ?>
                                                                         <td>                                                                   

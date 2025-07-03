@@ -134,14 +134,14 @@ $ARRAYEMPRESAPRODUCTOR=$EMPRESAPRODUCTOR_ADO->buscarEmpresaProductorPorUsuarioCB
                             <div class="row">
                                 <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
                                     <div class="table-responsive">
-                                        <table id="proceso" class="table-hover " style="width: 100%;">
+                                        <table id="procesoEstadisticaProductor" class="table-hover " style="width: 100%;">
                                             <thead>
                                                 <tr class="text-center">
                                                     <th>Numero</th>
                                                     <th>Estado</th>
                                                     <th class="text-center">Operaciónes</th>
                                                     <th>Fecha Proceso</th>
-                                                    <th>Tipo Proceso</th>
+                                                    
                                                     <th>Turno </th>
                                                     <th>CSG Productor</th>
                                                     <th>Nombre Productor</th>
@@ -165,13 +165,14 @@ $ARRAYEMPRESAPRODUCTOR=$EMPRESAPRODUCTOR_ADO->buscarEmpresaProductorPorUsuarioCB
                                                     <th>Empresa</th>
                                                     <th>Planta</th>
                                                     <th>Temporada</th>
+                                                    <th>Tipo Proceso</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             <?php foreach ($ARRAYEMPRESAPRODUCTOR as $a) : ?>
                                                 <?php 
                                                     if ( $TEMPORADAS) {
-                                                        $ARRAYPROCESO = $PROCESO_ADO->listarProcesoEmpresaProductorTemporadaCBX($a["ID_EMPRESA"], $a["ID_PRODUCTOR"], $TEMPORADAS);
+                                                        $ARRAYPROCESO = $PROCESO_ADO->listarProcesoEmpresaProductorTemporadaCBXEstadisticasEst($a["ID_EMPRESA"], $a["ID_PRODUCTOR"], $TEMPORADAS, $ESPECIE);
                                                     }
                                                     ?>
                                                     <?php foreach ($ARRAYPROCESO as $r) : ?>
@@ -259,7 +260,7 @@ $ARRAYEMPRESAPRODUCTOR=$EMPRESAPRODUCTOR_ADO->buscarEmpresaProductorPorUsuarioCB
                                                                 </span>
                                                             </td>
                                                             <td><?php echo $r['FECHA']; ?></td>
-                                                            <td><?php echo $TPROCESO; ?></td>
+                                                            
                                                             <td><?php echo $TURNO; ?> </td>
                                                             <td><?php echo $CSGPRODUCTOR; ?></td>
                                                             <td><?php echo $NOMBREPRODUCTOR; ?></td>
@@ -283,6 +284,7 @@ $ARRAYEMPRESAPRODUCTOR=$EMPRESAPRODUCTOR_ADO->buscarEmpresaProductorPorUsuarioCB
                                                             <td><?php echo $NOMBREEMPRESA; ?></td>
                                                             <td><?php echo $NOMBREPLANTA; ?></td>
                                                             <td><?php echo $NOMBRETEMPORADA; ?></td>
+                                                            <td><?php echo $TPROCESO; ?></td>
                                                         </tr>
                                                     <?php endforeach; ?>
                                             <?php endforeach; ?>

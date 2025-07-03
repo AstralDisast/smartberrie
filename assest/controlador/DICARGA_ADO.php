@@ -135,7 +135,8 @@ class DICARGA_ADO
             $query =
                 "INSERT INTO fruta_dicarga 
                                         (
-                                            CANTIDAD_ENVASE_DICARGA, 
+                                            CANTIDAD_ENVASE_DICARGA,
+                                            CANTIDAD_PALLET_DICARGA,  
                                             KILOS_NETO_DICARGA, 
                                             KILOS_BRUTO_DICARGA, 
                                             PRECIO_US_DICARGA, 
@@ -154,12 +155,13 @@ class DICARGA_ADO
                                             ESTADO_REGISTRO
                                         ) 
             VALUES
-	       	(?, ?, ?, ?, ?,  ?, ?, ?, ?, ?,  ?,  SYSDATE(),SYSDATE(), 1, 1);";
+	       	(?, ?, ?, ?, ?, ?,  ?, ?, ?, ?, ?,  ?,  SYSDATE(),SYSDATE(), 1, 1);";
             $this->conexion->prepare($query)
                 ->execute(
                     array(
 
                         $DICARGA->__GET('CANTIDAD_ENVASE_DICARGA'),
+                        $DICARGA->__GET('CANTIDAD_PALLET_DICARGA'),
                         $DICARGA->__GET('KILOS_NETO_DICARGA'),
                         $DICARGA->__GET('KILOS_BRUTO_DICARGA'),
                         $DICARGA->__GET('PRECIO_US_DICARGA'),
@@ -212,6 +214,7 @@ class DICARGA_ADO
             $query = "
                     UPDATE fruta_dicarga SET
                         CANTIDAD_ENVASE_DICARGA = ?,
+                        CANTIDAD_PALLET_DICARGA = ?,
                         KILOS_NETO_DICARGA = ?,
                         KILOS_BRUTO_DICARGA = ?,
                         PRECIO_US_DICARGA = ?,
@@ -230,6 +233,7 @@ class DICARGA_ADO
                     array(
 
                         $DICARGA->__GET('CANTIDAD_ENVASE_DICARGA'),
+                        $DICARGA->__GET('CANTIDAD_PALLET_DICARGA'),
                         $DICARGA->__GET('KILOS_NETO_DICARGA'),
                         $DICARGA->__GET('KILOS_BRUTO_DICARGA'),
                         $DICARGA->__GET('PRECIO_US_DICARGA'),
@@ -261,6 +265,7 @@ class DICARGA_ADO
 
             $datos = $this->conexion->prepare("SELECT *, 
                                                 IFNULL(CANTIDAD_ENVASE_DICARGA,0)AS 'ENVASE',
+                                                IFNULL(CANTIDAD_PALLET_DICARGA,0)AS 'PALLET,
                                                 IFNULL(KILOS_NETO_DICARGA,0)AS 'NETO',
                                                 IFNULL(KILOS_BRUTO_DICARGA,0) AS 'BRUTO',
                                                 IFNULL(PRECIO_US_DICARGA,0) AS 'US',
@@ -289,6 +294,7 @@ class DICARGA_ADO
 
             $datos = $this->conexion->prepare("SELECT *, 
                                                     FORMAT(IFNULL(CANTIDAD_ENVASE_DICARGA,0),0,'de_DE') AS 'ENVASE',
+                                                    FORMAT(IFNULL(CANTIDAD_PALLET_DICARGA,0),0,'de_DE') AS 'PALLET',
                                                     FORMAT(IFNULL(KILOS_NETO_DICARGA,0),2,'de_DE') AS 'NETO',
                                                     FORMAT(IFNULL(KILOS_BRUTO_DICARGA,0),2,'de_DE') AS 'BRUTO',
                                                     FORMAT(IFNULL(PRECIO_US_DICARGA,0),2,'de_DE') AS 'US',
@@ -344,17 +350,15 @@ class DICARGA_ADO
                                                     estandar.ID_ESTANDAR,
                                                     (select PESO_NETO_ESTANDAR
                                                     FROM estandar_eexportacion
-                                                    WHERE ID_ESTANDAR=estandar.ID_ESTANDAR
-                                                    ) AS 'PESONETOE',
-                                                    (select PESO_BRUTO_ESTANDAR
-                                                    FROM estandar_eexportacion
-                                                    WHERE ID_ESTANDAR=estandar.ID_ESTANDAR
-                                                    ) AS 'PESOBRUTOE',
+                                                    WHERE ID_ESTANDAR=estandar.ID_ESTANDAR) 
+                                                    AS 'PESONETOE',
+                                                    (select PESO_BRUTO_ESTANDAR) 
+                                                    AS 'PESOBRUTOE',
                                                     estandar.ID_ECOMERCIAL,
-                                                    (select CODIGO_ECOMERCIAL
-                                                    FROM estandar_ecomercial
-                                                    WHERE ID_ECOMERCIAL=comercial.ID_ECOMERCIAL
-                                                    ) AS 'CODIGO',
+                                                    (select CODIGO_ECOMERCIAL 
+                                                    FROM estandar_ecomercial 
+                                                    WHERE ID_ECOMERCIAL=comercial.ID_ECOMERCIAL) 
+                                                    AS 'CODIGO',
                                                     (select NOMBRE_ECOMERCIAL
                                                     FROM estandar_ecomercial
                                                     WHERE ID_ECOMERCIAL=comercial.ID_ECOMERCIAL
@@ -367,7 +371,8 @@ class DICARGA_ADO
                                                     FROM estandar_ecomercial
                                                     WHERE ID_ECOMERCIAL=comercial.ID_ECOMERCIAL
                                                     ) AS 'PESOBRUTOC',                      
-                                                    IFNULL(SUM(detalle.CANTIDAD_ENVASE_DICARGA),0)  AS 'ENVASESF',                              
+                                                    IFNULL(SUM(detalle.CANTIDAD_ENVASE_DICARGA),0)  AS 'ENVASESF',     
+                                                    IFNULL(SUM(detalle.CANTIDAD_PALLET_DICARGA), 0) AS 'PALLETSF',                         
                                                     (select IFNULL(SUM(detalle.CANTIDAD_ENVASE_DICARGA),0) *PESO_NETO_ECOMERCIAL
                                                     FROM estandar_ecomercial
                                                     WHERE ID_ECOMERCIAL=comercial.ID_ECOMERCIAL
@@ -446,7 +451,8 @@ class DICARGA_ADO
                                                         FROM estandar_ecomercial
                                                         WHERE ID_ECOMERCIAL=comercial.ID_ECOMERCIAL
                                                         ) AS 'PESOBRUTOC',                      
-                                                        IFNULL(SUM(detalle.CANTIDAD_ENVASE_DICARGA),0)  AS 'ENVASESF',                              
+                                                        IFNULL(SUM(detalle.CANTIDAD_ENVASE_DICARGA),0)  AS 'ENVASESF',   
+                                                        IFNULL(SUM(detalle.CANTIDAD_PALLET_DICARGA), 0) AS 'PALLETSF',                           
                                                         (select IFNULL(SUM(detalle.CANTIDAD_ENVASE_DICARGA),0) *PESO_NETO_ECOMERCIAL
                                                         FROM estandar_ecomercial
                                                         WHERE ID_ECOMERCIAL=comercial.ID_ECOMERCIAL
@@ -886,6 +892,7 @@ class DICARGA_ADO
 
             $datos = $this->conexion->prepare("SELECT 
                                             IFNULL(SUM(CANTIDAD_ENVASE_DICARGA),0) AS 'ENVASE',
+                                            IFNULL(SUM(CANTIDAD_PALLET_DICARGA), 0) AS 'PALLET',
                                             IFNULL(SUM(KILOS_NETO_DICARGA),0) AS 'NETO',
                                             IFNULL(SUM(KILOS_BRUTO_DICARGA),0) AS 'BRUTO',
                                             IFNULL(SUM(TOTAL_PRECIO_US_DICARGA),0) AS 'TOTALUS'
@@ -912,6 +919,7 @@ class DICARGA_ADO
 
             $datos = $this->conexion->prepare("SELECT 
                                             FORMAT(IFNULL(SUM(CANTIDAD_ENVASE_DICARGA),0),0,'de_DE') AS 'ENVASE',
+                                            FORMAT(IFNULL(SUM(CANTIDAD_PALLET_DICARGA),0),0,'de_DE') AS 'PALLET',
                                             FORMAT(IFNULL(SUM(KILOS_NETO_DICARGA),0 ),2,'de_DE') AS 'NETO',
                                             FORMAT(IFNULL(SUM(KILOS_BRUTO_DICARGA),0),2,'de_DE') AS 'BRUTO',
                                             FORMAT(IFNULL(SUM(TOTAL_PRECIO_US_DICARGA),0),2,'de_DE') AS 'TOTALUS'

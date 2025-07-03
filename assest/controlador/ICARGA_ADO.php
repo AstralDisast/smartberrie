@@ -127,6 +127,29 @@ class ICARGA_ADO
         }
     }
 
+    public function verReferencia($ID)
+    {
+        try {
+
+            $datos = $this->conexion->prepare(" SELECT *,
+                                                DATE_FORMAT(INGRESO, '%Y-%m-%d') AS 'INGRESO', 
+                                                DATE_FORMAT(MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION' 
+                                                FROM fruta_icarga 
+                                                WHERE ID_ICARGA= '" . $ID . "';");
+            $datos->execute();
+            $resultado = $datos->fetchAll();
+            $datos=null;
+
+            //	print_r($resultado);
+            //	var_dump($resultado);
+
+
+            return $resultado;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
 
     public function verIcarga2($IDICARGA)
     {
@@ -137,7 +160,8 @@ class ICARGA_ADO
                                                 DATE_FORMAT(FECHA_CDOCUMENTAL_ICARGA, '%d/%m/%Y') AS 'FECHACD', 
                                                 DATE_FORMAT(FECHAETD_ICARGA, '%d/%m/%Y') AS 'FECHAETD', 
                                                 DATE_FORMAT(FECHAETA_ICARGA, '%d/%m/%Y') AS 'FECHAETA', 
-                                                DATE_FORMAT(FECHAETAREAL_ICARGA, '%d/%m/%Y') AS 'FECHAETAREAL', 
+                                                DATE_FORMAT(FECHAETAREAL_ICARGA, '%d/%m/%Y') AS 'FECHAETAREAL',
+                                                DATE_FORMAT(FECHAETDREAL_ICARGA, '%d/%m/%Y') AS 'FECHAETDREAL',  
                                                 DATE_FORMAT(FECHASTACKING_ICARGA, '%d/%m/%Y') AS 'FECHAESTACKING', 
                                                 DATE_FORMAT(INGRESO, '%Y-%m-%d') AS 'INGRESO', 
                                                 DATE_FORMAT(MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION'
@@ -273,6 +297,12 @@ class ICARGA_ADO
             if ($ICARGA->__GET('FECHAETAREAL_ICARGA') == NULL) {
                 $ICARGA->__SET('FECHAETAREAL_ICARGA', NULL);
             }
+            if ($ICARGA->__GET('FECHAETDREAL_ICARGA') == NULL) {
+                $ICARGA->__SET('FECHAETDREAL_ICARGA', NULL);
+            }
+            if ($ICARGA->__GET('NCOURIER_ICARGA') == NULL) {
+                $ICARGA->__SET('NCOURIER_ICARGA', NULL);
+            }
             if ($ICARGA->__GET('FECHA_CDOCUMENTAL_ICARGA') == NULL) {
                 $ICARGA->__SET('FECHA_CDOCUMENTAL_ICARGA', NULL);
             }
@@ -285,9 +315,11 @@ class ICARGA_ADO
                                             FECHAETD_ICARGA, 
                                             FECHAETA_ICARGA, 
                                             FECHAETAREAL_ICARGA, 
+                                            FECHAETDREAL_ICARGA, 
                                             FDA_ICARGA, 
                                             TEMBARQUE_ICARGA, 
                                             NCONTENEDOR_ICARGA,
+                                            NCOURIER_ICARGA,
                                             CRT_ICARGA,  
                                             FECHASTACKING_ICARGA,
                                             NVIAJE_ICARGA, 
@@ -348,7 +380,11 @@ class ICARGA_ADO
                                             ESTADO_REGISTRO
                                         ) 
             VALUES
+<<<<<<< Updated upstream
 	       	    (  ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+=======
+	       	    (  ?,  ?, ?,  ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+>>>>>>> Stashed changes
                  0, 0, 0, 0, SYSDATE(), SYSDATE(), 1, 2, 1);";
             $this->conexion->prepare($query)
                 ->execute(
@@ -360,9 +396,11 @@ class ICARGA_ADO
                         $ICARGA->__GET('FECHAETD_ICARGA'),
                         $ICARGA->__GET('FECHAETA_ICARGA'),
                         $ICARGA->__GET('FECHAETAREAL_ICARGA'),
+                        $ICARGA->__GET('FECHAETDREAL_ICARGA'),
                         $ICARGA->__GET('FDA_ICARGA'),
                         $ICARGA->__GET('TEMBARQUE_ICARGA'),
                         $ICARGA->__GET('NCONTENEDOR_ICARGA'),
+                        $ICARGA->__GET('NCOURIER_ICARGA'),
                         $ICARGA->__GET('CRT_ICARGA'),
                         $ICARGA->__GET('FECHASTACKING_ICARGA'),
                         $ICARGA->__GET('NVIAJE_ICARGA'),
@@ -524,6 +562,9 @@ class ICARGA_ADO
         if ($ICARGA->__GET('FECHAETAREAL_ICARGA') == NULL) {
             $ICARGA->__SET('FECHAETAREAL_ICARGA', NULL);
         }
+        if ($ICARGA->__GET('FECHAETDREAL_ICARGA') == NULL) {
+            $ICARGA->__SET('FECHAETDREAL_ICARGA', NULL);
+        }
         if ($ICARGA->__GET('FECHA_CDOCUMENTAL_ICARGA') == NULL) {
             $ICARGA->__SET('FECHA_CDOCUMENTAL_ICARGA', NULL);
         }
@@ -538,9 +579,11 @@ class ICARGA_ADO
             FECHAETD_ICARGA = ?, 
             FECHAETA_ICARGA = ?, 
             FECHAETAREAL_ICARGA = ?, 
+            FECHAETDREAL_ICARGA = ?, 
             FDA_ICARGA = ?, 
             TEMBARQUE_ICARGA = ?, 
             NCONTENEDOR_ICARGA = ?, 
+            NCOURIER_ICARGA = ?, 
             CRT_ICARGA = ?,
             FECHASTACKING_ICARGA = ?,
             NVIAJE_ICARGA = ?, 
@@ -601,9 +644,11 @@ class ICARGA_ADO
                         $ICARGA->__GET('FECHAETD_ICARGA'),
                         $ICARGA->__GET('FECHAETA_ICARGA'),
                         $ICARGA->__GET('FECHAETAREAL_ICARGA'),
+                        $ICARGA->__GET('FECHAETDREAL_ICARGA'),
                         $ICARGA->__GET('FDA_ICARGA'),
                         $ICARGA->__GET('TEMBARQUE_ICARGA'),
                         $ICARGA->__GET('NCONTENEDOR_ICARGA'),
+                        $ICARGA->__GET('NCOURIER_ICARGA'),
                         $ICARGA->__GET('CRT_ICARGA'),
                         $ICARGA->__GET('FECHASTACKING_ICARGA'),
                         $ICARGA->__GET('NVIAJE_ICARGA'),
@@ -678,18 +723,21 @@ class ICARGA_ADO
                                                         FECHAETD_ICARGA AS 'FECHAETD', 
                                                         FECHAETA_ICARGA AS 'FECHAETA', 
                                                         FECHAETAREAL_ICARGA AS 'FECHAETAREAL', 
+                                                        FECHAETDREAL_ICARGA AS 'FECHAETDREAL', 
                                                         
                                                         WEEK(FECHA_ICARGA,3) AS 'SEMANA', 
                                                         WEEK(FECHA_CDOCUMENTAL_ICARGA,3) AS 'SEMANACORTEDOCUMENTAL', 
                                                         WEEK(FECHAETD_ICARGA,3) AS 'SEMANAETD', 
                                                         WEEK(FECHAETA_ICARGA,3) AS 'SEMANAETA', 
                                                         WEEK(FECHAETAREAL_ICARGA,3) AS 'SEMANAETAREAL', 
+                                                        WEEK(FECHAETDREAL_ICARGA,3) AS 'SEMANAETDREAL',
 
                                                         WEEKOFYEAR(FECHA_ICARGA) AS 'SEMANAISO', 
                                                         WEEKOFYEAR(FECHA_CDOCUMENTAL_ICARGA) AS 'SEMANACORTEDOCUMENTALISO', 
                                                         WEEKOFYEAR(FECHAETD_ICARGA) AS 'SEMANAETDISO', 
                                                         WEEKOFYEAR(FECHAETA_ICARGA) AS 'SEMANAETAISO', 
                                                         WEEKOFYEAR(FECHAETAREAL_ICARGA) AS 'SEMANAETAREALISO', 
+                                                        WEEKOFYEAR(FECHAETDREAL_ICARGA) AS 'SEMANAETDREALISO',
 
                                                         IFNULL(BOLAWBCRT_ICARGA, 'Sin Datos' ) AS 'BLAWB',
                                                         IFNULL(TOTAL_ENVASE_ICAGRA,0) AS 'ENVASE',
@@ -727,24 +775,29 @@ class ICARGA_ADO
                                                         FECHAETD_ICARGA AS 'FECHAETD', 
                                                         FECHAETA_ICARGA AS 'FECHAETA', 
                                                         FECHAETAREAL_ICARGA AS 'FECHAETAREAL', 
+                                                        FECHAETDREAL_ICARGA AS 'FECHAETDREAL', 
                                                         
                                                         WEEK(FECHA_ICARGA,3) AS 'SEMANA', 
                                                         WEEK(FECHA_CDOCUMENTAL_ICARGA,3) AS 'SEMANACORTEDOCUMENTAL', 
                                                         WEEK(FECHAETD_ICARGA,3) AS 'SEMANAETD', 
                                                         WEEK(FECHAETA_ICARGA,3) AS 'SEMANAETA', 
                                                         WEEK(FECHAETAREAL_ICARGA,3) AS 'SEMANAETAREAL', 
+                                                        WEEK(FECHAETDREAL_ICARGA,3) AS 'SEMANAETDREAL',
 
                                                         WEEKOFYEAR(FECHA_ICARGA) AS 'SEMANAISO', 
                                                         WEEKOFYEAR(FECHA_CDOCUMENTAL_ICARGA) AS 'SEMANACORTEDOCUMENTALISO', 
                                                         WEEKOFYEAR(FECHAETD_ICARGA) AS 'SEMANAETDISO', 
                                                         WEEKOFYEAR(FECHAETA_ICARGA) AS 'SEMANAETAISO', 
-                                                        WEEKOFYEAR(FECHAETAREAL_ICARGA) AS 'SEMANAETAREALISO', 
+                                                        WEEKOFYEAR(FECHAETAREAL_ICARGA) AS 'SEMANAETAREALISO',
+                                                        WEEKOFYEAR(FECHAETDREAL_ICARGA) AS 'SEMANAETDREALISO', 
 
                                                         IFNULL(BOLAWBCRT_ICARGA, 'Sin Datos' ) AS 'BLAWB',
                                                         IFNULL(TOTAL_ENVASE_ICAGRA,0) AS 'ENVASE',
                                                         IFNULL(TOTAL_NETO_ICARGA,0) AS 'NETO',
                                                         IFNULL(TOTAL_BRUTO_ICARGA,0) AS 'BRUTO',
-                                                        IFNULL(TOTAL_US_ICARGA,0) AS 'US'
+                                                        IFNULL(TOTAL_US_ICARGA,0) AS 'US',
+                                                        ID_ICARGA,
+														(select COUNT(ID_EXIEXPORTACION) FROM fruta_exiexportacion WHERE ESTADO = 2 AND REFERENCIA = fruta_icarga.ID_ICARGA)AS N_FOLIOS
                                             FROM fruta_icarga  
                                             WHERE ESTADO_REGISTRO = 1                                                                                                        
                                             AND ID_EMPRESA = '" . $EMPRESA . "' 

@@ -118,7 +118,7 @@ if ( $TEMPORADAS) {
                                 <div class="row">
                                     <div class="col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 col-xs-12">
                                         <div class="table-responsive">
-                                            <table id="existenciamp" class="table-hover " style="width: 150%;">
+                                            <table id="existenciamp_estadisticas" class="table-hover " style="width: 150%;">
                                                 <thead>
                                                     <tr class="text-center">
                                                         <th>Folio Original</th>
@@ -145,9 +145,9 @@ if ( $TEMPORADAS) {
                                                         <th>Número Guía Recepción </th>
                                                         <th>Fecha Guía Recepción
                                                         <th>Tipo Manejo</th>
-                                                        <th>Tipo Tratamiento 1 </th>
+                                                        <th>Gasificación </th>
                                                         <th>Tipo Tratamiento 2 </th>
-                                                        <th>Gasificacion</th>
+                                                        <!--<th>Gasificacion</th>-->
                                                         <th>Ingreso</th>
                                                         <th>Modificación</th>
                                                         <th>Empresa</th>
@@ -380,7 +380,7 @@ if ( $TEMPORADAS) {
                                                             <td><?php echo $NOMBRETMANEJO; ?></td>
                                                             <td><?php echo $NOMBRETTRATAMIENTO1; ?></td>
                                                             <td><?php echo $NOMBRETTRATAMIENTO2; ?></td>
-                                                            <td><?php echo $GASIFICADO; ?></td>
+                                                            <!--<td><?php echo $GASIFICADO; ?></td>-->
                                                             <td><?php echo $r['INGRESO']; ?></td>
                                                             <td><?php echo $r['MODIFICACION']; ?></td>
                                                             <td><?php echo $NOMBREEMPRESA; ?></td>

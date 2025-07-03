@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< Updated upstream
+=======
+//var_dump($_REQUEST);
+
+>>>>>>> Stashed changes
 include_once "../../assest/config/validarUsuarioFruta.php";
 
 //LLAMADA ARCHIVOS NECESARIOS PARA LAS OPERACIONES

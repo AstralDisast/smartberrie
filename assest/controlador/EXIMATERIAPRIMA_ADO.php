@@ -1379,6 +1379,45 @@ class EXIMATERIAPRIMA_ADO
             die($e->getMessage());
         }
     }
+
+    public function listarEximateriaprimaTemporadaDisponibleEst(   $TEMPORADA, $ESPECIE)
+    {
+        try {
+
+            $datos = $this->conexion->prepare("SELECT *,  
+                                                    DATEDIFF(SYSDATE(), FECHA_COSECHA_EXIMATERIAPRIMA) AS 'DIAS',
+                                                    DATE_FORMAT(FEXMP.INGRESO, '%Y-%m-%d')AS 'INGRESO',
+                                                    DATE_FORMAT(FEXMP.MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION',
+                                                    FECHA_COSECHA_EXIMATERIAPRIMA AS 'COSECHA',
+                                                    IFNULL(DATE_FORMAT(FECHA_RECEPCION, '%d-%m-%Y'),'Sin Datos') AS 'RECEPCION',
+                                                    IFNULL(DATE_FORMAT(FECHA_REPALETIZAJE, '%d-%m-%Y'),'Sin Datos') AS 'REPALETIZAJE',
+                                                    IFNULL(DATE_FORMAT(FECHA_DESPACHO, '%d-%m-%Y'),'Sin Datos') AS 'DESPACHO',
+                                                    IFNULL(CANTIDAD_ENVASE_EXIMATERIAPRIMA,0) AS 'ENVASE',
+                                                    IFNULL(KILOS_NETO_EXIMATERIAPRIMA,0) AS 'NETO',
+                                                    IFNULL(KILOS_BRUTO_EXIMATERIAPRIMA,0) AS 'BRUTO',
+                                                    IFNULL(KILOS_PROMEDIO_EXIMATERIAPRIMA,0) AS 'PROMEDIO',
+                                                    IFNULL(PESO_PALLET_EXIMATERIAPRIMA,0) AS 'PALLET'
+                                                    FROM fruta_eximateriaprima FEXMP
+
+                                            LEFT JOIN fruta_vespecies VES ON FEXMP.ID_VESPECIES = VES.ID_VESPECIES
+                                                    WHERE FEXMP.ESTADO_REGISTRO = 1
+                                                    AND FEXMP.ESTADO = 2
+                                                    AND FEXMP.ID_TEMPORADA = '" . $TEMPORADA . "' AND VES.ID_ESPECIES = '" . $ESPECIE . "';  ");
+            $datos->execute();
+            $resultado = $datos->fetchAll(PDO::FETCH_ASSOC);
+            $datos=null;
+
+            //	print_r($resultado);
+            //	var_dump($resultado);
+
+
+            return $resultado;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+
     public function listarEximateriaprimaEmpresaTemporadaDisponible($EMPRESA,   $TEMPORADA)
     {
         try {
@@ -2118,14 +2157,15 @@ class EXIMATERIAPRIMA_ADO
 
 
     //BUSQUEDA POR NUMERO FOLIO ASOCIADO AL REGISTRO
-    public function buscarPorFolio($FOLIOAUXILIAREXIMATERIAPRIMA)
+    public function buscarPorFolio($FOLIOAUXILIAREXIMATERIAPRIMA, $EMPRESA, $TEMPORADA)
     {
         try {
 
             $datos = $this->conexion->prepare("SELECT * 
                                              FROM fruta_eximateriaprima 
-                                             WHERE   FOLIO_AUXILIAR_EXIMATERIAPRIMA LIKE '" . $FOLIOAUXILIAREXIMATERIAPRIMA . "'
-                                               ;");
+                                             WHERE   FOLIO_AUXILIAR_EXIMATERIAPRIMA LIKE '" . $FOLIOAUXILIAREXIMATERIAPRIMA . "' 
+                                            AND ID_EMPRESA = '" . $EMPRESA . "' 
+                                            AND ID_TEMPORADA = '" . $TEMPORADA . "';");
             $datos->execute();
             $resultado = $datos->fetchAll();
             $datos=null;
@@ -3292,7 +3332,8 @@ class EXIMATERIAPRIMA_ADO
     //OBTENER EL ULTIMO FOLIO OCUPADO DEL DETALLE DE  RECEPCIONS
 
 
-    public function obtenerFolio($IDFOLIO, $EMPRESA, $PLANTA, $TEMPORADA)
+
+    public function obtenerFolio($IDFOLIO)
     {
         try {
 
@@ -3303,9 +3344,6 @@ class EXIMATERIAPRIMA_ADO
                                                 AND ID_DESPACHO2 IS NULL   
                                                 AND ID_DESPACHO3 IS NULL   
                                                 AND ID_PROCESO2 IS NULL                                                                             
-                                                AND ID_EMPRESA = '" . $EMPRESA . "' 
-                                                AND ID_PLANTA = '" . $PLANTA . "'
-                                                AND ID_TEMPORADA = '" . $TEMPORADA . "' 
                                                 ; ");
             $datos->execute();
             $resultado = $datos->fetchAll();

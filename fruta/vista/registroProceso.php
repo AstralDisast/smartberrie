@@ -1310,7 +1310,7 @@ if (isset($_POST)) {
                 $_REQUEST['FECHAPROCESO'],
                 $_REQUEST['EMPRESA'],
                 $_REQUEST['PLANTA'],
-                $_REQUEST['TEMPORADA'],
+                $_REQUEST['TEMPORADA']
             );
             //REDIRECCIONAR A PAGINA registroRecepcion.php
             $AUSUARIO_ADO->agregarAusuario2($NUMERO,1,1,"".$_SESSION["NOMBRE_USUARIO"].", Registro de Proceso.","fruta_proceso", $ARRYAOBTENERID[0]['ID_PROCESO'],$_SESSION["ID_USUARIO"],$_SESSION['ID_EMPRESA'], $_SESSION['ID_PLANTA'],$_SESSION['ID_TEMPORADA'] );  
@@ -1397,10 +1397,15 @@ if (isset($_POST)) {
         }
         //OPERACION CERRAR DE FILA
         if (isset($_REQUEST['CERRAR'])) {
+
+
+            //echo "<script>alert('".$_REQUEST['DIFERENCIAKILOSNETOEX'].'PRUEBAXX'."');</script>";
+    
             //UTILIZACION METODOS SET DEL MODELO
             $ARRAYEXIMATERIAPRIMATOMADO = $EXIMATERIAPRIMA_ADO->buscarPorProceso($_REQUEST['IDP']);
             $ARRAYDEXPORTACIONPORPROCESO = $DPEXPORTACION_ADO->buscarPorProceso($_REQUEST['IDP']);
             $ARRATDINDUSTRIALPORPROCESO = $DPINDUSTRIAL_ADO->buscarPorProceso($_REQUEST['IDP']);
+
             if (empty($ARRAYEXIMATERIAPRIMATOMADO)) {
                 $SINO = "1";
                 $MENSAJE = $MENSAJE. " Tiene que haber al menos un registro de existencia seleccionado.";                
@@ -1422,8 +1427,16 @@ if (isset($_POST)) {
             } else {
                 $SINO = "0";
                 $MENSAJE = $MENSAJE;
+            } 
+
+            $valorRedondeado = round(floatval($_REQUEST['DIFERENCIAKILOSNETOEX']));
+            if($valorRedondeado <> 0){
+                $SINO = "1";
+                $MENSAJE = $MENSAJE. " La diferencia de kilos debe ser igual 0.";  
             }
-            if($SINO == 1){
+
+            //echo "<script>alert('".$valorRedondeado.' re:'.$SINO."');</script>";
+            if($SINO == "1"){
                     echo '<script>
                         Swal.fire({
                             icon:"warning",

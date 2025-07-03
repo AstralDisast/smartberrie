@@ -58,6 +58,8 @@ $FOLIO = "";
 $FOLIOALIAS = "";
 $TCALIBREIND = "";
 
+$TIPOPROCESO = "";
+
 
 $FOLIOBAS2 = "";
 $FOLIOAUX = "";
@@ -108,7 +110,7 @@ $ARRAYDPROCESOINDUSTRIAL2 = "";
 $ARRAYVERFOLIOPOIND = "";
 
 $ARRAYTCALIBREIND = $TCALIBREIND_ADO->listarCalibreIndPorEmpresaCBX($EMPRESAS);
-$ARRAYESTANDAR = $EINDUSTRIAL_ADO->listarEstandarProcesoPorEmpresaCBX($EMPRESAS);
+
 $ARRAYTMANEJO = $TMANEJO_ADO->listarTmanejoCBX();
 $ARRAYFECHAACTUAL = $DPINDUSTRIAL_ADO->obtenerFecha();
 $FECHAEMBALADODINDUSTRIAL = $ARRAYFECHAACTUAL[0]['FECHA'];
@@ -167,6 +169,7 @@ if (isset($id_dato) && isset($accion_dato) && isset($urlo_dato)) {
         $PRODUCTOR = "" . $r['ID_PRODUCTOR'];
         $FECHAPROCESO = "" . $r['FECHA_PROCESO'];
         $VESPECIES = "" . $r['ID_VESPECIES'];
+        $TIPOPROCESO = "" . $r['ID_TPROCESO'];
         $ARRAYVESPECIES = $VESPECIES_ADO->verVespecies($r['ID_VESPECIES']);
         $ARRAYVERPRODUCTOR = $PRODUCTOR_ADO->verProductor($PRODUCTOR);
         if ($ARRAYVERPRODUCTOR) {          
@@ -178,6 +181,14 @@ if (isset($id_dato) && isset($accion_dato) && isset($urlo_dato)) {
 
     endforeach;
 }
+if($TIPOPROCESO==3){
+    //BULK
+    $ARRAYESTANDAR = $EINDUSTRIAL_ADO->listarEstandarProcesoPorEmpresaCBXBulk($EMPRESAS);
+}else{
+    //normal
+    $ARRAYESTANDAR = $EINDUSTRIAL_ADO->listarEstandarProcesoPorEmpresaCBX($EMPRESAS);
+}
+
 //OBTENCION DE DATOS ENVIADOR A LA URL
 //PARA OPERACIONES DE EDICION , VISUALIZACION Y CREACION
 //OPERACION PARA OBTENER EL ID RECEPCION Y FOLIO BASE, SOLO SE OCUPA PARA CREAR UN REGISTRO NUEVO
@@ -384,6 +395,7 @@ if ($_POST) {
                     }
                     document.form_reg_dato.TMANEJO.style.borderColor = "#4AF575";
 
+<<<<<<< Updated upstream
                     if (TCALIBREIND == null || TCALIBREIND == 0) {
                         document.form_reg_dato.TCALIBREIND.focus();
                         document.form_reg_dato.TCALIBREIND.style.borderColor = "#FF0000";
@@ -391,6 +403,9 @@ if ($_POST) {
                         return false;
                     }
                     document.form_reg_dato.TCALIBREIND.style.borderColor = "#4AF575";
+=======
+               
+>>>>>>> Stashed changes
 
 
                 }
@@ -491,10 +506,11 @@ if ($_POST) {
                                                 <select class="form-control select2" id="ESTANDAR" name="ESTANDAR" style="width: 100%;" <?php echo $DISABLED; ?> <?php echo $DISABLEDSTYLE; ?>>
                                                     <option></option>
                                                     <?php foreach ($ARRAYESTANDAR as $r) : ?>
-                                                        <?php if ($ARRAYESTANDAR) {    ?>
-                                                            <option value="<?php echo $r['ID_ESTANDAR']; ?>" <?php if ($ESTANDAR == $r['ID_ESTANDAR']) {
-                                                                                                                    echo "selected";
-                                                                                                                } ?>><?php echo $r['CODIGO_ESTANDAR'] ?> : <?php echo $r['NOMBRE_ESTANDAR'] ?> </option>
+                                                        <?php if ($ARRAYESTANDAR) {    
+                                                               
+                                                            ?>
+
+                                                            <option value="<?php echo $r['ID_ESTANDAR']; ?>" <?php if ($ESTANDAR == $r['ID_ESTANDAR']) {echo "selected";} ?>><?php echo $r['CODIGO_ESTANDAR'] ?> : <?php echo $r['NOMBRE_ESTANDAR'] ?> </option>
                                                         <?php } else { ?>
                                                             <option>No Hay Datos Registrados</option>
                                                         <?php } ?>
@@ -510,7 +526,12 @@ if ($_POST) {
                                                 <label id="val_neto" class="validacion"> </label>
                                             </div>
                                         </div>
+<<<<<<< Updated upstream
                                         <div class="col-xxl-2 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 col-xs-6 ">
+=======
+                                        <?php if($ESTADO_USO_CALIBRE == 1){ ?>
+                                        <div class="col-xxl-2 col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 col-xs-6 " style="display: none;">
+>>>>>>> Stashed changes
                                             <div class="form-group">
                                                 <label>Calibre Industrial</label>
                                                 <select class="form-control select2" id="TCALIBREIND" name="TCALIBREIND" style="width: 100%;" <?php echo $DISABLED; ?>>
@@ -648,7 +669,7 @@ if ($_POST) {
                 $DPINDUSTRIAL->__SET('ID_ESTANDAR', $_REQUEST['ESTANDAR']);
                 $DPINDUSTRIAL->__SET('ID_PRODUCTOR', $_REQUEST['PRODUCTOR']);
                 $DPINDUSTRIAL->__SET('ID_TMANEJO', $_REQUEST['TMANEJO']);
-                $DPINDUSTRIAL->__SET('ID_TCALIBREIND', $_REQUEST['TCALIBREIND']);
+                $DPINDUSTRIAL->__SET('ID_TCALIBREIND', 0);
                 $DPINDUSTRIAL->__SET('ID_PROCESO', $_REQUEST['IDP']);
                 $DPINDUSTRIAL_ADO->agregarDpindustrial($DPINDUSTRIAL);
 
@@ -665,7 +686,7 @@ if ($_POST) {
                 $EXIINDUSTRIAL->__SET('FECHA_PROCESO', $_REQUEST['FECHAPROCESO']);
                 $EXIINDUSTRIAL->__SET('TCOBRO', $TCOBRO);
                 $EXIINDUSTRIAL->__SET('ID_TMANEJO', $_REQUEST['TMANEJO']);
-                $EXIINDUSTRIAL->__SET('ID_TCALIBRE', $_REQUEST['TCALIBREIND']);
+                $EXIINDUSTRIAL->__SET('ID_TCALIBRE', 0);
                 $EXIINDUSTRIAL->__SET('ID_FOLIO', $FOLIO);
                 $EXIINDUSTRIAL->__SET('ID_ESTANDAR', $_REQUEST['ESTANDAR']);
                 $EXIINDUSTRIAL->__SET('ID_PRODUCTOR', $_REQUEST['PRODUCTOR']);
@@ -708,7 +729,7 @@ if ($_POST) {
                 $DPINDUSTRIAL->__SET('ID_TMANEJO', $_REQUEST['TMANEJO']);
                 $DPINDUSTRIAL->__SET('ID_VESPECIES',  $_REQUEST['VESPECIES']);
                 $DPINDUSTRIAL->__SET('ID_ESTANDAR', $_REQUEST['ESTANDAR']);
-                $DPINDUSTRIAL->__SET('ID_TCALIBREIND', $_REQUEST['TCALIBREIND']);
+                $DPINDUSTRIAL->__SET('ID_TCALIBREIND', 0);
                 $DPINDUSTRIAL->__SET('ID_PRODUCTOR', $_REQUEST['PRODUCTOR']);
                 $DPINDUSTRIAL->__SET('ID_PROCESO', $_REQUEST['IDP']);
                 $DPINDUSTRIAL->__SET('ID_DPINDUSTRIAL', $_REQUEST['ID']);
@@ -726,7 +747,7 @@ if ($_POST) {
                     $EXIINDUSTRIAL->__SET('FECHA_PROCESO', $_REQUEST['FECHAPROCESO']);
                     $EXIINDUSTRIAL->__SET('TCOBRO', $TCOBRO);
                     $EXIINDUSTRIAL->__SET('ID_TMANEJO', $_REQUEST['TMANEJO']);
-                    $EXIINDUSTRIAL->__SET('ID_TCALIBRE', $_REQUEST['TCALIBREIND']);
+                    $EXIINDUSTRIAL->__SET('ID_TCALIBRE', 0);
                     $EXIINDUSTRIAL->__SET('ID_ESTANDAR', $_REQUEST['ESTANDAR']);
                     $EXIINDUSTRIAL->__SET('ID_PRODUCTOR', $_REQUEST['PRODUCTOR']);
                     $EXIINDUSTRIAL->__SET('ID_VESPECIES', $_REQUEST['VESPECIES']);
@@ -757,7 +778,7 @@ if ($_POST) {
                     $EXIINDUSTRIAL->__SET('FECHA_PROCESO', $_REQUEST['FECHAPROCESO']);
                     $EXIINDUSTRIAL->__SET('TCOBRO', $TCOBRO);
                     $EXIINDUSTRIAL->__SET('ID_TMANEJO', $_REQUEST['TMANEJO']);
-                    $EXIINDUSTRIAL->__SET('ID_TCALIBRE', $_REQUEST['TCALIBREIND']);
+                    $EXIINDUSTRIAL->__SET('ID_TCALIBRE', 0);
                     $EXIINDUSTRIAL->__SET('ID_FOLIO', $FOLIO);
                     $EXIINDUSTRIAL->__SET('ID_ESTANDAR', $_REQUEST['ESTANDAR']);
                     $EXIINDUSTRIAL->__SET('ID_PRODUCTOR', $_REQUEST['PRODUCTOR']);

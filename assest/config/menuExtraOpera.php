@@ -264,6 +264,10 @@
               </li>
             </ul>
         </div>
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         <!-- /.tab-pane -->
       </div>
     </aside>

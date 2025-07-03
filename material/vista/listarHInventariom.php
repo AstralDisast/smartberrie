@@ -146,7 +146,7 @@ include_once "../../assest/config/reporteUrl.php";
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                               <?php foreach ($ARRAYINVENTARIOCONSUMO as $r) : ?>
+                                               <?php /*foreach ($ARRAYINVENTARIOCONSUMO as $r) : ?>
                                                     <tr class="center">
                                                         <td> <?php echo $r['CODIGO']; ?> </td>
                                                         <td> <?php echo $r['PRODUCTO']; ?> </td>
@@ -166,6 +166,30 @@ include_once "../../assest/config/reporteUrl.php";
                                                         <td> <?php echo -$r['CONSUMO']; ?> </td>        
                                                         <td> <?php echo $r['TEMPORADA']; ?> </td>    
                                                     </tr>
+<<<<<<< Updated upstream
+=======
+                                                <?php endforeach;*/ ?>
+                                                <?php foreach ($ARRAYINVENTARIOCONSUMODESPACHOPT as $r) : ?>
+                                                    <tr class="center">
+                                                        <td> <?php echo $r['CODIGO']; ?> </td>
+                                                        <td> <?php echo $r['PRODUCTO']; ?> </td>
+                                                        <td> <?php echo $r['NOMBRE_TUMEDIDA']; ?> </td> 
+                                                        <td> <?php echo "No Aplica"; ?> </td>  
+                                                        <td> <?php echo $r['NOMBRE_EMPRESA']; ?> </td>
+                                                        <td> <?php echo $r['PLANTAORIGEN']; ?> </td>  
+                                                        <td> <?php echo "Despacho Producto Terminado"; ?> </td>  
+                                                        <td> <?php echo $r['FECHADESPACHO']; ?> </td>  
+                                                        <td> <?php echo $r['NUMERO_DESPACHO']; ?> </td>  
+                                                        <td> <?php echo $r['NUMERO_GUIA_DESPACHO']; ?> </td>  
+                                                        <td> <?php echo $r['PLANTAORIGEN']; ?> </td>  
+                                                        <td> <?php echo $r['PLANTADESTINO']; ?> </td>    
+                                                        <td> <?php echo +$r['CONSUMO']; ?> </td> 
+                                                        <td> <?php echo "0"; ?> </td>                                                          
+                                                        <td> <?php echo +$r['CONSUMO']; ?> </td>  
+                                                        <td> <?php echo -$r['CONSUMO']; ?> </td>        
+                                                        <td> <?php echo $r['NOMBRE_TEMPORADA']; ?> </td>    
+                                                    </tr>
+>>>>>>> Stashed changes
                                                 <?php endforeach; ?>
                                                 <?php foreach ($ARRAYINVENTARIORECEPCION as $r) : ?>
                                                     <tr class="center">

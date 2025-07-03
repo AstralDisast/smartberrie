@@ -105,7 +105,7 @@ class TCONTENEDOR_ADO
     {
         try {
 
-            $datos = $this->conexion->prepare("SELECT * FROM  MATERIAL_TCONTENEDOR  WHERE  ID_TCONTENEDOR = '" . $ID . "';");
+            $datos = $this->conexion->prepare("SELECT * FROM  material_tcontenedor  WHERE  ID_TCONTENEDOR = '" . $ID . "';");
             $datos->execute();
             $resultado = $datos->fetchAll();
             $datos=null;
@@ -120,6 +120,49 @@ class TCONTENEDOR_ADO
         }
     }
 
+<<<<<<< Updated upstream
+=======
+     //VER LA INFORMACION RELACIONADA EN BASE AL ID INGRESADO A LA FUNCION
+     public function verTcontenedorCarga($ID)
+     {
+         try {
+ 
+             $datos = $this->conexion->prepare("SELECT * FROM  fruta_tcontenedor  WHERE  ID_TCONTENEDOR = '" . $ID . "';");
+             $datos->execute();
+             $resultado = $datos->fetchAll();
+             $datos=null;
+ 
+             //	print_r($resultado);
+             //	var_dump($resultado);
+ 
+ 
+             return $resultado;
+         } catch (Exception $e) {
+             die($e->getMessage());
+         }
+     }
+
+
+    public function verTcontenedorInstructivo($ID)
+    {
+        try {
+
+            $datos = $this->conexion->prepare("SELECT * FROM  fruta_tcontenedor  WHERE  ID_TCONTENEDOR = '" . $ID . "';");
+            $datos->execute();
+            $resultado = $datos->fetchAll();
+            $datos=null;
+
+            //	print_r($resultado);
+            //	var_dump($resultado);
+
+
+            return $resultado;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+>>>>>>> Stashed changes
 
 
     //BUSCAR CONSIDENCIA DE ACUERDO AL CARACTER INGRESADO EN LA FUNCION

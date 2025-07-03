@@ -424,7 +424,7 @@ class PROCESO_ADO
                                                 WHERE   ESTADO_REGISTRO = 1 
                                                 AND  ID_EMPRESA = '" . $EMPRESA . "' 
                                                 AND ID_PRODUCTOR = '" . $PRODUCTOR . "'
-                                                AND ID_TEMPORADA = '" . $TEMPORADA . "' ;	");
+                                                AND ID_TEMPORADA = '" . $TEMPORADA . "'  ;	");
             $datos->execute();
             $resultado = $datos->fetchAll();
             $datos=null;
@@ -439,7 +439,7 @@ class PROCESO_ADO
         }
     }
 
-    public function listarProcesoTemporadaCBX( $TEMPORADA)
+    public function listarProcesoEmpresaProductorTemporadaCBXEstadisticas($EMPRESA,$PRODUCTOR, $TEMPORADA)
     {
         try {
 
@@ -453,9 +453,160 @@ class PROCESO_ADO
                                                     FECHA_PROCESO AS 'FECHA', 
                                                     DATE_FORMAT(INGRESO, '%Y-%m-%d') AS 'INGRESO', 
                                                     DATE_FORMAT(MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION'
-                                                FROM fruta_proceso                                                        
+                                                FROM fruta_proceso                                                      
+                                                WHERE   ESTADO_REGISTRO = 1 
+                                                AND  ID_EMPRESA = '" . $EMPRESA . "' 
+                                                AND ID_PRODUCTOR = '" . $PRODUCTOR . "'
+                                                AND ID_TEMPORADA = '" . $TEMPORADA . "' AND FECHA_PROCESO < CURRENT_DATE AND ESTADO=0 ;	");
+            $datos->execute();
+            $resultado = $datos->fetchAll();
+            $datos=null;
+
+            //	print_r($resultado);
+            //	var_dump($resultado);
+
+
+            return $resultado;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+
+    public function listarProcesoEmpresaProductorTemporadaCBXEstadisticasEst($EMPRESA,$PRODUCTOR, $TEMPORADA, $ESPECIE)
+    {
+        try {
+
+            $datos = $this->conexion->prepare("SELECT * ,  
+                                                    IFNULL(KILOS_EXPORTACION_PROCESO,0) AS 'EXPORTACION'   ,                                                 
+                                                    IFNULL(KILOS_INDUSTRIAL_PROCESO,0) AS 'INDUSTRIAL'    ,                                                
+                                                    IFNULL(KILOS_INDUSTRIALSC_PROCESO,0) AS 'INDUSTRIALSC'    ,                                               
+                                                    IFNULL(KILOS_INDUSTRIALNC_PROCESO,0) AS 'INDUSTRIALNC'    ,                                                
+                                                    IFNULL(KILOS_NETO_PROCESO,0) AS 'NETO',                                        
+                                                    IFNULL(KILOS_NETO_ENTRADA,0) AS 'ENTRADA',
+                                                    FECHA_PROCESO AS 'FECHA', 
+                                                    DATE_FORMAT(FPRO.INGRESO, '%Y-%m-%d') AS 'INGRESO', 
+                                                    DATE_FORMAT(FPRO.MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION'
+                                                FROM fruta_proceso  FPRO 
+	
+	LEFT JOIN fruta_vespecies VES ON FPRO.ID_VESPECIES = VES.ID_VESPECIES                                                      
+                                                WHERE   FPRO.ESTADO_REGISTRO = 1 
+                                                AND  FPRO.ID_EMPRESA = '" . $EMPRESA . "' 
+                                                AND FPRO.ID_PRODUCTOR = '" . $PRODUCTOR . "'
+                                                AND VES.ID_ESPECIES = '" . $ESPECIE . "' 
+                                                AND FPRO.ID_TEMPORADA = '" . $TEMPORADA . "' AND FPRO.FECHA_PROCESO < CURRENT_DATE AND FPRO.ESTADO=0 
+                                                GROUP BY  FPRO.ID_PROCESO;	");
+                                                
+            $datos->execute();
+            $resultado = $datos->fetchAll();
+            $datos=null;
+
+            //	print_r($resultado);
+            //	var_dump($resultado);
+
+
+            return $resultado;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+    
+    public function listarProcesoTemporadaCBX( $TEMPORADA)
+    {
+        try {
+
+            $datos = $this->conexion->prepare("SELECT * ,  
+                                                    IFNULL(KILOS_EXPORTACION_PROCESO,0) AS 'EXPORTACION'   ,                                                 
+                                                    IFNULL(KILOS_INDUSTRIAL_PROCESO,0) AS 'INDUSTRIAL'    ,                                                
+                                                    IFNULL(KILOS_INDUSTRIALSC_PROCESO,0) AS 'INDUSTRIALSC'    ,                                               
+                                                    IFNULL(KILOS_INDUSTRIALNC_PROCESO,0) AS 'INDUSTRIALNC'    ,                                                
+                                                    IFNULL(KILOS_NETO_PROCESO,0) AS 'NETO',                                        
+                                                    IFNULL(KILOS_NETO_ENTRADA,0) AS 'ENTRADA',
+                                                    FECHA_PROCESO AS 'FECHA', 
+                                                    DATE_FORMAT(INGRESO, '%Y-%m-%d') AS 'INGRESO', 
+                                                    DATE_FORMAT(MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION',
+                                                    (select SUM(FINDM.KILOS_NETO_EXIINDUSTRIAL) from fruta_exiindustrial FINDM
+                                                    LEFT JOIN estandar_eindustrial ESM ON FINDM.ID_ESTANDAR = ESM.ID_ESTANDAR
+                                                    WHERE FINDM.ID_PROCESO=FPRO.ID_PROCESO AND ESM.AGRUPACION=2 AND ESM.COBRO = 0  AND FINDM.ESTADO_REGISTRO=1)AS MERMA, 
+                                                    (select SUM(FINDD.KILOS_NETO_EXIINDUSTRIAL) from fruta_exiindustrial FINDD
+                                                    LEFT JOIN estandar_eindustrial ESD ON FINDD.ID_ESTANDAR = ESD.ID_ESTANDAR
+                                                    WHERE FINDD.ID_PROCESO=FPRO.ID_PROCESO AND ESD.AGRUPACION=3 AND ESD.COBRO = 0 AND FINDD.ESTADO NOT IN(6,0))AS DESECHO 
+                                                FROM fruta_proceso FPRO                                                       
                                                 WHERE   ESTADO_REGISTRO = 1 
                                                 AND  ID_TEMPORADA = '" . $TEMPORADA . "' ;	");
+            $datos->execute();
+            $resultado = $datos->fetchAll();
+            $datos=null;
+
+            //	print_r($resultado);
+            //	var_dump($resultado);
+
+
+            return $resultado;
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function listarProcesoTemporadaCBXEst( $TEMPORADA, $ESPECIE)
+    {
+        try {
+            //revisar urgente
+            /*echo "SELECT * ,  
+                                                    IFNULL(KILOS_EXPORTACION_PROCESO,0) AS 'EXPORTACION'   ,                                                 
+                                                    IFNULL(KILOS_INDUSTRIAL_PROCESO,0) AS 'INDUSTRIAL'    ,                                                
+                                                    IFNULL(KILOS_INDUSTRIALSC_PROCESO,0) AS 'INDUSTRIALSC'    ,                                               
+                                                    IFNULL(KILOS_INDUSTRIALNC_PROCESO,0) AS 'INDUSTRIALNC'    ,                                                
+                                                    IFNULL(KILOS_NETO_PROCESO,0) AS 'NETO',                                        
+                                                    IFNULL(KILOS_NETO_ENTRADA,0) AS 'ENTRADA',
+                                                    FECHA_PROCESO AS 'FECHA', 
+                                                    DATE_FORMAT(INGRESO, '%Y-%m-%d') AS 'INGRESO', 
+                                                    DATE_FORMAT(MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION',
+                                                    (select SUM(FINDM.KILOS_NETO_EXIINDUSTRIAL) from fruta_exiindustrial FINDM
+                                                    LEFT JOIN estandar_eindustrial ESM ON FINDM.ID_ESTANDAR = ESM.ID_ESTANDAR
+                                                    WHERE FINDM.ID_PROCESO=FPRO.ID_PROCESO AND ESM.AGRUPACION=2 AND ESM.COBRO = 0)AS MERMA, 
+                                                    (select SUM(FINDD.KILOS_NETO_EXIINDUSTRIAL) from fruta_exiindustrial FINDD
+                                                    LEFT JOIN estandar_eindustrial ESD ON FINDD.ID_ESTANDAR = ESD.ID_ESTANDAR
+                                                    WHERE FINDD.ID_PROCESO=FPRO.ID_PROCESO AND ESD.AGRUPACION=3 AND ESD.COBRO = 0)AS DESECHO 
+                                                FROM fruta_proceso FPRO                                                       
+                                                WHERE   ESTADO_REGISTRO = 1 
+                                                LEFT JOIN fruta_vespecies VES ON 	FPRO.ID_VESPECIES = VES.ID_ESPECIES 
+                                                AND  ID_TEMPORADA = '" . $TEMPORADA . "' AND VES.ID_ESPECIES = '" . $ESPECIE . "' ;	";*/
+            $datos = $this->conexion->prepare("SELECT
+	*,
+	IFNULL( KILOS_EXPORTACION_PROCESO, 0 ) AS 'EXPORTACION',
+	IFNULL( KILOS_INDUSTRIAL_PROCESO, 0 ) AS 'INDUSTRIAL',
+	IFNULL( KILOS_INDUSTRIALSC_PROCESO, 0 ) AS 'INDUSTRIALSC',
+	IFNULL( KILOS_INDUSTRIALNC_PROCESO, 0 ) AS 'INDUSTRIALNC',
+	IFNULL( KILOS_NETO_PROCESO, 0 ) AS 'NETO',
+	IFNULL( KILOS_NETO_ENTRADA, 0 ) AS 'ENTRADA',
+	FECHA_PROCESO AS 'FECHA',
+	DATE_FORMAT( FPRO.INGRESO, '%Y-%m-%d' ) AS 'INGRESO',
+	DATE_FORMAT( FPRO.MODIFICACION, '%Y-%m-%d' ) AS 'MODIFICACION',
+	(
+	SELECT
+		SUM( FINDM.KILOS_NETO_EXIINDUSTRIAL ) 
+	FROM
+		fruta_exiindustrial FINDM
+		LEFT JOIN estandar_eindustrial ESM ON FINDM.ID_ESTANDAR = ESM.ID_ESTANDAR 
+	WHERE
+		FINDM.ID_PROCESO = FPRO.ID_PROCESO 
+		AND ESM.AGRUPACION = 2 
+		AND ESM.COBRO = 0 
+        AND FINDM.ESTADO_REGISTRO=1
+	) AS MERMA,
+	(SELECT SUM( FINDD.KILOS_NETO_EXIINDUSTRIAL ) FROM fruta_exiindustrial FINDD LEFT JOIN estandar_eindustrial ESD ON FINDD.ID_ESTANDAR = ESD.ID_ESTANDAR WHERE
+		FINDD.ID_PROCESO = FPRO.ID_PROCESO 
+		AND ESD.AGRUPACION = 3 
+		AND ESD.COBRO = 0 AND FINDD.ESTADO NOT IN(6,0)
+	) AS DESECHO 
+FROM
+	fruta_proceso FPRO 
+	
+	LEFT JOIN fruta_vespecies VES ON FPRO.ID_VESPECIES = VES.ID_VESPECIES                                                 
+                                                WHERE   FPRO.ESTADO_REGISTRO = 1 
+                                                
+                                                AND  FPRO.ID_TEMPORADA = '" . $TEMPORADA . "' AND VES.ID_ESPECIES = '" . $ESPECIE . "' ;	");
             $datos->execute();
             $resultado = $datos->fetchAll();
             $datos=null;
@@ -524,12 +675,27 @@ class PROCESO_ADO
             WEEKOFYEAR(FECHA_PROCESO) AS 'SEMANAISO', 
             
             DATE_FORMAT(INGRESO, '%Y-%m-%d') AS 'INGRESO',
-            DATE_FORMAT(MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION' 
-        FROM fruta_proceso                                                        
-        WHERE   ESTADO_REGISTRO = 1 
-        AND  ID_EMPRESA = '" . $EMPRESA . "' 
-        AND ID_PLANTA = '" . $PLANTA . "'
-        AND ID_TEMPORADA = '" . $TEMPORADA . "' ;	";*/
+            DATE_FORMAT(MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION',
+						(SELECT SUM(fruta_exiindustrial.KILOS_NETO_EXIINDUSTRIAL) FROM fruta_exiindustrial 
+				JOIN estandar_eindustrial on estandar_eindustrial.ID_ESTANDAR = fruta_exiindustrial.ID_ESTANDAR 
+				where ID_PROCESO = fruta_proceso.ID_PROCESO AND AGRUPACION='1' AND fruta_exiindustrial.ESTADO_REGISTRO=1 AND ESTADO != 6)AS 'IQF_INFO',
+						(SELECT SUM(fruta_exiindustrial.KILOS_NETO_EXIINDUSTRIAL) FROM fruta_exiindustrial 
+				JOIN estandar_eindustrial on estandar_eindustrial.ID_ESTANDAR = fruta_exiindustrial.ID_ESTANDAR 
+				where ID_PROCESO = fruta_proceso.ID_PROCESO AND AGRUPACION='2' AND fruta_exiindustrial.ESTADO_REGISTRO=1)AS 'MERMA_INFO',
+				(SELECT SUM(fruta_exiindustrial.KILOS_NETO_EXIINDUSTRIAL) FROM fruta_exiindustrial 
+				JOIN estandar_eindustrial on estandar_eindustrial.ID_ESTANDAR = fruta_exiindustrial.ID_ESTANDAR 
+				where ID_PROCESO = fruta_proceso.ID_PROCESO AND AGRUPACION='3' AND fruta_exiindustrial.ESTADO_REGISTRO=1)AS 'DESECHO_INFO',
+                (SELECT SUM(fruta_exiindustrial.KILOS_NETO_EXIINDUSTRIAL) FROM fruta_exiindustrial 
+				JOIN estandar_eindustrial on estandar_eindustrial.ID_ESTANDAR = fruta_exiindustrial.ID_ESTANDAR 
+				where ID_PROCESO = fruta_proceso.ID_PROCESO AND AGRUPACION='4' AND fruta_exiindustrial.ESTADO_REGISTRO=1)AS 'SUMA_DIFERENCIA_PROCESO',
+				(SELECT SUM(fruta_exiindustrial.KILOS_NETO_EXIINDUSTRIAL) FROM fruta_exiindustrial 
+				JOIN estandar_eindustrial on estandar_eindustrial.ID_ESTANDAR = fruta_exiindustrial.ID_ESTANDAR 
+				where ID_PROCESO = fruta_proceso.ID_PROCESO AND ESTADO != 6 AND (AGRUPACION='1' OR AGRUPACION='2' OR AGRUPACION='3') AND fruta_exiindustrial.ESTADO_REGISTRO=1)AS 'SUMA_INDUSTRIAL_INFO' 
+        FROM fruta_proceso                                                           
+                                                WHERE   ESTADO_REGISTRO = 1 
+                                                AND  ID_EMPRESA = '" . $EMPRESA . "' 
+                                                AND ID_PLANTA = '" . $PLANTA . "'
+                                                AND ID_TEMPORADA = '" . $TEMPORADA . "' ;	";*/
             $datos = $this->conexion->prepare("SELECT * ,  
             IFNULL(KILOS_EXPORTACION_PROCESO,0) AS 'EXPORTACION'   ,                                                 
             IFNULL(KILOS_INDUSTRIAL_PROCESO,0) AS 'INDUSTRIAL'    ,                                                
@@ -544,6 +710,7 @@ class PROCESO_ADO
             
             DATE_FORMAT(INGRESO, '%Y-%m-%d') AS 'INGRESO',
             DATE_FORMAT(MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION',
+<<<<<<< Updated upstream
 						(SELECT SUM(FRUTA_EXIINDUSTRIAL.KILOS_NETO_EXIINDUSTRIAL) FROM FRUTA_EXIINDUSTRIAL 
 				JOIN ESTANDAR_EINDUSTRIAL on ESTANDAR_EINDUSTRIAL.ID_ESTANDAR = FRUTA_EXIINDUSTRIAL.ID_ESTANDAR 
 				where ID_PROCESO = FRUTA_PROCESO.ID_PROCESO AND AGRUPACION='1')AS 'IQF_INFO',
@@ -557,6 +724,24 @@ class PROCESO_ADO
 				JOIN ESTANDAR_EINDUSTRIAL on ESTANDAR_EINDUSTRIAL.ID_ESTANDAR = FRUTA_EXIINDUSTRIAL.ID_ESTANDAR 
 				where ID_PROCESO = FRUTA_PROCESO.ID_PROCESO AND (AGRUPACION='1' OR AGRUPACION='2' OR AGRUPACION='3'))AS 'SUMA_INDUSTRIAL_INFO' 
         FROM FRUTA_PROCESO                                                           
+=======
+						(SELECT SUM(fruta_exiindustrial.KILOS_NETO_EXIINDUSTRIAL) FROM fruta_exiindustrial 
+				JOIN estandar_eindustrial on estandar_eindustrial.ID_ESTANDAR = fruta_exiindustrial.ID_ESTANDAR 
+				where ID_PROCESO = fruta_proceso.ID_PROCESO AND AGRUPACION='1' AND fruta_exiindustrial.ESTADO_REGISTRO=1 AND ESTADO != 6)AS 'IQF_INFO',
+						(SELECT SUM(fruta_exiindustrial.KILOS_NETO_EXIINDUSTRIAL) FROM fruta_exiindustrial 
+				JOIN estandar_eindustrial on estandar_eindustrial.ID_ESTANDAR = fruta_exiindustrial.ID_ESTANDAR 
+				where ID_PROCESO = fruta_proceso.ID_PROCESO AND AGRUPACION='2' AND fruta_exiindustrial.ESTADO_REGISTRO=1)AS 'MERMA_INFO',
+				(SELECT SUM(fruta_exiindustrial.KILOS_NETO_EXIINDUSTRIAL) FROM fruta_exiindustrial 
+				JOIN estandar_eindustrial on estandar_eindustrial.ID_ESTANDAR = fruta_exiindustrial.ID_ESTANDAR 
+				where ID_PROCESO = fruta_proceso.ID_PROCESO AND AGRUPACION='3' AND fruta_exiindustrial.ESTADO_REGISTRO=1)AS 'DESECHO_INFO',
+                (SELECT SUM(fruta_exiindustrial.KILOS_NETO_EXIINDUSTRIAL) FROM fruta_exiindustrial 
+				JOIN estandar_eindustrial on estandar_eindustrial.ID_ESTANDAR = fruta_exiindustrial.ID_ESTANDAR 
+				where ID_PROCESO = fruta_proceso.ID_PROCESO AND AGRUPACION='4' AND fruta_exiindustrial.ESTADO_REGISTRO=1)AS 'SUMA_DIFERENCIA_PROCESO',
+				(SELECT SUM(fruta_exiindustrial.KILOS_NETO_EXIINDUSTRIAL) FROM fruta_exiindustrial 
+				JOIN estandar_eindustrial on estandar_eindustrial.ID_ESTANDAR = fruta_exiindustrial.ID_ESTANDAR 
+				where ID_PROCESO = fruta_proceso.ID_PROCESO AND fruta_exiindustrial.ESTADO NOT IN(6,0) AND (AGRUPACION='1' OR AGRUPACION='2' OR AGRUPACION='3') AND fruta_exiindustrial.ESTADO_REGISTRO=1)AS 'SUMA_INDUSTRIAL_INFO' 
+        FROM fruta_proceso                                                           
+>>>>>>> Stashed changes
                                                 WHERE   ESTADO_REGISTRO = 1 
                                                 AND  ID_EMPRESA = '" . $EMPRESA . "' 
                                                 AND ID_PLANTA = '" . $PLANTA . "'
