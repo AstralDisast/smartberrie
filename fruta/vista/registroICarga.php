@@ -46,6 +46,7 @@ include_once '../../assest/controlador/TFLETE_ADO.php';
 
 include_once '../../assest/controlador/TCONTENEDOR_ADO.php';
 include_once '../../assest/controlador/ATMOSFERA_ADO.php';
+include_once '../../assest/controlador/EMISIONBL_ADO.php';
 include_once '../../assest/controlador/PAIS_ADO.php';
 include_once '../../assest/controlador/SEGURO_ADO.php';
 
@@ -105,6 +106,7 @@ $CVENTA_ADO =  new CVENTA_ADO();
 $TFLETE_ADO =  new TFLETE_ADO();
 $TCONTENEDOR_ADO =  new TCONTENEDOR_ADO();
 $ATMOSFERA_ADO =  new ATMOSFERA_ADO();
+$EMISIONBL_ADO =  new EMISIONBL_ADO();
 $SEGURO_ADO =  new SEGURO_ADO();
 
 $EEXPORTACION_ADO = new EEXPORTACION_ADO();
@@ -166,6 +168,7 @@ $ADESTINO = "";
 $NAVIERA = "";
 $NAVE = "";
 $FECHASTACKING = "";
+$FECHASTACKINGF = "";
 $NVIAJE = "";
 $PCARGA = "";
 $PDESTINO = "";
@@ -178,6 +181,7 @@ $COSTOFLETE = "";
 $FDA = "";
 $TCONTENEDOR = "";
 $ATMOSFERA = "";
+$EMISIONBL = "";
 $TINSTRUCTIVO = "";
 $O2INSTRUCTIVO = "";
 $CO2INSTRUCTIVO = "";
@@ -292,6 +296,7 @@ $ARRAYTFLETE = "";
 
 $ARRAYTCONTENEDOR = "";
 $ARRAYATMOSFERA = "";
+$ARRAYEMISIONBL = "";
 
 $ARRAYESTANDAR = "";
 $ARRAYVERESTANDAR = "";
@@ -353,6 +358,7 @@ $ARRAYTFLETE = $TFLETE_ADO->listarTfletePorEmpresaCBX($EMPRESAS);
 
 $ARRAYTCONTENEDOR = $TCONTENEDOR_ADO->listarTcontenedorPorEmpresaCBX($EMPRESAS);
 $ARRAYATMOSFERA = $ATMOSFERA_ADO->listarAtmosferaPorEmpresaCBX($EMPRESAS);
+$ARRAYEMISIONBL = $EMISIONBL_ADO->listarEmisionblPorEmpresaCBX($EMPRESAS);
 $ARRAYSEGURO = $SEGURO_ADO->listarSeguroPorEmpressCBX($EMPRESAS);
 
 $ARRAYESPECIES = $ESPECIES_ADO->listarEspeciesCBX();
@@ -370,6 +376,8 @@ $FECHAINSTRUCTIVO = $ARRAYFECHAACTUAL[0]['FECHA'];
 $FECHAETA = $ARRAYFECHAACTUAL[0]['FECHA'];
 $FECHAETD = $ARRAYFECHAACTUAL[0]['FECHA'];
 $FECHASTACKING = $ARRAYFECHAACTUAL[0]['FECHA'];
+$FECHASTACKINGF = $ARRAYFECHAACTUAL[0]['FECHA'];
+
 
 include_once "../../assest/config/validarDatosUrl.php";
 include_once "../../assest/config/datosUrlD.php";
@@ -443,6 +451,7 @@ if (isset($id_dato) && isset($accion_dato)) {
             $FECHAMODIFCIACION = $r['MODIFICACION'];
             $EXPORTADORA = $r['ID_EXPPORTADORA'];
             $CONSIGNATARIO = $r['ID_CONSIGNATARIO'];
+            $EMISIONBL = $r['ID_EMISIONBL'];
             $NOTIFICADOR = $r['ID_NOTIFICADOR'];
             $BROKER = $r['ID_BROKER'];
             $RFINAL = $r['ID_RFINAL'];
@@ -477,6 +486,7 @@ if (isset($id_dato) && isset($accion_dato)) {
                     $NAVIERA = $r['ID_NAVIERA'];
                     $NAVE = $r['NAVE_ICARGA'];
                     $FECHASTACKING = $r['FECHASTACKING_ICARGA'];
+                    $FECHASTACKINGF = $r['FECHASTACKINGF_ICARGA'];
                     $NVIAJE = $r['NVIAJE_ICARGA'];
                     $PCARGA = $r['ID_PCARGA'];
                     $PDESTINO = $r['ID_PDESTINO'];
@@ -489,6 +499,7 @@ if (isset($id_dato) && isset($accion_dato)) {
             $TFLETE = $r['ID_TFLETE'];
             $TCONTENEDOR = $r['ID_TCONTENEDOR'];
             $ATMOSFERA = $r['ID_ATMOSFERA'];
+            
             $TINSTRUCTIVO = $r['T_ICARGA'];
             $O2INSTRUCTIVO = $r['O2_ICARGA'];
             $CO2INSTRUCTIVO = $r['C02_ICARGA'];
@@ -537,6 +548,7 @@ if (isset($id_dato) && isset($accion_dato)) {
             $FECHAMODIFCIACION = $r['MODIFICACION'];
             $EXPORTADORA = $r['ID_EXPPORTADORA'];
             $CONSIGNATARIO = $r['ID_CONSIGNATARIO'];
+            $EMISIONBL = $r['ID_EMISIONBL'];
             $NOTIFICADOR = $r['ID_NOTIFICADOR'];
             $BROKER = $r['ID_BROKER'];
             $RFINAL = $r['ID_RFINAL'];
@@ -571,6 +583,7 @@ if (isset($id_dato) && isset($accion_dato)) {
                     $NAVIERA = $r['ID_NAVIERA'];
                     $NAVE = $r['NAVE_ICARGA'];
                     $FECHASTACKING = $r['FECHASTACKING_ICARGA'];
+                    $FECHASTACKINGF = $r['FECHASTACKINGF_ICARGA'];
                     $NVIAJE = $r['NVIAJE_ICARGA'];
                     $PCARGA = $r['ID_PCARGA'];
                     $PDESTINO = $r['ID_PDESTINO'];
@@ -633,6 +646,7 @@ if (isset($id_dato) && isset($accion_dato)) {
             $FECHAMODIFCIACION = $r['MODIFICACION'];
             $EXPORTADORA = $r['ID_EXPPORTADORA'];
             $CONSIGNATARIO = $r['ID_CONSIGNATARIO'];
+            $EMISIONBL = $r['ID_EMISIONBL'];
             $NOTIFICADOR = $r['ID_NOTIFICADOR'];
             $BROKER = $r['ID_BROKER'];
             $RFINAL = $r['ID_RFINAL'];
@@ -667,6 +681,7 @@ if (isset($id_dato) && isset($accion_dato)) {
                     $NAVIERA = $r['ID_NAVIERA'];
                     $NAVE = $r['NAVE_ICARGA'];
                     $FECHASTACKING = $r['FECHASTACKING_ICARGA'];
+                    $FECHASTACKINGF = $r['FECHASTACKINGF_ICARGA'];
                     $NVIAJE = $r['NVIAJE_ICARGA'];
                     $PCARGA = $r['ID_PCARGA'];
                     $PDESTINO = $r['ID_PDESTINO'];
@@ -731,6 +746,9 @@ if (isset($_POST)) {
     }
     if (isset($_REQUEST['CONSIGNATARIO'])) {
         $CONSIGNATARIO = $_REQUEST['CONSIGNATARIO'];
+    }
+    if (isset($_REQUEST['EMISIONBL'])) {
+        $EMISIONBL = $_REQUEST['EMISIONBL'];
     }
     if (isset($_REQUEST['NOTIFICADOR'])) {
         $NOTIFICADOR = $_REQUEST['NOTIFICADOR'];
@@ -819,6 +837,9 @@ if (isset($_POST)) {
             }
             if (isset($_REQUEST['FECHASTACKING'])) {
                 $FECHASTACKING = $_REQUEST['FECHASTACKING'];
+            }
+            if (isset($_REQUEST['FECHASTACKINGF'])) {
+                $FECHASTACKINGF = $_REQUEST['FECHASTACKINGF'];
             }
             if (isset($_REQUEST['NVIAJE'])) {
                 $NVIAJE = $_REQUEST['NVIAJE'];
@@ -1482,6 +1503,7 @@ if (isset($_POST)) {
 
 
                     CONSIGNATARIO = document.getElementById("CONSIGNATARIO").selectedIndex;
+                    EMISIONBL = document.getElementById("EMISIONBL").selectedIndex;
                     NOTIFICADOR = document.getElementById("NOTIFICADOR").selectedIndex;
                     BROKER = document.getElementById("BROKER").selectedIndex;
                     RFINAL = document.getElementById("RFINAL").selectedIndex;
@@ -1529,6 +1551,7 @@ if (isset($_POST)) {
 
                     document.getElementById('val_exportadora').innerHTML = "";
                     document.getElementById('val_consignatario').innerHTML = "";
+                    document.getElementById('val_emisionbl').innerHTML = "";
                     document.getElementById('val_notificador').innerHTML = "";
                     document.getElementById('val_broker').innerHTML = "";
                     document.getElementById('val_rfinal').innerHTML = "";
@@ -1626,6 +1649,14 @@ if (isset($_POST)) {
                         return false;
                     }
                     document.form_reg_dato.CONSIGNATARIO.style.borderColor = "#4AF575";
+
+                    if (EMISIONBL == null || EMISIONBL == 0) {
+                        document.form_reg_dato.EMISIONBL.focus();
+                        document.form_reg_dato.EMISIONBL.style.borderColor = "#FF0000";
+                        document.getElementById('val_emisionbl').innerHTML = "NO HA SELECIONADO ALTERNATIVA";
+                        return false;
+                    }
+                    document.form_reg_dato.EMISIONBL.style.borderColor = "#4AF575";
 
                     if (NOTIFICADOR == null || NOTIFICADOR == 0) {
                         document.form_reg_dato.NOTIFICADOR.focus();
@@ -1826,6 +1857,7 @@ if (isset($_POST)) {
 
                         NAVIERA = document.getElementById("NAVIERA").selectedIndex;
                         FECHASTACKING = document.getElementById("FECHASTACKING").value;
+                        FECHASTACKINGF = document.getElementById("FECHASTACKINGF").value;
                         NVIAJE = document.getElementById("NVIAJE").value;
                         PCARGA = document.getElementById("PCARGA").selectedIndex;
                         PDESTINO = document.getElementById("PDESTINO").selectedIndex;
@@ -1852,6 +1884,15 @@ if (isset($_POST)) {
                             return false;
                         }
                         document.form_reg_dato.FECHASTACKING.style.borderColor = "#4AF575";
+
+                        if (FECHASTACKINGF == null || FECHASTACKINGF.length == 0 || /^\s+$/.test(FECHASTACKINGF)) {
+                            document.form_reg_dato.FECHASTACKINGF.focus();
+                            document.form_reg_dato.FECHASTACKINGF.style.borderColor = "#FF0000";
+                            document.getElementById('val_fechastackingf').innerHTML = "NO A INGRESADO DATO";
+                            return false;
+                        }
+                        document.form_reg_dato.FECHASTACKINGF.style.borderColor = "#4AF575";
+
 
                         if (NVIAJE == null || NVIAJE.length == 0 || /^\s+$/.test(NVIAJE)) {
                             document.form_reg_dato.NVIAJE.focus();
@@ -2422,9 +2463,6 @@ if (isset($_POST)) {
                                                     <label id="val_exportadora" class="validacion"> </label>
                                                 </div>
                                             </div>
-<<<<<<< Updated upstream
-                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
-=======
                                             <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Mercado</label>
@@ -2478,7 +2516,6 @@ if (isset($_POST)) {
                                                         <i class="glyphicon glyphicon-plus"></i>
                                                     </button>
                                                 </div>
->>>>>>> Stashed changes
                                             </div>
                                             <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
@@ -2507,11 +2544,7 @@ if (isset($_POST)) {
                                                     </button>
                                                 </div>
                                             </div>
-<<<<<<< Updated upstream
-                                            <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
-=======
                                             <div class="col-xxl-3 col-xl-5 col-lg-7 col-md-7 col-sm-7 col-7 col-xs-7">
->>>>>>> Stashed changes
                                                 <div class="form-group">
                                                     <label>Notificador</label>
                                                     <input type="hidden" class="form-control" placeholder="NOTIFICADORE" id="NOTIFICADORE" name="NOTIFICADORE" value="<?php echo $NOTIFICADOR; ?>" />
@@ -2538,7 +2571,7 @@ if (isset($_POST)) {
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                           <!--  <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Planta Carga</label>
                                                     <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
@@ -2556,7 +2589,7 @@ if (isset($_POST)) {
                                                     </select>
                                                     <label id="val_lcarga" class="validacion"> </label>
                                                  </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-xxl-3 col-xl-5 col-lg-9 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Ciudad Destino</label>
@@ -3006,7 +3039,7 @@ if (isset($_POST)) {
                                                     </button>
                                                 </div>
                                             </div>
-                                            <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                            <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Planta Carga</label>
                                                     <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
@@ -3024,7 +3057,7 @@ if (isset($_POST)) {
                                                     </select>
                                                     <label id="val_lcarga" class="validacion"> </label>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             
                                             
                                             <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-12 col-sm-12 col-12 col-xs-12">
@@ -3494,9 +3527,9 @@ if (isset($_POST)) {
                                             <div class="col-xxl-2 col-xl-4 col-lg-6 col-md-6 col-sm-6 col-6 col-xs-6">
                                                 <div class="form-group">
                                                     <label>Cierre Stacking</label>
-                                                    <input type="hidden" class="form-control" placeholder="FECHA FINAL PROCESO" id="FECHACIERRESTACKINGE" name="FECHACIERRESTACKINGE" value="<?php echo $FECHACIERRESTACKING; ?>" />
-                                                    <input type="date" class="form-control" placeholder="Fecha Cierre Stacking" id="FECHACIERRESTACKING" name="FECHACIERRESTACKING" value="<?php echo $FECHACIERRESTACKING; ?>" <?php echo $DISABLED; ?> />
-                                                    <label id="val_fechacierrestacking" class="validacion"> </label>
+                                                    <input type="hidden" class="form-control" placeholder="FECHA FINAL STACKING" id="FECHASTACKINGFE" name="FECHASTACKINGFE" value="<?php echo $FECHASTACKINGF; ?>" />
+                                                    <input type="date" class="form-control" placeholder="Fecha Cierre Stacking" id="FECHASTACKINGF" name="FECHASTACKINGF" value="<?php echo $FECHASTACKINGF; ?>" <?php echo $DISABLED; ?> />
+                                                    <label id="val_fechastackingf" class="validacion"> </label>
                                                 </div>
                                             </div>
                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
@@ -3771,7 +3804,7 @@ if (isset($_POST)) {
                                                     </button>
                                                 </div>
                                             </div>
-                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
+                                             <!-- <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Planta Carga</label>
                                                     <input type="hidden" class="form-control" placeholder="LCARGAE" id="LCARGAE" name="LCARGAE" value="<?php echo $LCARGA; ?>" />
@@ -3789,7 +3822,7 @@ if (isset($_POST)) {
                                                     </select>
                                                     <label id="val_lcarga" class="validacion"> </label>
                                                  </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                     <div class="form-group">
                                                         <label>Puerto Carga</label>
@@ -4020,14 +4053,14 @@ if (isset($_POST)) {
                                                     <label id="val_lcarga" class="validacion"> </label>
                                                 </div>
                                             </div>
-                                            <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
+                                            <!-- <div class="col-xxl-1 col-xl-1 col-lg-3 col-md-3 col-sm-3 col-3 col-xs-3">
                                                 <div class="form-group">
                                                     <br>
                                                     <button type="button" class="btn btn-success btn-block" data-toggle="tooltip" title="Agregar Planta Carga" <?php echo $DISABLED; ?> id="defecto" name="pop" Onclick="abrirVentana('registroPopLcarga.php' ); ">
                                                         <i class="glyphicon glyphicon-plus"></i>
                                                     </button>
                                                 </div>
-                                            </div> 
+                                            </div>  -->
                                              <div class="col-xxl-3 col-xl-3 col-lg-4 col-md-9 col-sm-9 col-9 col-xs-9">
                                                 <div class="form-group">
                                                     <label>Tipo Flete</label>
@@ -5416,6 +5449,7 @@ if (isset($_POST)) {
                 $ICARGA->__SET('ID_TSERVICIO', $_REQUEST['TSERVICIO']);
                 $ICARGA->__SET('ID_EXPPORTADORA', $_REQUEST['EXPORTADORA']);
                 $ICARGA->__SET('ID_CONSIGNATARIO', $_REQUEST['CONSIGNATARIO']);
+                $ICARGA->__SET('ID_EMISIONBL', $_REQUEST['EMISIONBL']);
                 $ICARGA->__SET('ID_NOTIFICADOR', $_REQUEST['NOTIFICADOR']);
                 $ICARGA->__SET('ID_BROKER', $_REQUEST['BROKER']);
                 $ICARGA->__SET('ID_RFINAL', $_REQUEST['RFINAL']);
@@ -5448,6 +5482,7 @@ if (isset($_POST)) {
                         $ICARGA->__SET('ID_NAVIERA', $_REQUEST['NAVIERA']);
                         $ICARGA->__SET('NAVE_ICARGA', $_REQUEST['NAVE']);
                         $ICARGA->__SET('FECHASTACKING_ICARGA', $_REQUEST['FECHASTACKING']);
+                        $ICARGA->__SET('FECHASTACKINGF_ICARGA', $_REQUEST['FECHASTACKINGF']);
                         $ICARGA->__SET('NVIAJE_ICARGA', $_REQUEST['NVIAJE']);
                         $ICARGA->__SET('ID_PCARGA', $_REQUEST['PCARGA']);
                         $ICARGA->__SET('ID_PDESTINO', $_REQUEST['PDESTINO']);
@@ -5521,6 +5556,7 @@ if (isset($_POST)) {
                 $ICARGA->__SET('TOTAL_US_ICARGA', $_REQUEST['TOTALUS']);
                 $ICARGA->__SET('ID_EXPPORTADORA', $_REQUEST['EXPORTADORA']);
                 $ICARGA->__SET('ID_CONSIGNATARIO', $_REQUEST['CONSIGNATARIO']);
+                $ICARGA->__SET('ID_EMISIONBL', $_REQUEST['EMISIONBL']);
                 $ICARGA->__SET('ID_NOTIFICADOR', $_REQUEST['NOTIFICADOR']);
                 $ICARGA->__SET('ID_BROKER', $_REQUEST['BROKER']);
                 $ICARGA->__SET('ID_RFINAL', $_REQUEST['RFINAL']);
@@ -5547,6 +5583,7 @@ if (isset($_POST)) {
                         $ICARGA->__SET('ID_NAVIERA', $_REQUEST['NAVIERA']);
                         $ICARGA->__SET('NAVE_ICARGA', $_REQUEST['NAVE']);
                         $ICARGA->__SET('FECHASTACKING_ICARGA', $_REQUEST['FECHASTACKING']);
+                        $ICARGA->__SET('FECHASTACKINGF_ICARGA', $_REQUEST['FECHASTACKINGF']);
                         $ICARGA->__SET('NVIAJE_ICARGA', $_REQUEST['NVIAJE']);
                         $ICARGA->__SET('ID_PCARGA', $_REQUEST['PCARGA']);
                         $ICARGA->__SET('ID_PDESTINO', $_REQUEST['PDESTINO']);
@@ -5659,6 +5696,7 @@ if (isset($_POST)) {
                     $ICARGA->__SET('TOTAL_US_ICARGA', $_REQUEST['TOTALUS']);
                     $ICARGA->__SET('ID_EXPPORTADORA', $_REQUEST['EXPORTADORA']);
                     $ICARGA->__SET('ID_CONSIGNATARIO', $_REQUEST['CONSIGNATARIO']);
+                    $ICARGA->__SET('ID_EMISIONBL', $_REQUEST['EMISIONBL']);
                     $ICARGA->__SET('ID_NOTIFICADOR', $_REQUEST['NOTIFICADOR']);
                     $ICARGA->__SET('ID_BROKER', $_REQUEST['BROKER']);
                     $ICARGA->__SET('ID_RFINAL', $_REQUEST['RFINAL']);
@@ -5684,6 +5722,7 @@ if (isset($_POST)) {
                             $ICARGA->__SET('ID_NAVIERA', $_REQUEST['NAVIERA']);
                             $ICARGA->__SET('NAVE_ICARGA', $_REQUEST['NAVE']);
                             $ICARGA->__SET('FECHASTACKING_ICARGA', $_REQUEST['FECHASTACKING']);
+                            $ICARGA->__SET('FECHASTACKINGF_ICARGA', $_REQUEST['FECHASTACKINGF']);
                             $ICARGA->__SET('NVIAJE_ICARGA', $_REQUEST['NVIAJE']);
                             $ICARGA->__SET('ID_PCARGA', $_REQUEST['PCARGA']);
                             $ICARGA->__SET('ID_PDESTINO', $_REQUEST['PDESTINO']);

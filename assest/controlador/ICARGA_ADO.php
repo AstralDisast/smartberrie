@@ -163,6 +163,7 @@ class ICARGA_ADO
                                                 DATE_FORMAT(FECHAETAREAL_ICARGA, '%d/%m/%Y') AS 'FECHAETAREAL',
                                                 DATE_FORMAT(FECHAETDREAL_ICARGA, '%d/%m/%Y') AS 'FECHAETDREAL',  
                                                 DATE_FORMAT(FECHASTACKING_ICARGA, '%d/%m/%Y') AS 'FECHAESTACKING', 
+                                                DATE_FORMAT(FECHASTACKINGF_ICARGA, '%d/%m/%Y') AS 'FECHAESTACKINGF', 
                                                 DATE_FORMAT(INGRESO, '%Y-%m-%d') AS 'INGRESO', 
                                                 DATE_FORMAT(MODIFICACION, '%Y-%m-%d') AS 'MODIFICACION'
                                             FROM fruta_icarga
@@ -212,6 +213,9 @@ class ICARGA_ADO
         try {
             if ($ICARGA->__GET('ID_CONSIGNATARIO') == NULL) {
                 $ICARGA->__SET('ID_CONSIGNATARIO', NULL);
+            }
+            if ($ICARGA->__GET('ID_EMISIONBL') == NULL) {
+                $ICARGA->__SET('ID_EMISIONBL', NULL);
             }
             if ($ICARGA->__GET('ID_EXPPORTADORA') == NULL) {
                 $ICARGA->__SET('ID_EXPPORTADORA', NULL);
@@ -322,6 +326,7 @@ class ICARGA_ADO
                                             NCOURIER_ICARGA,
                                             CRT_ICARGA,  
                                             FECHASTACKING_ICARGA,
+                                            FECHASTACKINGF_ICARGA,
                                             NVIAJE_ICARGA, 
                                             FUMIGADO_ICARGA, 
                                             T_ICARGA,
@@ -340,6 +345,7 @@ class ICARGA_ADO
                                             NAVE_ICARGA, 
                                             ID_EXPPORTADORA, 
                                             ID_CONSIGNATARIO, 
+                                            ID_EMISIONBL, 
                                             ID_NOTIFICADOR, 
                                             ID_BROKER, 
                                             ID_RFINAL,
@@ -380,11 +386,7 @@ class ICARGA_ADO
                                             ESTADO_REGISTRO
                                         ) 
             VALUES
-<<<<<<< Updated upstream
-	       	    (  ?,  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
-=======
-	       	    (  ?,  ?, ?,  ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
->>>>>>> Stashed changes
+	       	    (  ?,  ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
                  0, 0, 0, 0, SYSDATE(), SYSDATE(), 1, 2, 1);";
             $this->conexion->prepare($query)
                 ->execute(
@@ -403,6 +405,7 @@ class ICARGA_ADO
                         $ICARGA->__GET('NCOURIER_ICARGA'),
                         $ICARGA->__GET('CRT_ICARGA'),
                         $ICARGA->__GET('FECHASTACKING_ICARGA'),
+                        $ICARGA->__GET('FECHASTACKINGF_ICARGA'),
                         $ICARGA->__GET('NVIAJE_ICARGA'),
                         $ICARGA->__GET('FUMIGADO_ICARGA'),
                         $ICARGA->__GET('T_ICARGA'),
@@ -421,6 +424,7 @@ class ICARGA_ADO
                         $ICARGA->__GET('NAVE_ICARGA'),
                         $ICARGA->__GET('ID_EXPPORTADORA'),
                         $ICARGA->__GET('ID_CONSIGNATARIO'),
+                        $ICARGA->__GET('ID_EMISIONBL'),
                         $ICARGA->__GET('ID_NOTIFICADOR'),
                         $ICARGA->__GET('ID_BROKER'),
                         $ICARGA->__GET('ID_RFINAL'),
@@ -477,6 +481,9 @@ class ICARGA_ADO
     {
         if ($ICARGA->__GET('ID_CONSIGNATARIO') == NULL) {
             $ICARGA->__SET('ID_CONSIGNATARIO', NULL);
+        }
+        if ($ICARGA->__GET('ID_EMISIONBL') == NULL) {
+            $ICARGA->__SET('ID_EMISIONBL', NULL);
         }
         if ($ICARGA->__GET('ID_EXPPORTADORA') == NULL) {
             $ICARGA->__SET('ID_EXPPORTADORA', NULL);
@@ -586,6 +593,7 @@ class ICARGA_ADO
             NCOURIER_ICARGA = ?, 
             CRT_ICARGA = ?,
             FECHASTACKING_ICARGA = ?,
+            FECHASTACKINGF_ICARGA = ?,
             NVIAJE_ICARGA = ?, 
             FUMIGADO_ICARGA = ?, 
             T_ICARGA = ?,
@@ -608,6 +616,7 @@ class ICARGA_ADO
             TOTAL_US_ICARGA = ?,   
             ID_EXPPORTADORA = ?, 
             ID_CONSIGNATARIO = ?, 
+            ID_EMISIONBL = ?, 
             ID_NOTIFICADOR = ?, 
             ID_BROKER = ?, 
             ID_RFINAL = ?,
@@ -673,6 +682,7 @@ class ICARGA_ADO
                         $ICARGA->__GET('TOTAL_US_ICARGA'),
                         $ICARGA->__GET('ID_EXPPORTADORA'),
                         $ICARGA->__GET('ID_CONSIGNATARIO'),
+                        $ICARGA->__GET('ID_EMISIONBL'),
                         $ICARGA->__GET('ID_NOTIFICADOR'),
                         $ICARGA->__GET('ID_BROKER'),
                         $ICARGA->__GET('ID_RFINAL'),

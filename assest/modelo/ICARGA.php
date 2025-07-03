@@ -27,6 +27,7 @@ class ICARGA
     private      $NVIAJE_ICARGA;
     private      $NAVE_ICARGA;
     private      $FECHASTACKING_ICARGA;
+    private      $FECHASTACKINGF_ICARGA;
     private      $FUMIGADO_ICARGA;
     private      $T_ICARGA;
     private      $O2_ICARGA;
